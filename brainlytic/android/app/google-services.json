@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "249456853413",
+    "project_id": "brainlytic-bc38f",
+    "storage_bucket": "brainlytic-bc38f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249456853413:android:01c8da2c2fc509ed42a84c",
+        "android_client_info": {
+          "package_name": "com.example.brainlytic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249456853413-u9s7fi9lflf4i2h81vqge2jgr6hojnqb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6uft_xIKD2wpQ_maVmsGLo41vJ81abpE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249456853413-u9s7fi9lflf4i2h81vqge2jgr6hojnqb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
