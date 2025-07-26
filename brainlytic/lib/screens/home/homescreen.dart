@@ -1,12 +1,20 @@
 import 'package:brainlytic/screens/home/quiz_topics_templates.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final String name;
-  HomeScreen({
+  const HomeScreen({
     super.key,
     required this.name
   });
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
 
   final List<Color> templateColors = [
     Colors.red,
@@ -23,9 +31,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore.instance.collection("quizzes").get();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hey! $name"),
+        title: Text("Hey! ${widget.name}"),
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
@@ -33,9 +42,12 @@ class HomeScreen extends StatelessWidget {
         child: SizedBox(
           height: MediaQuery.of(context).size.height - 185,
           child: ListView.builder(
-            itemCount: 9,
+            itemCount: 3,
             itemBuilder: (context, index){
-              return QuizTopicsTemplates(color: templateColors[index]);
+              return QuizTopicsTemplates(
+                color: templateColors[index],
+                title: "Topic ${index + 1}",
+              );
             },
           ),
         ),
@@ -48,10 +60,6 @@ class HomeScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
