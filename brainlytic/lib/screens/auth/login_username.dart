@@ -1,12 +1,14 @@
 import 'package:brainlytic/screens/auth/lineorline.dart';
 import 'package:brainlytic/screens/auth/login_password.dart';
-import 'package:brainlytic/screens/auth/signinapple.dart';
+import 'package:brainlytic/screens/auth/signingithub.dart';
 import 'package:brainlytic/screens/auth/signingoogle.dart';
+
 import 'package:flutter/material.dart';
 
 
 class LoginUsername extends StatelessWidget {
-  const LoginUsername({super.key});
+  final TextEditingController emailController = TextEditingController();
+  LoginUsername({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,39 +32,38 @@ class LoginUsername extends StatelessWidget {
               style: TextStyle(
                 fontSize: 45,
                 fontWeight: FontWeight.bold,
-                color: Colors.blue
+                //color: Colors.blue
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16,right: 16, top: 5, bottom: 16),
-            child: SizedBox(
-              width: 400,
-              child: TextField(
-                autofocus: true,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400,
-                      style: BorderStyle.solid,
-                      width: 1.5
-                    ),
-                    borderRadius: BorderRadius.circular(50)
+          Container(
+            padding: EdgeInsets.only(left: 16,right: 16, top: 5, bottom: 16),
+            width: 400,
+            child: TextField(
+              controller: emailController,
+              autofocus: true,
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade400,
+                    style: BorderStyle.solid,
+                    width: 1.5
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    borderSide: BorderSide(
-                      color: Colors.indigoAccent.shade400,
-                      width: 1.5
-                    )
-                  ),
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  labelText: "Email",
-                  labelStyle: TextStyle(
-                    fontSize: 20
-                  ),
-                  enabled: true,
+                  borderRadius: BorderRadius.circular(50)
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide(
+                    color: Colors.indigoAccent.shade400,
+                    width: 1.5
+                  )
+                ),
+                floatingLabelBehavior: FloatingLabelBehavior.auto,
+                labelText: "Email",
+                labelStyle: TextStyle(
+                  fontSize: 20
+                ),
+                enabled: true,
               ),
             ),
           ),
@@ -75,9 +76,11 @@ class LoginUsername extends StatelessWidget {
                 onPressed: (){
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context){
-                      return LoginPassword();
-                      }
-                    ));
+                      return LoginPassword(
+                        email: emailController.text
+                      );
+                    }
+                  ));
                 }, 
                 style: ButtonStyle(
                   backgroundColor: WidgetStatePropertyAll(Colors.black),
@@ -93,7 +96,7 @@ class LoginUsername extends StatelessWidget {
           ),
           const Lineorline(),
           const SigninGoogle(),
-          const SigninApple(),
+          const SigninGitHub(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

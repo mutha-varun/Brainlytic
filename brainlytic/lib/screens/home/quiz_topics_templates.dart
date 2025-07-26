@@ -7,18 +7,21 @@ class QuizTopicsTemplates extends StatelessWidget {
     {
       super.key,
       required this.color,
-      
     }
   );
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 200,
+      //padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 5),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30)
+        borderRadius: BorderRadius.circular(30),
+        color: color,
       ),
       child: Column(
-
+        
       ),
     );
   }

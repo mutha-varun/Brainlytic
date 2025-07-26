@@ -1,7 +1,17 @@
+import 'package:brainlytic/screens/auth/lineorline.dart';
+import 'package:brainlytic/screens/auth/register.dart';
+import 'package:brainlytic/screens/auth/signingithub.dart';
+import 'package:brainlytic/screens/auth/signingoogle.dart';
+import 'package:brainlytic/screens/home/homescreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPassword extends StatefulWidget {
-  const LoginPassword({super.key});
+  final String email;
+  const LoginPassword({
+    super.key,
+    required this.email
+  });
 
   @override
   State<LoginPassword> createState() => _LoginPasswordState();
@@ -11,6 +21,7 @@ class _LoginPasswordState extends State<LoginPassword> {
 
   bool showPasswordField = false;
   bool isVisible = false;
+  final passwordController = TextEditingController();
   
   @override
   void initState() {
@@ -18,11 +29,31 @@ class _LoginPasswordState extends State<LoginPassword> {
     super.initState();
   } 
 
+  Future<void> loginUser() async {
+    // Implement login logic here
+    try{
+      final userCredential =  await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: widget.email, password: passwordController.text.trim()
+      );
+      if(mounted) {
+        Navigator.pushReplacement(context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(name: userCredential.user!.displayName!))
+        );
+      }
+      print(userCredential.user);
+    } on FirebaseAuthException catch (e) {
+      // Handle login errors
+      print(e.message);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 23,
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -31,13 +62,11 @@ class _LoginPasswordState extends State<LoginPassword> {
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
-              // decoration: TextDecoration.underline,
-              // decorationColor: Colors.blue.shade200
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 35),
-            padding: EdgeInsets.symmetric(vertical: 10),
+            margin: EdgeInsets.only(top: 30, bottom: 5),
+            padding: EdgeInsets.only(top: 7, bottom: 7),
             child: Text("Enter your password",
               style: TextStyle(
                 fontSize: 36,
@@ -45,73 +74,90 @@ class _LoginPasswordState extends State<LoginPassword> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16,right: 16, top: 5, bottom: 16),
-            child: SizedBox(
-              width: 400,
-              child: TextField(
-                enabled: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
-                        style: BorderStyle.solid,
-                        width: 1.5
-                      ),
-                      borderRadius: BorderRadius.circular(50)
-                    ),
-                  labelText: "Email",
-                  labelStyle: TextStyle(
+          Container(
+            margin: EdgeInsets.only(right: 13),
+            alignment: Alignment.topRight,
+            child: IconButton(
+              onPressed: (){
+                Navigator.pop(context);
+              }, 
+            icon: Icon(Icons.edit,
+                size: 26,
+              )
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 16,right: 16, top: 5, bottom: 16),
+            width: 400,
+            child: TextField(
+              enabled: false,
+              decoration: InputDecoration(
+                label: Text(widget.email,
+                  style: TextStyle(
                     fontSize: 20
+                  )
+                ),
+                labelStyle: TextStyle(
+                  fontSize: 19,
+                  color: Colors.grey.shade600
+                ),
+                floatingLabelStyle: TextStyle(
+                  fontSize: 19,
+                  color: Colors.indigoAccent.shade400
+                ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade400,
+                    style: BorderStyle.solid,
+                    width: 1.5
                   ),
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  borderRadius: BorderRadius.circular(50)
                 ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16,right: 16, top: 5, bottom:0),
-            child: SizedBox(
-              width: 400,
-              child: TextField(
-                obscureText: isVisible,
-                autofocus: true,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
+          Container(
+            padding: EdgeInsets.only(left: 16,right: 16, top: 10, bottom: 16),
+            width: 400,
+            child: TextField(
+              controller: passwordController,
+              obscureText: isVisible,
+              autofocus: true,
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    style: BorderStyle.solid
+                  ),
+                  borderRadius: BorderRadius.circular(50)
+                ),
+                labelText: "Password",
+                labelStyle: TextStyle(
+                  fontSize: 20
+                ),
+                floatingLabelStyle: TextStyle(
+                  fontSize: 19,
+                  color: Colors.indigoAccent.shade400
+                ),
+                floatingLabelBehavior: FloatingLabelBehavior.auto,
+                suffixIcon: IconButton(
+                  onPressed: (){
+                    setState(() {
+                      isVisible = !isVisible;
+                    });
+                  },
+                  icon: Icon(isVisible? Icons.visibility : Icons.visibility_off,
+                    size: 30,
+                  )
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
                     borderSide: BorderSide(
-                      style: BorderStyle.solid
-                    ),
-                    borderRadius: BorderRadius.circular(50)
-                  ),
-                  labelText: "Password",
-                  labelStyle: TextStyle(
-                    fontSize: 20
-                  ),
-                  floatingLabelStyle: TextStyle(
-                    fontSize: 19,
-                    color: Colors.indigoAccent.shade400
-                  ),
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  suffixIcon: IconButton(
-                    onPressed: (){
-                      setState(() {
-                        isVisible = !isVisible;
-                      });
-                    },
-                    icon: Icon(isVisible? Icons.visibility : Icons.visibility_off,
-                      size: 30,
-                    )
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(
-                        color: Colors.indigoAccent.shade400,
-                        width: 1.5
-                    )
-                  ),
+                      color: Colors.indigoAccent.shade400,
+                      width: 1.5
+                  )
                 ),
               ),
-            ),
+            )
           ),
           Container(
             alignment: Alignment.centerRight,
@@ -134,8 +180,8 @@ class _LoginPasswordState extends State<LoginPassword> {
               width: 340,
               height: 60,
               child: ElevatedButton(
-                onPressed: () {
-
+                onPressed: () async {
+                  await loginUser();
                 }, 
                 style: ButtonStyle(
                   backgroundColor: WidgetStatePropertyAll(Colors.black),
@@ -149,98 +195,9 @@ class _LoginPasswordState extends State<LoginPassword> {
               ),
             ),
           ),
-          SizedBox(
-            width: 450,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(left:10, right:10, top: 20),
-                    child: Divider(
-                      thickness: 2,
-                    ), 
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20),
-                  child: Text("or",
-                    style: TextStyle(
-                      fontSize: 18
-                    ),
-                  )
-                ),
-                Expanded(
-                  child :Container(
-                    margin: EdgeInsets.only(left: 10, right:10, top: 20),
-                    child: Divider(
-                      thickness: 2
-                    ),
-                  )
-                )
-              ],
-            )
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top:25, bottom: 15),
-            child: SizedBox(
-              width: 340,
-              height: 60,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.white)
-                ),
-                onPressed: (){
-                  
-                }, 
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset("assets/icons/google-favicon.jpg",
-                      height: 24,
-                    ),
-                    Text(
-                      "  Continue with Google",
-                      style: TextStyle(
-                        fontSize: 21.3,
-                        color: Colors.black
-                      ),
-                    ),
-                  ],
-                )
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left:20, right: 20, bottom: 20, top:7),
-            child: SizedBox(
-              width: 340,
-              height: 60,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.white)
-                ),
-                onPressed: (){
-                  
-                }, 
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset("assets/icons/apple-favicon.jpg",
-                      height: 26,
-                    ),
-                    Text(
-                      "  Continue with Apple",
-                      style: TextStyle(
-                        fontSize: 21.3,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                )
-              ),
-            ),
-          ),
+          Lineorline(),
+          SigninGoogle(),
+          SigninGitHub(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -251,7 +208,12 @@ class _LoginPasswordState extends State<LoginPassword> {
               ),
               TextButton(
                 onPressed: (){
-
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Register()
+                    )
+                  );
                 }, 
                 child: Text("Sign up",
                   style: TextStyle(
