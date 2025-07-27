@@ -16,41 +16,57 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
 
-  final List<Color> templateColors = [
-    Colors.red,
-    Colors.blue,
-    Colors.green,
-    Colors.orange,
-    Colors.purple,
-    Colors.yellow,
-    Colors.pink,
-    Colors.teal,
-    Colors.cyan,
-    Colors.indigo,
-  ];
+  Color hextoColor(String hex){
+    return Color(int.parse(hex,  radix: 16) + 0xFF000000);
+  }
 
   @override
   Widget build(BuildContext context) {
-    FirebaseFirestore.instance.collection("quizzes").get();
+    
     return Scaffold(
       appBar: AppBar(
         title: Text("Hey! ${widget.name}"),
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.black,
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height - 185,
-          child: ListView.builder(
-            itemCount: 3,
-            itemBuilder: (context, index){
-              return QuizTopicsTemplates(
-                color: templateColors[index],
-                title: "Topic ${index + 1}",
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('quizzes').snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container(
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  alignment: Alignment.center,
+                  child: LinearProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                  )
+                );
+              }
+              if(!snapshot.hasData){
+                return Center(
+                  child: const Text("No quizzes found")
+                );
+              }
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: 3,
+                  itemBuilder: (context, index){
+                    return QuizTopicsTemplates(
+                      color: hextoColor(snapshot.data!.docs[index].data()['color']),
+                      title: snapshot.data!.docs[index].data()['title'],
+                      id: snapshot.data!.docs[index].data()['id'],
+                      stars: snapshot.data!.docs[index].data()['stars'],
+                    );
+                  },
+                ),
               );
-            },
+            }
           ),
-        ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

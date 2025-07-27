@@ -1,22 +1,27 @@
+import 'package:brainlytic/screens/quiz/quizpage.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class QuizTopicsTemplates extends StatelessWidget {
   final Color color;
   final String title;
+  final int id;
+  final int stars;
 
   const QuizTopicsTemplates(
     {
       super.key,
       required this.color,
       required this.title,
+      required this.id,
+      required this.stars
     }
   );
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 280,
+      height: 285,
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 5),
       decoration: BoxDecoration(
@@ -28,7 +33,7 @@ class QuizTopicsTemplates extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
               color: color.withValues(alpha: 2),
@@ -49,7 +54,7 @@ class QuizTopicsTemplates extends StatelessWidget {
                 size: 30,
               ),
               const SizedBox(width: 10),
-              Text("4/10",
+              Text("$stars/10",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -60,14 +65,14 @@ class QuizTopicsTemplates extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           LinearPercentIndicator(
-            percent: 0.6,
+            percent: stars/10,
             progressColor: Colors.white,
             width: 130,
             animation: true,
             barRadius: const Radius.circular(20),
             lineHeight: 15,
           ),
-          const SizedBox(height: 48),
+          const SizedBox(height: 35),
           Center(
             child: TextButton(
               style: ButtonStyle(
@@ -83,7 +88,13 @@ class QuizTopicsTemplates extends StatelessWidget {
                 backgroundColor: WidgetStatePropertyAll(Colors.white),
               ),
               onPressed: (){
-                
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) {
+                    return Quizpage(
+                      qid: id,
+                    );
+                  },
+                ));
               }, 
               child: Text("Start",
                 style: TextStyle(

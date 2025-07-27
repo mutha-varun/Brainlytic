@@ -25,29 +25,29 @@ class Brainlytic extends StatelessWidget {
       title: "Brainlytic",
 
       debugShowCheckedModeBanner: false,
-      // home: StreamBuilder(
-      //   stream: FirebaseAuth.instance.authStateChanges(),
-      //   builder: (context, snapshot) {
-      //     if(snapshot.connectionState == ConnectionState.waiting){
-      //       return const Center(
-      //         child: CircularProgressIndicator()
-      //       );
-      //     }
-      //     if(snapshot.data != null){
-      //       return HomeScreen(
-      //         name: FirebaseAuth.instance.currentUser!.displayName!
-      //       );
-      //     }
-      //     // if(snapshot.data != null){
-      //     //   return HomeScreen(
-      //     //     name: FirebaseAuth.instance.currentUser!.displayName!
-      //     //   );
-      //     // }
-      //     return const Onboarding();
-      //   },
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return Container(
+              margin: const EdgeInsets.all(20),
+              alignment: Alignment.center,
+              child: LinearProgressIndicator(
+                
+              )
+            );
+          }
+          if(snapshot.data != null){
+            return HomeScreen(
+              name: FirebaseAuth.instance.currentUser!.displayName!
+            );
+          }
+          
+          return Onboarding();
+        },
         
-      // )
-      home: Quizpage()
+      )
+      //home: Homecreen()
     );
   }
 }
