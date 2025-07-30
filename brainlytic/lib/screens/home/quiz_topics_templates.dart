@@ -7,6 +7,7 @@ class QuizTopicsTemplates extends StatelessWidget {
   final String title;
   final int id;
   final int stars;
+  final int totalQuestions; 
 
   const QuizTopicsTemplates(
     {
@@ -14,7 +15,8 @@ class QuizTopicsTemplates extends StatelessWidget {
       required this.color,
       required this.title,
       required this.id,
-      required this.stars
+      required this.stars,
+      required this.totalQuestions
     }
   );
 
@@ -42,7 +44,7 @@ class QuizTopicsTemplates extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 27,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.black54,
               ),
             ),
           ),
@@ -54,7 +56,7 @@ class QuizTopicsTemplates extends StatelessWidget {
                 size: 30,
               ),
               const SizedBox(width: 10),
-              Text("$stars/10",
+              Text("$stars/$totalQuestions",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -65,7 +67,7 @@ class QuizTopicsTemplates extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           LinearPercentIndicator(
-            percent: stars/10,
+            percent: stars/totalQuestions,
             progressColor: Colors.white,
             width: 130,
             animation: true,

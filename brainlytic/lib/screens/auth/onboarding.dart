@@ -79,7 +79,7 @@ class Onboarding extends StatelessWidget {
                     child: Text("Register",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20
+                        fontSize: 22
                       ),
                     )
                   ),

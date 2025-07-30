@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_final_fields
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Quizpage extends StatefulWidget {
@@ -30,8 +31,10 @@ class _QuizpageState extends State<Quizpage> {
       });
     }
     else {
-      await FirebaseFirestore.instance
-      .collection('quizzes')
+      final userId = FirebaseAuth.instance.currentUser!.uid;
+      await FirebaseFirestore.instance.collection('userData').
+      doc(userId)
+      .collection('quizData')
       .doc("quiz${widget.qid}")
       .update({
         'stars': _score,
@@ -42,7 +45,6 @@ class _QuizpageState extends State<Quizpage> {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              
               title: const Text("Quiz Completed",
                 textAlign: TextAlign.center,
                 style: TextStyle(

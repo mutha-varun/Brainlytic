@@ -1,5 +1,6 @@
 import 'package:brainlytic/screens/auth/lineorline.dart';
 import 'package:brainlytic/screens/auth/login_password.dart';
+import 'package:brainlytic/screens/auth/register.dart';
 import 'package:brainlytic/screens/auth/signingithub.dart';
 import 'package:brainlytic/screens/auth/signingoogle.dart';
 
@@ -107,7 +108,11 @@ class LoginUsername extends StatelessWidget {
               ),
               TextButton(
                 onPressed: (){
-
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) {
+                      return Register();
+                    }
+                  ));
                 }, 
                 child: Text("Sign up",
                   style: TextStyle(

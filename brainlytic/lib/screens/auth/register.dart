@@ -2,6 +2,7 @@ import 'package:brainlytic/screens/auth/lineorline.dart';
 import 'package:brainlytic/screens/auth/login_username.dart';
 import 'package:brainlytic/screens/auth/signingithub.dart';
 import 'package:brainlytic/screens/auth/signingoogle.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,27 @@ class _RegisterState extends State<Register> {
     super.dispose();
   }
 
+  Future<void> createUserData() async{
+    try{
+      final user = FirebaseAuth.instance.currentUser;
+      
+      if(user!=null){
+        await FirebaseFirestore.instance.collection('userData').doc(user.uid).set({"uid": user.uid});
+        
+        for(int i=1; i<=8; i++){
+          await FirebaseFirestore.instance.collection("userData").doc(user.uid).
+          collection('quizData').doc("quiz$i").set({
+            "stars": 0,
+            "id": i
+          });
+        }
+      }
+      
+    }catch(e){
+      print(e);
+    }
+  }
+
   Future<void> createUser() async{
     try{
       final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -41,8 +63,8 @@ class _RegisterState extends State<Register> {
         password: passwordController.text.trim()
       );
       await userCredential.user!.updateDisplayName(nameController.text.trim());
-      print("User created: ${userCredential.user!.displayName}");
-      print(userCredential);
+      await createUserData();
+
     }on FirebaseAuthException catch(e){
       print(e.message);
     }

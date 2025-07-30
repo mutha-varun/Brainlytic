@@ -47,7 +47,7 @@ class Brainlytic extends StatelessWidget {
         },
         
       )
-      //home: Homecreen()
+      //home: Onboarding()
     );
   }
 }
