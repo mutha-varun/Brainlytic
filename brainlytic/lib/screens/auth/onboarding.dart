@@ -37,10 +37,10 @@ class Onboarding extends StatelessWidget {
                 Text("Test out your knowledge",
                   style: TextStyle(
                     color: Colors.blueGrey,
-                    fontSize: 17
+                    fontSize: 19
                   ),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(height: 19,),
                 Padding(
                   padding: const EdgeInsets.all(14),
                   child: SizedBox(
@@ -57,6 +57,7 @@ class Onboarding extends StatelessWidget {
                       }, 
                       child: Text("Login",
                         style: TextStyle(
+                          color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 22
                         ),
@@ -64,10 +65,11 @@ class Onboarding extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: 10,),
                 SizedBox(
                   width: 310,
                   height: 50,
-                  child: ElevatedButton(
+                  child: OutlinedButton(
                     onPressed: (){
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context){
@@ -78,6 +80,7 @@ class Onboarding extends StatelessWidget {
                     }, 
                     child: Text("Register",
                       style: TextStyle(
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 22
                       ),

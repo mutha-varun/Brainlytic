@@ -22,6 +22,25 @@ class _QuizpageState extends State<Quizpage> {
   int _score = 0;
   int _answerIndex = -1;
   int _totalQuestions = 0;
+  int _selectedAnswer = -1;
+  bool _isAnswered = false;
+  bool _isFirst = true;
+
+  Color getButtonColor(int index) {
+    if (!_isAnswered) {
+      return Colors.black;
+    }
+    if(index == _answerIndex) {
+      return Colors.green;
+    }
+
+    if(index == _selectedAnswer){
+      return  Colors.red;
+    }
+    
+    return Colors.black;
+
+  }
 
   void _nextQuestion() async{
     
@@ -81,13 +100,24 @@ class _QuizpageState extends State<Quizpage> {
     } 
   }
   
-  void _checkAnswer(int selectedIndex) {
-    if(selectedIndex == _answerIndex) {
-      setState(() {
+  void _checkAnswer(int selectedIndex) async{
+
+    setState(() {
+      _selectedAnswer = selectedIndex;
+      _isAnswered = true;
+      if(selectedIndex == _answerIndex) {
         _score++;
+      }
+    });
+
+    await Future.delayed(const Duration(seconds: 3));
+    if(mounted){
+      setState(() {
+        _isAnswered = false;
+        _selectedAnswer = -1;
       });
+      _nextQuestion();
     }
-    _nextQuestion();
   }
    
   @override
@@ -109,7 +139,8 @@ class _QuizpageState extends State<Quizpage> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('quizzes').doc("quiz${widget.qid}").collection('questions').snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if (snapshot.connectionState == ConnectionState.waiting && _isFirst) {
+            _isFirst = false; 
             return Container(
               margin: const EdgeInsets.all(20),
               alignment: Alignment.center,
@@ -118,6 +149,7 @@ class _QuizpageState extends State<Quizpage> {
               ),
             );
           }
+
           if(!snapshot.hasData) {
             return Center(
               child: const Text("No question found")
@@ -134,13 +166,14 @@ class _QuizpageState extends State<Quizpage> {
               Container(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 20),
                 margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 20),
-                height: 190,
-                child: Text(snapshot.data!.docs[_currentQuestionIndex].data()['question'],
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontSize: 38,
-                    fontWeight: FontWeight.bold,
+                child: Expanded(
+                  child: Text(snapshot.data!.docs[_currentQuestionIndex].data()['question'],
+                    textAlign: TextAlign.center,
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 38,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -153,16 +186,18 @@ class _QuizpageState extends State<Quizpage> {
                       height: 85,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
+                          backgroundColor: getButtonColor(index),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(45),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: (){
                           _checkAnswer(index);
                         },
                         child: Text(
                           snapshot.data!.docs[_currentQuestionIndex].data()['options'][index],
+                          softWrap: true,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 25,
                             color: Colors.white,

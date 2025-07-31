@@ -1,3 +1,4 @@
+import 'package:brainlytic/screens/auth/onboarding.dart';
 import 'package:brainlytic/screens/home/quiz_topics_templates.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,8 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  Color hextoColor(String hex){
-    return Color(int.parse(hex,  radix: 16) + 0xFF000000);
+  Color hextoColor(String hex) {
+      return Color(int.parse(hex, radix: 16) + 0xFF000000);
   }
 
   @override
@@ -40,10 +41,60 @@ class _HomeScreenState extends State<HomeScreen> {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hey! ${widget.name}"),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text("Hey! ${widget.name}"),
+        ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.black,
+        actions: [
+          IconButton(
+            padding: EdgeInsets.only(right: 20),
+            icon: const Icon(Icons.logout, color: Colors.black),
+            onPressed: () {
+              showDialog(context: context, builder: (context) {
+                return AlertDialog(
+                  title: const Text("Logout",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  content: const Text("Are you sure you want to logout?",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text("No",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                        Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => const Onboarding()) 
+                        );
+                      },
+                      child: const Text("Logout",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              });
+            },
+          ),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -59,9 +110,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       margin: const EdgeInsets.all(20),
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       alignment: Alignment.center,
-                      child: LinearProgressIndicator(
+                      child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                      )
+                      ),
                     );
                   }
 

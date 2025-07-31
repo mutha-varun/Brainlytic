@@ -23,7 +23,7 @@ class Brainlytic extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Brainlytic",
-
+      //showPerformanceOverlay: true,
       debugShowCheckedModeBanner: false,
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),

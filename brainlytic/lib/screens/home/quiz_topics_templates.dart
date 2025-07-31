@@ -80,7 +80,7 @@ class QuizTopicsTemplates extends StatelessWidget {
               style: ButtonStyle(
                 shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(
+                  side: const BorderSide(
                     style: BorderStyle.solid,
                     color: Colors.black,
                     width: 2
@@ -98,7 +98,7 @@ class QuizTopicsTemplates extends StatelessWidget {
                   },
                 ));
               }, 
-              child: Text("Start",
+              child: const Text("Start",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
