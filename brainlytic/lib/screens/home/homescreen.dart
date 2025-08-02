@@ -42,8 +42,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Text("Hey! ${widget.name}"),
+          padding: const EdgeInsets.only(left: 5),
+          child: Row(
+            spacing: 5,
+            children: [
+              Icon(Icons.home,
+                size: 30,
+              ),
+              Text("Hey! ${widget.name}"),
+            ],
+          ),
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
@@ -115,7 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }
-
                   return Expanded(
                     child: ListView.builder(
                       itemCount: 7,
@@ -137,21 +144,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
               );
             }
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black,
-        unselectedItemColor: Colors.white,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
           ),
         ],
       ),

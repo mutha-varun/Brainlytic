@@ -33,6 +33,17 @@ migrate_working_dir/
 .pub/
 /build/
 
+#Firebase config files
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+ios/firebase_app_id_file.json
+
+#Firebase config backup files
+**/google-services.json.bak
+**/GoogleService-Info.plist.bak
+#Local configuration file
+lib/firebase_options.dart
+
 # Symbolication related
 app.*.symbols
 

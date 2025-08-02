@@ -1,4 +1,5 @@
 import 'package:brainlytic/screens/home/homescreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sign_button/constants.dart';
@@ -18,11 +19,46 @@ class _SigninGitHubState extends State<SigninGitHub>{
   String _errorMessage = "";
 
   Future<UserCredential> signinGitHub() async {
-    GithubAuthProvider githubAuthProvider = GithubAuthProvider();
+    try{
+      GithubAuthProvider githubAuthProvider = GithubAuthProvider();
 
-    return await FirebaseAuth.instance.signInWithProvider(githubAuthProvider);
+      final UserCredential userCredential = await FirebaseAuth.instance.signInWithProvider(githubAuthProvider);
+
+      await createUserData(userCredential);
+      return userCredential;
+    }catch(e){
+      rethrow;
+    }
   }
 
+  Future<void> createUserData(UserCredential credential) async{
+    try{
+      final user = credential.user;
+
+      if(user!=null){
+        await FirebaseFirestore.instance.
+        collection("userData").doc(user.uid).set(
+          {
+            "uid":user.uid
+          }
+        );
+
+        for(int i =1; i<=8;i++){
+          await FirebaseFirestore.instance.
+          collection("userData").doc(user.uid).
+          collection("quizData").doc('quiz$i').set(
+            {
+              "stars":0,
+              "id":i
+            }
+          );
+        }
+      }
+    }catch (e){
+      print("Error creating user data");
+      rethrow;
+    }
+  }
   @override
   Widget build(BuildContext context){
     return Container(
@@ -41,13 +77,16 @@ class _SigninGitHubState extends State<SigninGitHub>{
             setState(() {
               _errorMessage = e.toString();
             });
-            StatusAlert.show(context,
-              duration: Duration(seconds: 3),
-              title: "Error",
-              subtitle: "Erorr",
-              configuration: IconConfiguration(icon: Icons.error, color: Colors.red),
-              maxWidth: 700
-            );
+            if(context.mounted)
+            {
+              StatusAlert.show(context,
+                duration: Duration(seconds: 3),
+                title: "Error",
+                subtitle: _errorMessage,
+                configuration: IconConfiguration(icon: Icons.error, color: Colors.red),
+                maxWidth: 700
+              );
+            }
           }
         },
         width: MediaQuery.of(context).size.width,

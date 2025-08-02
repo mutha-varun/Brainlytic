@@ -110,7 +110,7 @@ class _QuizpageState extends State<Quizpage> {
       }
     });
 
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 2));
     if(mounted){
       setState(() {
         _isAnswered = false;
@@ -166,14 +166,12 @@ class _QuizpageState extends State<Quizpage> {
               Container(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 20),
                 margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 20),
-                child: Expanded(
-                  child: Text(snapshot.data!.docs[_currentQuestionIndex].data()['question'],
-                    textAlign: TextAlign.center,
-                    softWrap: true,
-                    style: TextStyle(
-                      fontSize: 38,
-                      fontWeight: FontWeight.bold,
-                    ),
+                child: Text(snapshot.data!.docs[_currentQuestionIndex].data()['question'],
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
