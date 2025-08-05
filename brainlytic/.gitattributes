@@ -1,6 +1,2 @@
-* linguist vendored
-<<<<<<< HEAD
-*.dart linguist-vendored = false
-=======
-*.dart linguist-vendored = false
->>>>>>> 4bd45e64d00d4451a8c8f694d4f14ba1a971f1a3
+* linguist-vendored
+*.dart linguist-vendored=false
