@@ -63,11 +63,28 @@ class _SigninGoogleState extends State<SigninGoogle> {
     try{
       final googleProvider = GoogleAuthProvider();
 
+      googleProvider.addScope('email');
+      googleProvider.addScope('profile');
+
+      googleProvider.setCustomParameters({
+        'prompt': 'select_account'
+      });
+
       if(defaultTargetPlatform == TargetPlatform.android){
         return await FirebaseAuth.instance.signInWithProvider(googleProvider);
       }
       else{
-        return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+        await FirebaseAuth.instance.signOut();
+        try{
+          return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+        }catch(e){
+          if(e is FirebaseAuthException && e.code == 'popup-closed-by-user'){
+            throw Exception('Sign-in cancelled by user');
+          }
+
+          throw Exception('Failed to sign in with Google');
+        }
+      
       }
     }catch (e) {
       setState(() {
@@ -89,6 +106,7 @@ class _SigninGoogleState extends State<SigninGoogle> {
               final userCredential = await signInWithGoogle();
 
               await createUserData(userCredential);
+              
               if(context.mounted){
                 Navigator.pushReplacement(context, 
                   MaterialPageRoute(
