@@ -17,24 +17,15 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -59,4 +50,37 @@ class DefaultFirebaseOptions {
     projectId: 'brainlytic-bc38f',
     storageBucket: 'brainlytic-bc38f.firebasestorage.app',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAa3YQiO72fKTC9ctYLfliyoGVRYh7tRag',
+    appId: '1:249456853413:web:b0d0691dc205396c42a84c',
+    messagingSenderId: '249456853413',
+    projectId: 'brainlytic-bc38f',
+    authDomain: 'brainlytic-bc38f.firebaseapp.com',
+    storageBucket: 'brainlytic-bc38f.firebasestorage.app',
+    measurementId: 'G-6RL8X3X5P4',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDVwAH84W3h0gESF5_PHWI0xJc-ho0DE5k',
+    appId: '1:249456853413:ios:96c195e4dcaee2d342a84c',
+    messagingSenderId: '249456853413',
+    projectId: 'brainlytic-bc38f',
+    storageBucket: 'brainlytic-bc38f.firebasestorage.app',
+    androidClientId: '249456853413-0hltm44pea805kolbfi1q24lj40kgtko.apps.googleusercontent.com',
+    iosClientId: '249456853413-9qrfjc3d9pj0qbuil8jiaalqfpfa9etf.apps.googleusercontent.com',
+    iosBundleId: 'com.example.brainlytic',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDVwAH84W3h0gESF5_PHWI0xJc-ho0DE5k',
+    appId: '1:249456853413:ios:96c195e4dcaee2d342a84c',
+    messagingSenderId: '249456853413',
+    projectId: 'brainlytic-bc38f',
+    storageBucket: 'brainlytic-bc38f.firebasestorage.app',
+    androidClientId: '249456853413-0hltm44pea805kolbfi1q24lj40kgtko.apps.googleusercontent.com',
+    iosClientId: '249456853413-9qrfjc3d9pj0qbuil8jiaalqfpfa9etf.apps.googleusercontent.com',
+    iosBundleId: 'com.example.brainlytic',
+  );
+
 }
