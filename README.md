@@ -33,7 +33,8 @@ The core application logic is organized within the `lib/` directory:
 - `screens/home/`: Includes the main home screen that users see after logging in, displaying the list of available quiz topics.
 - `screens/quiz/`: The interactive quiz page where users answer questions.
 
-##Images
+## Images
+
 <img src = "https://github.com/user-attachments/assets/c4d652dc-d878-43bc-ab79-863a63d5f751" height="150">
 <img src = "https://github.com/user-attachments/assets/d92d813c-d0c8-476e-a1d3-b35e319ee2e7" height="150">
 <img src="https://github.com/user-attachments/assets/5d276fa7-739e-4223-bc91-c883d668a510" height="150">
