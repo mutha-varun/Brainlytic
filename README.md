@@ -34,7 +34,7 @@ The core application logic is organized within the `lib/` directory:
 - `screens/quiz/`: The interactive quiz page where users answer questions.
 
 ##Images
-![Oboarding_Screen](<img src = "https://github.com/user-attachments/assets/c4d652dc-d878-43bc-ab79-863a63d5f751" height="150" />)
+![Oboarding_Screen](https://github.com/user-attachments/assets/c4d652dc-d878-43bc-ab79-863a63d5f751 = 250x150)
 ![Register_Page](<img src = "https://github.com/user-attachments/assets/d92d813c-d0c8-476e-a1d3-b35e319ee2e7" height="150" />)
 ![Login_Page](<img src="https://github.com/user-attachments/assets/5d276fa7-739e-4223-bc91-c883d668a510" height="150"/>)
 ![LoginPass_Page](<img src  = "https://github.com/user-attachments/assets/710ae866-6ac9-4164-8804-456adcce29db" height="150" />)
