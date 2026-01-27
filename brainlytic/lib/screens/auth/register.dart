@@ -74,13 +74,13 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 20,
+        toolbarHeight: 29.3,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left:8.0, right:8, bottom:4),
             child: const Text("Brainlytic",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
