@@ -34,15 +34,15 @@ The core application logic is organized within the `lib/` directory:
 - `screens/quiz/`: The interactive quiz page where users answer questions.
 
 ##Images
-![Oboarding_Screen](<img = "https://github.com/user-attachments/assets/c4d652dc-d878-43bc-ab79-863a63d5f751" height="150" />)
-![Register_Page](<img = "https://github.com/user-attachments/assets/d92d813c-d0c8-476e-a1d3-b35e319ee2e7" height="150" />)
-![Login_Page](<img="https://github.com/user-attachments/assets/5d276fa7-739e-4223-bc91-c883d668a510" height="150"/>)
-![LoginPass_Page](<img = "https://github.com/user-attachments/assets/710ae866-6ac9-4164-8804-456adcce29db" height="150" />)
-![HomeScreen_Page](<img = "https://github.com/user-attachments/assets/bad56253-8e5d-4a77-8ee8-6a30f2624203" height="150"/>)
-![Questions_Page](<img = "https://github.com/user-attachments/assets/eb34bb48-cbe5-402f-894c-11e7640554f8" height="150" />)
-![AnswerUI](<img = "https://github.com/user-attachments/assets/91e46dbf-71de-4ba9-8390-ca1c99f50301" height = "150"/>)
-![QuizFinishUI](<img = "https://github.com/user-attachments/assets/1af76ac7-fbf4-4c84-b20f-f71cbc9fe175" height = "150" />)
-![HomeScreen_Page](<imag = "https://github.com/user-attachments/assets/5f780555-2f1d-4a70-bca9-05921cc1c9e4" height = "150" />)
+![Oboarding_Screen](<img src = "https://github.com/user-attachments/assets/c4d652dc-d878-43bc-ab79-863a63d5f751" height="150" />)
+![Register_Page](<img src = "https://github.com/user-attachments/assets/d92d813c-d0c8-476e-a1d3-b35e319ee2e7" height="150" />)
+![Login_Page](<img src="https://github.com/user-attachments/assets/5d276fa7-739e-4223-bc91-c883d668a510" height="150"/>)
+![LoginPass_Page](<img src  = "https://github.com/user-attachments/assets/710ae866-6ac9-4164-8804-456adcce29db" height="150" />)
+![HomeScreen_Page](<img src = "https://github.com/user-attachments/assets/bad56253-8e5d-4a77-8ee8-6a30f2624203" height="150"/>)
+![Questions_Page](<img src = "https://github.com/user-attachments/assets/eb34bb48-cbe5-402f-894c-11e7640554f8" height="150" />)
+![AnswerUI](<img src= "https://github.com/user-attachments/assets/91e46dbf-71de-4ba9-8390-ca1c99f50301" height = "150"/>)
+![QuizFinishUI](<img src= "https://github.com/user-attachments/assets/1af76ac7-fbf4-4c84-b20f-f71cbc9fe175" height = "150" />)
+![HomeScreen_Page](<imag src = "https://github.com/user-attachments/assets/5f780555-2f1d-4a70-bca9-05921cc1c9e4" height = "150" />)
 
 
 
