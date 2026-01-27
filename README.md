@@ -1,5 +1,4 @@
 # Brainlytic
-[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/mutha-varun/Brainlytic)
 
 Brainlytic is a cross-platform quiz application built with Flutter and Firebase. It allows users to test their knowledge across various topics, track their progress, and engage in an interactive learning experience.
 
