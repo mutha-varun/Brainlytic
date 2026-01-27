@@ -1,4 +1,4 @@
-# Brainlytic
+![Screenshot 2026-01-27 at 10 54 04 PM](https://github.com/user-attachments/assets/f276b17f-b7d7-4b4b-8593-927d36893c8d)# Brainlytic
 
 Brainlytic is a cross-platform quiz application built with Flutter and Firebase. It allows users to test their knowledge across various topics, track their progress, and engage in an interactive learning experience.
 
@@ -32,6 +32,24 @@ The core application logic is organized within the `lib/` directory:
 - `screens/auth/`: Contains all UI screens related to user authentication, including onboarding, login, registration, and social sign-in handlers.
 - `screens/home/`: Includes the main home screen that users see after logging in, displaying the list of available quiz topics.
 - `screens/quiz/`: The interactive quiz page where users answer questions.
+
+##Images
+![Oboarding_Screen](https://github.com/user-attachments/assets/c4d652dc-d878-43bc-ab79-863a63d5f751)
+![Register_Page](https://github.com/user-attachments/assets/d92d813c-d0c8-476e-a1d3-b35e319ee2e7)
+![Login_Page](https://github.com/user-attachments/assets/5d276fa7-739e-4223-bc91-c883d668a510)
+![LoginPass_Page](https://github.com/user-attachments/assets/710ae866-6ac9-4164-8804-456adcce29db)
+![HomeScreen_Page](https://github.com/user-attachments/assets/bad56253-8e5d-4a77-8ee8-6a30f2624203)
+![Questions_Page](https://github.com/user-attachments/assets/eb34bb48-cbe5-402f-894c-11e7640554f8)
+![AnswerUI](https://github.com/user-attachments/assets/91e46dbf-71de-4ba9-8390-ca1c99f50301)
+![QuizFinishUI](https://github.com/user-attachments/assets/1af76ac7-fbf4-4c84-b20f-f71cbc9fe175)
+![HomeScreen_Page](https://github.com/user-attachments/assets/5f780555-2f1d-4a70-bca9-05921cc1c9e4)
+
+
+
+
+
+
+
 
 ## Getting Started
 
