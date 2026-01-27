@@ -37,11 +37,12 @@ migrate_working_dir/
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 ios/firebase_app_id_file.json
-lib/firebase_options.dart
+
 
 #Firebase config backup files
 **/google-services.json.bak
 **/GoogleService-Info.plist.bak
+
 #Local configuration file
 lib/firebase_options.dart
 

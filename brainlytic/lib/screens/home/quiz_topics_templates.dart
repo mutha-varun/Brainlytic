@@ -1,6 +1,8 @@
+//import 'package:brainlytic/firebase_options.dart';
 import 'package:brainlytic/screens/quiz/quizpage.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+//import "dart:io" show Platform;
 
 class QuizTopicsTemplates extends StatelessWidget {
   final Color color;
@@ -8,7 +10,7 @@ class QuizTopicsTemplates extends StatelessWidget {
   final int id;
   final int stars;
   final int totalQuestions; 
-
+  
   const QuizTopicsTemplates(
     {
       super.key,
@@ -19,6 +21,8 @@ class QuizTopicsTemplates extends StatelessWidget {
       required this.totalQuestions
     }
   );
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,7 @@ class QuizTopicsTemplates extends StatelessWidget {
             ),
             child: Text(title,
               style: const TextStyle(
-                fontSize: 27,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
                 color: Colors.black54,
               ),
