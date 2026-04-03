@@ -1,19 +1,10 @@
 import 'dart:async';
-// ignore: unused_import
-import 'dart:io';
 import 'package:brainlytic/screens/home/homescreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_button/sign_button.dart';
-
-const List<String> scopes = <String>[
-  'https://www.googleapis.com/auth/contacts.readonly',
-];
-
-String? clientId;
-String? serverClientId;
 
 class SigninGoogle extends StatefulWidget {
   const SigninGoogle({super.key});
@@ -23,10 +14,35 @@ class SigninGoogle extends StatefulWidget {
 }
 
 class _SigninGoogleState extends State<SigninGoogle> {
-
-  
  
-  String _errorMessage = '';
+  Future<UserCredential?> singinWithGoogle() async{
+    try{
+     
+      final GoogleSignInAccount googleUser = await GoogleSignIn.instance.authenticate();
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+      final idToken = googleAuth.idToken;
+
+      final authorizationClient = googleUser.authorizationClient;
+      GoogleSignInClientAuthorization? authorization =
+      await authorizationClient.authorizationForScopes([
+        'email',
+        'profile',
+      ]);
+      authorization ??= await authorizationClient.authorizeScopes(['email', 'profile']);
+
+      final accessToken = authorization.accessToken;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: accessToken,
+        idToken: idToken
+      );
+
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    }
+    catch(e){
+      debugPrint(e.toString());
+      return null;
+    }
+  }
 
   Future<void> createUserData(UserCredential userCredential) async {
     try {
@@ -59,41 +75,6 @@ class _SigninGoogleState extends State<SigninGoogle> {
   }
 
 
-  Future<UserCredential> signInWithGoogle() async{
-    try{
-      final googleProvider = GoogleAuthProvider();
-
-      googleProvider.addScope('email');
-      googleProvider.addScope('profile');
-
-      googleProvider.setCustomParameters({
-        'prompt': 'select_account'
-      });
-
-      if(defaultTargetPlatform == TargetPlatform.android){
-        return await FirebaseAuth.instance.signInWithProvider(googleProvider);
-      }
-      else{
-        await FirebaseAuth.instance.signOut();
-        try{
-          return await FirebaseAuth.instance.signInWithPopup(googleProvider);
-        }catch(e){
-          if(e is FirebaseAuthException && e.code == 'popup-closed-by-user'){
-            throw Exception('Sign-in cancelled by user');
-          }
-
-          throw Exception('Failed to sign in with Google');
-        }
-      
-      }
-    }catch (e) {
-      setState(() {
-        _errorMessage = e.toString();
-      });
-      rethrow;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -102,30 +83,19 @@ class _SigninGoogleState extends State<SigninGoogle> {
         child: SignInButton(
           buttonType: ButtonType.google, 
           onPressed: () async {
-            try{
-              final userCredential = await signInWithGoogle();
-
-              await createUserData(userCredential);
-              
-              if(context.mounted){
-                Navigator.pushReplacement(context, 
-                  MaterialPageRoute(
-                    builder: (context) => HomeScreen(
-                      name: userCredential.user?.displayName ?? "User"
-                    )
-                  )
-                );
-              }
-            }catch (e){
-              if(context.mounted){
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(_errorMessage),
-                    backgroundColor: Colors.red,
-                  )
-                );
-              }
+          final user = await singinWithGoogle();
+          if(user != null){
+            if(user.additionalUserInfo?.isNewUser ?? false){
+              await createUserData(user);
             }
+            if(context.mounted){
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen(name: "",)
+                )
+              );
+            }
+          }
           },
           btnText: "Continue with Google",
           width: MediaQuery.of(context).size.width,
