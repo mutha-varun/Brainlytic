@@ -33,6 +33,20 @@ The core application logic is organized within the `lib/` directory:
 - `screens/home/`: Includes the main home screen that users see after logging in, displaying the list of available quiz topics.
 - `screens/quiz/`: The interactive quiz page where users answer questions.
 
+## Images
+
+<img src = "https://github.com/user-attachments/assets/c4d652dc-d878-43bc-ab79-863a63d5f751" height="300">
+<img src = "https://github.com/user-attachments/assets/d92d813c-d0c8-476e-a1d3-b35e319ee2e7" height="300">
+<img src="https://github.com/user-attachments/assets/5d276fa7-739e-4223-bc91-c883d668a510" height="300">
+<img src  = "https://github.com/user-attachments/assets/710ae866-6ac9-4164-8804-456adcce29db" height="300">
+<img src = "https://github.com/user-attachments/assets/bad56253-8e5d-4a77-8ee8-6a30f2624203" height="300">
+<img src = "https://github.com/user-attachments/assets/eb34bb48-cbe5-402f-894c-11e7640554f8" height="300">
+<img src= "https://github.com/user-attachments/assets/91e46dbf-71de-4ba9-8390-ca1c99f50301" height = "300">
+<img src= "https://github.com/user-attachments/assets/1af76ac7-fbf4-4c84-b20f-f71cbc9fe175" height = "300">
+<img src = "https://github.com/user-attachments/assets/5f780555-2f1d-4a70-bca9-05921cc1c9e4" height = "300">
+
+
+
 ## Getting Started
 
 To get a local copy up and running, follow these simple steps.
