@@ -91,7 +91,7 @@ class _SigninGoogleState extends State<SigninGoogle> {
             if(context.mounted){
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => HomeScreen(name: "",)
+                MaterialPageRoute(builder: (context) => HomeScreen()
                 )
               );
             }

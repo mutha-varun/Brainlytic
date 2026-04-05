@@ -5,10 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String name;
   const HomeScreen({
     super.key,
-    required this.name
   });
 
   @override
@@ -18,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   final userId = FirebaseAuth.instance.currentUser!.uid;
+  final name = FirebaseAuth.instance.currentUser!.displayName;
 
   Stream<Map<String, int>> getUserStars(){
     return FirebaseFirestore.instance.collection('userData').
@@ -49,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Icon(Icons.home,
                 size: 30,
               ),
-              Text("Hey! ${widget.name}"),
+              Text("Hey! ${name}"),
             ],
           ),
         ),

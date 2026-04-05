@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sign_button/constants.dart';
 import 'package:sign_button/create_button.dart';
-import 'package:status_alert/status_alert.dart';
 
 
 class SigninGitHub extends StatefulWidget {
@@ -16,18 +15,17 @@ class SigninGitHub extends StatefulWidget {
 
 class _SigninGitHubState extends State<SigninGitHub>{
 
-  String _errorMessage = "";
-
-  Future<UserCredential> signinGitHub() async {
+  Future<UserCredential?> signinGitHub() async {
     try{
       GithubAuthProvider githubAuthProvider = GithubAuthProvider();
 
       final UserCredential userCredential = await FirebaseAuth.instance.signInWithProvider(githubAuthProvider);
 
-      await createUserData(userCredential);
+      
       return userCredential;
     }catch(e){
-      rethrow;
+      debugPrint(e.toString());
+      return null;
     }
   }
 
@@ -67,24 +65,16 @@ class _SigninGitHubState extends State<SigninGitHub>{
       child: SignInButton(
         buttonType: ButtonType.github,
         onPressed: () async{
-          try{
-            UserCredential userCredential = await signinGitHub();
-            if(context.mounted){
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) => HomeScreen(name: userCredential.user?.displayName ?? "User"),));
+          final user = await signinGitHub();
+          if(user != null){
+            if(user.additionalUserInfo?.isNewUser ?? false){
+              await createUserData(user);
             }
-          }catch(e){
-            setState(() {
-              _errorMessage = e.toString();
-            });
-            if(context.mounted)
-            {
-              StatusAlert.show(context,
-                duration: Duration(seconds: 3),
-                title: "Error",
-                subtitle: _errorMessage,
-                configuration: IconConfiguration(icon: Icons.error, color: Colors.red),
-                maxWidth: 700
+            if(context.mounted){
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()
+                )
               );
             }
           }

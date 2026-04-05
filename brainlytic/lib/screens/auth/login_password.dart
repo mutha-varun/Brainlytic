@@ -38,10 +38,9 @@ class _LoginPasswordState extends State<LoginPassword> {
       if(mounted) {
         Navigator.pushReplacement(context,
           MaterialPageRoute(
-            builder: (context) => HomeScreen(name: userCredential.user!.displayName!))
+            builder: (context) => HomeScreen())
         );
       }
-      print(userCredential.user);
     } on FirebaseAuthException catch (e) {
       // Handle login errors
       print(e.message);

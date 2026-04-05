@@ -31,9 +31,7 @@ class Brainlytic extends StatelessWidget {
         builder: (context, snapshot) {
           
           if(snapshot.data != null){
-            return HomeScreen(
-              name: FirebaseAuth.instance.currentUser!.displayName!
-            );
+            return HomeScreen();
           }
           return Onboarding();
         },
