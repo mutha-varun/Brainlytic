@@ -58,7 +58,7 @@ class _QuizpageState extends State<Quizpage> {
       .update({
         'stars': _score,
       });
-      if(context.mounted){
+      if(mounted){
         showDialog(
           context: context,
           barrierDismissible: false,
@@ -110,7 +110,7 @@ class _QuizpageState extends State<Quizpage> {
       }
     });
 
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 700));
     if(mounted){
       setState(() {
         _isAnswered = false;
