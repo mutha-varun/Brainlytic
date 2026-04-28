@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Icon(Icons.home,
                 size: 30,
               ),
-              Text("Hey! ${name}"),
+              Text("Hey! $name"),
             ],
           ),
         ),
