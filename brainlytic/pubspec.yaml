@@ -49,6 +49,7 @@ dependencies:
 
 dev_dependencies:
   flutter_native_splash: ^2.4.7
+  flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
 
@@ -78,6 +79,13 @@ flutter_native_splash:
   ios: true
   android: true
   fullscreen: true
+  branding_bottom_padding_ios: assets/branding.png
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/favicon.png
+
 
 flutter:
 
