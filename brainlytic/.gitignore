@@ -47,6 +47,7 @@ ios/firebase_app_id_file.json
 **/GoogleService-Info.plist.bak
 
 #Local configuration file
+**/.DS_Store
 
 # Symbolication related
 app.*.symbols
