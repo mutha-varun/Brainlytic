@@ -40,6 +40,8 @@ android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 ios/Runner/Info.plist
 ios/firebase_app_id_file.json
+macos/Runner/GoogleService-Info.plist
+macos/Runner/Info.plist
 
 
 #Firebase config backup files
