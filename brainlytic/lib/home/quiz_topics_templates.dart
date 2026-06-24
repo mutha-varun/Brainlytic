@@ -1,5 +1,5 @@
 //import 'package:brainlytic/firebase_options.dart';
-import 'package:brainlytic/screens/quiz/quizpage.dart';
+import 'package:brainlytic/quiz/quizpage.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 //import "dart:io" show Platform;

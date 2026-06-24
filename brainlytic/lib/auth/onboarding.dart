@@ -1,5 +1,5 @@
-import 'package:brainlytic/screens/auth/login_username.dart';
-import 'package:brainlytic/screens/auth/register.dart';
+import 'package:brainlytic/auth/login_username.dart';
+import 'package:brainlytic/auth/register.dart';
 import 'package:flutter/material.dart';
 
 class Onboarding extends StatelessWidget {
@@ -11,7 +11,7 @@ class Onboarding extends StatelessWidget {
       backgroundColor: Colors.grey,
       body: Column(
         children: [
-          Spacer(),
+          const Spacer(),
           Container(
             decoration: BoxDecoration(
               color: Colors.black,
