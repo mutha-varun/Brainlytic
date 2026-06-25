@@ -1,8 +1,8 @@
-import 'package:brainlytic/auth/widgets/lineorline.dart';
-import 'package:brainlytic/auth/login_password.dart';
-import 'package:brainlytic/auth/register.dart';
-import 'package:brainlytic/auth/signingithub.dart';
-import 'package:brainlytic/auth/signingoogle.dart';
+import 'package:brainlytic/features/auth/widgets/lineorline.dart';
+import 'package:brainlytic/features/auth/login_password.dart';
+import 'package:brainlytic/features/auth/register.dart';
+import 'package:brainlytic/features/auth/signingithub.dart';
+import 'package:brainlytic/features/auth/signingoogle.dart';
 
 import 'package:flutter/material.dart';
 

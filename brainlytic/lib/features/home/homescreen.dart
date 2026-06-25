@@ -1,5 +1,5 @@
-import 'package:brainlytic/auth/onboarding.dart';
-import 'package:brainlytic/home/quiz_topics_templates.dart';
+import 'package:brainlytic/features/onboarding/pages/onboarding.dart';
+import 'package:brainlytic/features/home/quiz_topics_templates.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () {
                         FirebaseAuth.instance.signOut();
                         Navigator.pushAndRemoveUntil(context,
-                          MaterialPageRoute(builder: (context) => const Onboarding()),
+                          MaterialPageRoute(builder: (context) =>  Onboarding()),
                           (Route<dynamic> route)=> false
                         );
                       },
