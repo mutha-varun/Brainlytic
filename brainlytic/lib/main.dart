@@ -1,3 +1,4 @@
+import 'package:brainlytic/core/router/app_router.dart';
 import 'package:brainlytic/core/theme/theme.dart';
 import 'package:brainlytic/features/onboarding/pages/initial_screen.dart';
 import 'package:brainlytic/features/onboarding/pages/onboarding.dart';
@@ -29,7 +30,7 @@ class Brainlytic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: "Brainlytic",
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
@@ -43,7 +44,8 @@ class Brainlytic extends StatelessWidget {
       //     return Onboarding();
       //   },
       // )
-      home: const Onboarding(),
+
+      routerConfig: appRouter,
     );
   }
 }

@@ -1,4 +1,6 @@
+import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class InitialScreen extends StatelessWidget {
   const InitialScreen({super.key});
@@ -30,7 +32,7 @@ class InitialScreen extends StatelessWidget {
               shape: StadiumBorder()
             ),
             onPressed: (){
-             
+             context.goNamed(RouteConstants.onboarding);
             }, 
             child: const Text("Next")
           ),
