@@ -5,41 +5,101 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-class Onboarding extends ConsumerWidget {
+class Onboarding extends ConsumerStatefulWidget {
   const Onboarding({super.key});
 
-  Widget _buildAnimation(BuildContext context,String text, int index){
-  
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
-      transitionBuilder: (child, Animation<double> animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: ScaleTransition(scale: animation, child: child),
+  @override
+  ConsumerState<Onboarding> createState() => _OnboardingState();
+}
 
-        );
-      },
-      child: Text(
-          text,
-          key: ValueKey<int>(index), 
-          style: Theme.of(context).textTheme.displayLarge
-        ),
-    );
+class _OnboardingState extends ConsumerState<Onboarding> with SingleTickerProviderStateMixin{
+  final Duration _typeDuration = const Duration(milliseconds: 2700);
+  final Duration _deleteDuration = const Duration(milliseconds: 1500);
+
+  late AnimationController _controller;
+  late Animation<int> _charCountAnim;
+  OnboardingTextState? _prevProviderState;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: _typeDuration);
+    _controller.addStatusListener(_onAnimationStatus);
+
+    final notifier = ref.read(onboardingTextIndexProvider.notifier);
+    final text = notifier.textChoices[0];
+    _charCountAnim = IntTween(begin: 0, end: text.length)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
+   
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.forward(from: 0);
+    });
+  }
+  void _onAnimationStatus(AnimationStatus status) {
+    if (status != AnimationStatus.completed) return;
+
+    final notifier = ref.read(onboardingTextIndexProvider.notifier);
+    final state = ref.read(onboardingTextIndexProvider);
+
+    if (!state.isDeleting) {
+      notifier.startDeleting();
+    } else {
+      notifier.nextText();
+    }
+  }
+
+  void _rebuildAnimation(OnboardingTextState providerState, String text) {
+    final isDeleting = providerState.isDeleting;
+    _controller.duration = isDeleting ? _deleteDuration : _typeDuration;
+    _charCountAnim = IntTween(
+      begin: isDeleting ? text.length : 0,
+      end: isDeleting ? 0 : text.length,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: isDeleting ? Curves.easeIn : Curves.easeOut,
+    ));
+    _controller.forward(from: 0);
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final index = ref.watch(onboardingTextIndexProvider);
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
+
+    final providerState = ref.watch(onboardingTextIndexProvider);
     final notifier = ref.read(onboardingTextIndexProvider.notifier);
-    final text = notifier.textChoices[index];
+    final text = notifier.textChoices[providerState.index];
 
+   
+    if (_prevProviderState?.index != providerState.index ||
+        _prevProviderState?.isDeleting != providerState.isDeleting) {
+      _prevProviderState = providerState;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _rebuildAnimation(providerState, text);
+      });
+    }
+  
     return Scaffold(
-      backgroundColor: Colors.grey,
       body: Column(
         children: [
           const Spacer(),
-          _buildAnimation(context,text, index),
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              final count = _charCountAnim.value.clamp(0, text.length);
+              return Text(
+                text.substring(0, count),
+                textAlign: TextAlign.center,
+                softWrap: true,
+                style: Theme.of(context).textTheme.displayLarge,
+              );
+            },
+          ),
           const Spacer(),
           Container(
             decoration: const BoxDecoration(
@@ -47,24 +107,14 @@ class Onboarding extends ConsumerWidget {
               borderRadius: BorderRadius.only(topLeft:Radius.circular(50) ,topRight:Radius.circular(50))
             ),
             width: double.infinity,
-            height: 450,
+            height: 400,
             child: Column(
               children: [
-                const SizedBox(height: 55,),
-                const Text(" Welcome to Brainlytic ",
-                    softWrap: true,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 37,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                const Text("Test out your knowledge",
-                  style: TextStyle(
-                    color: Colors.blueGrey,
-                    fontSize: 19
-                  ),
+                const SizedBox(height: 60,),
+                Text(" Welcome to Brainlytic ",
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.displayLarge
                 ),
                 const SizedBox(height: 19,),
                 Padding(
@@ -104,12 +154,10 @@ class Onboarding extends ConsumerWidget {
                       //   )
                       // );
                     }, 
-                    child: const Text("Register",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22
-                      ),
+                    child:  Text("Register",
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Colors.white
+                      )
                     )
                   ),
                 )

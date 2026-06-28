@@ -1,29 +1,26 @@
-import 'dart:async';
 import 'package:flutter_riverpod/legacy.dart';
 
+final onboardingTextIndexProvider = StateNotifierProvider.autoDispose<OnboardingText, OnboardingTextState>((ref) => OnboardingText());
 
-final onboardingTextIndexProvider = StateNotifierProvider.autoDispose<OnboardingText,int>((ref)=> OnboardingText());
+class OnboardingTextState {
+  final int index;
+  final bool isDeleting;
+  const OnboardingTextState({required this.index, required this.isDeleting});
+}
 
+class OnboardingText extends StateNotifier<OnboardingTextState> {
+  final List<String> textChoices = ["Tease your brain", "Pump your brain", "Test out your knowledge"];
 
-class OnboardingText extends StateNotifier<int>{
-  final List<String> textChoices = ["Test out your knowledge", "Tease your brain", "Pump your brain"];
-  
-  Timer? _timer;
+  OnboardingText() : super(const OnboardingTextState(index: 0, isDeleting: false));
 
-  OnboardingText():super(0){
-    timer();
+  String get currentText => textChoices[state.index];
+
+  void startDeleting() {
+    state = OnboardingTextState(index: state.index, isDeleting: true);
   }
 
-  void timer() {
-    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
-      state = (state + 1) % textChoices.length;
-    });
+  void nextText() {
+    final nextIndex = (state.index + 1) % textChoices.length;
+    state = OnboardingTextState(index: nextIndex, isDeleting: false);
   }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
-  
 }
