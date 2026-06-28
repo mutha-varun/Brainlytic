@@ -1,6 +1,5 @@
+import 'package:brainlytic/features/onboarding/pages/onboarding.dart';
 import 'package:brainlytic/firebase_options.dart';
-import 'package:brainlytic/auth/onboarding.dart';
-import 'package:brainlytic/home/homescreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,16 +25,17 @@ class Brainlytic extends StatelessWidget {
     return MaterialApp(
       title: "Brainlytic",
       debugShowCheckedModeBanner: false,
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
+      // home: StreamBuilder(
+      //   stream: FirebaseAuth.instance.authStateChanges(),
+      //   builder: (context, snapshot) {
           
-          if(snapshot.data != null){
-            return HomeScreen();
-          }
-          return Onboarding();
-        },
-      )
+      //     if(snapshot.data != null){
+      //       return HomeScreen();
+      //     }
+      //     return Onboarding();
+      //   },
+      // )
+      home: const Onboarding(),
     );
   }
 }
