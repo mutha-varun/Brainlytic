@@ -1,3 +1,4 @@
+import 'package:brainlytic/core/theme/theme.dart';
 import 'package:brainlytic/features/onboarding/pages/initial_screen.dart';
 import 'package:brainlytic/features/onboarding/pages/onboarding.dart';
 import 'package:brainlytic/firebase_options.dart';
@@ -31,6 +32,7 @@ class Brainlytic extends StatelessWidget {
     return MaterialApp(
       title: "Brainlytic",
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.darkTheme,
       // home: StreamBuilder(
       //   stream: FirebaseAuth.instance.authStateChanges(),
       //   builder: (context, snapshot) {
@@ -41,7 +43,7 @@ class Brainlytic extends StatelessWidget {
       //     return Onboarding();
       //   },
       // )
-      home: const InitialScreen(),
+      home: const Onboarding(),
     );
   }
 }
