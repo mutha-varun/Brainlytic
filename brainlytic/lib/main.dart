@@ -1,9 +1,11 @@
+import 'package:brainlytic/features/onboarding/pages/initial_screen.dart';
 import 'package:brainlytic/features/onboarding/pages/onboarding.dart';
 import 'package:brainlytic/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 void main() async{
@@ -13,7 +15,11 @@ void main() async{
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await GoogleSignIn.instance.initialize();
   
-  runApp(const Brainlytic());
+  runApp(
+    ProviderScope(
+      child: const Brainlytic()
+    )
+  );
   
 }
 
@@ -35,7 +41,7 @@ class Brainlytic extends StatelessWidget {
       //     return Onboarding();
       //   },
       // )
-      home: const Onboarding(),
+      home: const InitialScreen(),
     );
   }
 }
