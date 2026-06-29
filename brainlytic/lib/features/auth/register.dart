@@ -126,6 +126,7 @@ class _RegisterState extends State<Register> {
                 padding: EdgeInsets.only(left: 16,right: 16, top: 5, bottom: 16),
                 width: 400,
                 child: TextField(
+                  autofocus: true,
                   controller: nameController,
                   decoration: InputDecoration(
                     label: Text("Name"),
