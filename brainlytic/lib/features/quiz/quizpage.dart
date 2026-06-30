@@ -1,9 +1,11 @@
+import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Quizpage extends StatefulWidget {
-  final int qid;
+  final String qid;
   const Quizpage({
     required this.qid,
     super.key
@@ -81,7 +83,7 @@ class _QuizpageState extends State<Quizpage> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    Navigator.of(context).pop(); // Go back to the previous screen
+                    context.goNamed(RouteConstants.home); // Go back to the home screen
                   },
                   child: const Text("OK",
                     style: TextStyle(

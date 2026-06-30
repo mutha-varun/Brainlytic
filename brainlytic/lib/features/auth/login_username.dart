@@ -1,10 +1,10 @@
+import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/features/auth/widgets/lineorline.dart';
-import 'package:brainlytic/features/auth/login_password.dart';
-import 'package:brainlytic/features/auth/register.dart';
 import 'package:brainlytic/features/auth/signingithub.dart';
 import 'package:brainlytic/features/auth/signingoogle.dart';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 
 class LoginUsername extends StatelessWidget {
@@ -91,15 +91,8 @@ class LoginUsername extends StatelessWidget {
                         );
                       }
                       else{
-                        Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context){
-                          return LoginPassword(
-                            email: emailController.text
-                          );
-                        }
-                      ));
+                        context.pushNamed(RouteConstants.loginPassword);
                       }
-                      
                     }, 
                     style: ButtonStyle(
                       backgroundColor: WidgetStatePropertyAll(Colors.black),
@@ -126,11 +119,7 @@ class LoginUsername extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) {
-                          return Register();
-                        }
-                      ));
+                      context.replaceNamed(RouteConstants.register);
                     }, 
                     child: Text("Sign up",
                       style: TextStyle(

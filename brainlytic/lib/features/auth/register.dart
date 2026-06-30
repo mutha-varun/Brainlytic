@@ -1,10 +1,11 @@
+import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/features/auth/widgets/lineorline.dart';
-import 'package:brainlytic/features/auth/login_username.dart';
 import 'package:brainlytic/features/auth/signingithub.dart';
 import 'package:brainlytic/features/auth/signingoogle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -281,9 +282,8 @@ class _RegisterState extends State<Register> {
                       bool isCreated = await createUser();
                       if(isCreated){
                         if(context.mounted){
-                          Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) => LoginUsername()));
-                       }
+                          context.replaceNamed(RouteConstants.loginUsername);
+                       }  
                       }
                     }
                   }, 
@@ -312,12 +312,7 @@ class _RegisterState extends State<Register> {
                   ),
                   TextButton(
                     onPressed: (){
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginUsername()
-                        )
-                      );
+                      context.pushNamed(RouteConstants.loginUsername);
                     }, 
                     child: Text("Log in",
                       style: TextStyle(

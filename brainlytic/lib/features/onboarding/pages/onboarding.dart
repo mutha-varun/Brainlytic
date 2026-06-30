@@ -1,8 +1,8 @@
-import 'package:brainlytic/features/auth/login_username.dart';
-import 'package:brainlytic/features/auth/register.dart';
+import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/features/onboarding/provider/onboarding_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 
 class Onboarding extends ConsumerStatefulWidget {
@@ -124,12 +124,7 @@ class _OnboardingState extends ConsumerState<Onboarding> with SingleTickerProvid
                     height: 50,
                     child: ElevatedButton(
                       onPressed: (){
-                        // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        //     builder: (context){
-                        //       return LoginUsername();
-                        //     }
-                        //   )
-                        // );
+                        context.pushNamed(RouteConstants.loginUsername);
                       }, 
                       child: const Text("Login",
                         style: TextStyle(
@@ -147,12 +142,7 @@ class _OnboardingState extends ConsumerState<Onboarding> with SingleTickerProvid
                   height: 50,
                   child: OutlinedButton(
                     onPressed: (){
-                      // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      //     builder: (context){
-                      //       return const Register();
-                      //     }
-                      //   )
-                      // );
+                      context.pushNamed(RouteConstants.register);
                     }, 
                     child:  Text("Register",
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
