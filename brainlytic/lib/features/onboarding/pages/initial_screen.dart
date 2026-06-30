@@ -32,7 +32,7 @@ class InitialScreen extends StatelessWidget {
               shape: StadiumBorder()
             ),
             onPressed: (){
-             context.goNamed(RouteConstants.onboarding);
+             context.pushNamed(RouteConstants.onboarding);
             }, 
             child: const Text("Next")
           ),

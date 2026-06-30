@@ -1,7 +1,8 @@
-import 'package:brainlytic/features/home/homescreen.dart';
+import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sign_button/constants.dart';
 import 'package:sign_button/create_button.dart';
 
@@ -71,11 +72,7 @@ class _SigninGitHubState extends State<SigninGitHub>{
               await createUserData(user);
             }
             if(context.mounted){
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => HomeScreen()
-                )
-              );
+              context.goNamed(RouteConstants.home);
             }
           }
         },

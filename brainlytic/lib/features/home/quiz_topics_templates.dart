@@ -1,8 +1,7 @@
-//import 'package:brainlytic/firebase_options.dart';
-import 'package:brainlytic/features/quiz/quizpage.dart';
+import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-//import "dart:io" show Platform;
 
 class QuizTopicsTemplates extends StatelessWidget {
   final Color color;
@@ -94,13 +93,11 @@ class QuizTopicsTemplates extends StatelessWidget {
                 backgroundColor: WidgetStatePropertyAll(Colors.white),
               ),
               onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) {
-                    return Quizpage(
-                      qid: id,
-                    );
-                  },
-                ));
+                context.pushNamed(RouteConstants.quizPage,
+                  pathParameters: {
+                    'quizId': id.toString()
+                  }
+                );
               }, 
               child: const Text("Start",
                 style: TextStyle(

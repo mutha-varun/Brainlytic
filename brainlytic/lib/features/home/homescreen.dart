@@ -1,8 +1,10 @@
+import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/features/onboarding/pages/onboarding.dart';
 import 'package:brainlytic/features/home/quiz_topics_templates.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -85,10 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     TextButton(
                       onPressed: () {
                         FirebaseAuth.instance.signOut();
-                        Navigator.pushAndRemoveUntil(context,
-                          MaterialPageRoute(builder: (context) =>  Onboarding()),
-                          (Route<dynamic> route)=> false
-                        );
+                        context.goNamed(RouteConstants.onboarding);
                       },
                       child: const Text("Logout",
                         style: TextStyle(

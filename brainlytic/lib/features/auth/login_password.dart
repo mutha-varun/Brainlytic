@@ -1,16 +1,16 @@
+import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/features/auth/widgets/lineorline.dart';
-import 'package:brainlytic/features/auth/register.dart';
 import 'package:brainlytic/features/auth/signingithub.dart';
 import 'package:brainlytic/features/auth/signingoogle.dart';
-import 'package:brainlytic/features/home/homescreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPassword extends StatefulWidget {
-  final String email;
+  //final String email;
   const LoginPassword({
     super.key,
-    required this.email
+    //required this.email
   });
 
   @override
@@ -18,6 +18,9 @@ class LoginPassword extends StatefulWidget {
 }
 
 class _LoginPasswordState extends State<LoginPassword> {
+
+  //temporary varible for email
+  var email = "muthavarun@gmail.com";
 
   bool showPasswordField = false;
   bool isVisible = false;
@@ -34,13 +37,11 @@ class _LoginPasswordState extends State<LoginPassword> {
   Future<void> loginUser() async {
     try{
       final userCredential =  await _firebaseAuth.signInWithEmailAndPassword(
-        email: widget.email, password: passwordController.text.trim()
+        email: email, //change this to widegt.email 
+        password: passwordController.text.trim()
       );
       if(mounted) {
-        Navigator.pushReplacement(context,
-          MaterialPageRoute(
-            builder: (context) => HomeScreen())
-        );
+        context.goNamed(RouteConstants.home);
       }
     } on FirebaseAuthException catch (e) {
       if(mounted){
@@ -104,7 +105,7 @@ class _LoginPasswordState extends State<LoginPassword> {
                         {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text("Password is required",
+                              content: Text("Email is required",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 18
@@ -233,7 +234,7 @@ class _LoginPasswordState extends State<LoginPassword> {
                     child: TextField(
                       enabled: false,
                       decoration: InputDecoration(
-                        label: Text(widget.email,
+                        label: Text(email, //change this to widget.emil
                           style: TextStyle(
                             fontSize: 19
                           )
@@ -261,7 +262,7 @@ class _LoginPasswordState extends State<LoginPassword> {
                     margin: EdgeInsets.only(bottom: 16),
                     child: IconButton(
                       onPressed: (){
-                        Navigator.pop(context);
+                        context.pushNamed(RouteConstants.loginUsername);
                       }, 
                       icon: Icon(Icons.edit,
                         size: 27,
@@ -377,12 +378,7 @@ class _LoginPasswordState extends State<LoginPassword> {
                   ),
                   TextButton(
                     onPressed: (){
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Register()
-                        )
-                      );
+                      context.pushNamed(RouteConstants.register);
                     }, 
                     child: Text("Sign up",
                       style: TextStyle(
