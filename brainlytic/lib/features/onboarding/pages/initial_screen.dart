@@ -12,31 +12,31 @@ class InitialScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Spacer(flex: 2,),
+          const Spacer(flex: 5,),
           Image.asset("assets/initial_screen.png",
             width: width,
             height: 180,
+            alignment: AlignmentGeometry.center,
           ),
           const Spacer(),
           Text("Give it a jolt!",
-            style: Theme.of(context).textTheme.displayLarge
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.displayMedium
           ),
-          const Spacer(),
+          const Spacer(flex: 2,),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              minimumSize: Size(width-30, 55),
-              textStyle: const TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.w500
-              ),
-              shape: StadiumBorder()
+              minimumSize: Size(width-45, 57),
+              textStyle: Theme.of(context).textTheme.titleLarge,
+              shape: StadiumBorder(),
+              alignment: Alignment.center
             ),
             onPressed: (){
              context.pushNamed(RouteConstants.onboarding);
             }, 
             child: const Text("Next")
           ),
-          const Spacer(flex: 2,)
+          const Spacer(flex: 4,)
         ],
       ),
     );
