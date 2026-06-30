@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   actions: [
                     TextButton(
-                      onPressed: () => context.goNamed(RouteConstants.initialScreen),
+                      onPressed: () => Navigator.pop(context),
                       child: const Text("No",
                         style: TextStyle(
                           color: Colors.blue,
