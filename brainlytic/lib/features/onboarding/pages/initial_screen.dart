@@ -21,16 +21,10 @@ class InitialScreen extends StatelessWidget {
           const Spacer(),
           Text("Give it a jolt!",
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.displayMedium
+            style: Theme.of(context).textTheme.displaySmall
           ),
           const Spacer(flex: 2,),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(width-45, 57),
-              textStyle: Theme.of(context).textTheme.titleLarge,
-              shape: StadiumBorder(),
-              alignment: Alignment.center
-            ),
             onPressed: (){
              context.pushNamed(RouteConstants.onboarding);
             }, 

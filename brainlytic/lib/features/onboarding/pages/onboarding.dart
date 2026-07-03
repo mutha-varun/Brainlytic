@@ -1,4 +1,5 @@
 import 'package:brainlytic/core/router/route_constants.dart';
+import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/onboarding/provider/onboarding_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -71,6 +72,8 @@ class _OnboardingState extends ConsumerState<Onboarding> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
 
+    final size = MediaQuery.of(context).size;
+
     final providerState = ref.watch(onboardingTextIndexProvider);
     final notifier = ref.read(onboardingTextIndexProvider.notifier);
     final text = notifier.textChoices[providerState.index];
@@ -96,61 +99,41 @@ class _OnboardingState extends ConsumerState<Onboarding> with SingleTickerProvid
                 text.substring(0, count),
                 textAlign: TextAlign.center,
                 softWrap: true,
-                style: Theme.of(context).textTheme.displayLarge,
+                style: Theme.of(context).textTheme.headlineLarge,
               );
             },
           ),
           const Spacer(),
           Container(
-            decoration: const BoxDecoration(
-              color: Colors.black,
+            decoration: BoxDecoration(
+              color: Pallete.blackColor,
               borderRadius: BorderRadius.only(topLeft:Radius.circular(50) ,topRight:Radius.circular(50))
             ),
             width: double.infinity,
-            height: 400,
+            height: 370,
             child: Column(
               children: [
-                const SizedBox(height: 60,),
-                Text(" Welcome to Brainlytic ",
+                const Spacer(flex: 2,),
+                Text("Welcome to Brainlytic",
                   softWrap: true,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.displayLarge
+                  style: Theme.of(context).textTheme.headlineSmall
                 ),
-                const SizedBox(height: 19,),
-                Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: SizedBox(
-                    width: 310,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: (){
-                        context.pushNamed(RouteConstants.loginUsername);
-                      }, 
-                      child: const Text("Login",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22
-                        ),
-                      )
-                    ),
-                  ),
+                const Spacer(),
+                ElevatedButton(
+                  onPressed: (){
+                    context.pushNamed(RouteConstants.loginUsername);
+                  }, 
+                  child: const Text("Login")
                 ),
-                const SizedBox(height: 10,),
-                SizedBox(
-                  width: 310,
-                  height: 50,
-                  child: OutlinedButton(
-                    onPressed: (){
-                      context.pushNamed(RouteConstants.register);
-                    }, 
-                    child:  Text("Register",
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Colors.white
-                      )
-                    )
-                  ),
-                )
+                const SizedBox(height: 20,),
+                OutlinedButton(
+                  onPressed: (){
+                    context.pushNamed(RouteConstants.register);
+                  }, 
+                  child:  Text("Register",)
+                ),
+                const Spacer(flex: 2,)
               ],
             ),
           ),
