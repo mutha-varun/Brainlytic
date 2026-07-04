@@ -1,4 +1,5 @@
 import 'package:brainlytic/core/router/route_constants.dart';
+import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/auth/widgets/lineorline.dart';
 import 'package:brainlytic/features/auth/signingithub.dart';
 import 'package:brainlytic/features/auth/signingoogle.dart';
@@ -102,112 +103,49 @@ class _RegisterState extends State<Register> {
         physics: const NeverScrollableScrollPhysics(),
         child: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 20,),
-              Padding(
-                padding: const EdgeInsets.only(left:8.0, right:8, bottom:4),
-                child: const Text("Brainlytic",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25
-                  ),
-                ),
+              SizedBox(height: 25,),
+              Text("Brainlytic",
+                style: Theme.of(context).textTheme.titleLarge
               ),
-              Padding(
-                padding: const EdgeInsets.all(19),
-                child: const Text("Create an account",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 36
-                  ),
-                ),
+              const SizedBox(height: 30,),
+              Text("Create an account",
+                style: Theme.of(context).textTheme.headlineLarge
               ),
+              const SizedBox(height: 10,),
               Container(
-                padding: EdgeInsets.only(left: 16,right: 16, top: 5, bottom: 16),
-                width: 400,
+                margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 10),
+                width: 360,
+                height: 60,
                 child: TextField(
                   controller: nameController,
                   decoration: InputDecoration(
                     label: Text("Name"),
-                    labelStyle: TextStyle(
-                      fontSize: 19,
-                      color: Colors.grey.shade600
-                    ),
-                    floatingLabelStyle: TextStyle(
-                      fontSize: 19,
-                      color: Colors.indigoAccent.shade400
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
-                        style: BorderStyle.solid,
-                        width: 1.5
-                      ),
-                      borderRadius: BorderRadius.circular(50)
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(
-                        color: Colors.indigoAccent.shade400,
-                        width: 1.5
-                      )
-                    ),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto
                   ),
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(left: 16,right: 16, top: 5, bottom: 16),
-                width: 400,
+                margin: const EdgeInsets.only(left: 16,right: 16, top: 10, bottom: 10),
+                width: 360,
+                height: 60,
                 child: TextField(
                   controller: emailController,
                   decoration: InputDecoration(
                     label: Text("Email"),
-                    labelStyle: TextStyle(
-                      fontSize: 19,
-                      color: Colors.grey.shade600
-                    ),
-                    floatingLabelStyle: TextStyle(
-                      fontSize: 19,
-                      color: Colors.indigoAccent.shade400
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
-                        style: BorderStyle.solid,
-                        width: 1.5
-                      ),
-                      borderRadius: BorderRadius.circular(50)
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(
-                        color: Colors.indigoAccent.shade400,
-                        width: 1.5
-                      )
-                    ),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto
                   ),
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(left: 16,right: 16, top: 5, bottom: 16),
-                width: 400,
+                margin: const EdgeInsets.only(left: 16,right: 16, top: 10, bottom: 16),
+                width: 360,
+                height: 60,
                 child: TextField(
                   obscureText: isVisible,
                   controller: passwordController,
                   decoration: InputDecoration(
                     label: Text("Password"),
-                    labelStyle: TextStyle(
-                      fontSize: 19,
-                      color: Colors.grey.shade600
-                    ),
-                    floatingLabelStyle: TextStyle(
-                      fontSize: 19,
-                      color: Colors.indigoAccent.shade400
-                    ),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
                     suffixIcon: IconButton(
                       onPressed: (){
                         setState(() {
@@ -218,86 +156,58 @@ class _RegisterState extends State<Register> {
                         size: 30,
                       )
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
-                        style: BorderStyle.solid,
-                        width: 1.5
-                      ),
-                      borderRadius: BorderRadius.circular(50)
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(
-                        color: Colors.indigoAccent.shade400,
-                        width: 1.5
-                      )
-                    )
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.only(left: 16,right: 16, top: 16, bottom: 4),
-                width: 335,
-                height: 77,
-                child: ElevatedButton(
-                  onPressed: ()async{
-                    if(nameController.text.isEmpty){
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Name cannot be empty",
+              const SizedBox(height: 15,),
+              ElevatedButton(
+                onPressed: ()async{
+                  if(nameController.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Name cannot be empty",
+                        textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18
+                          ),
+                        )
+                      )
+                    );
+                  }
+                  else if(emailController.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("E-mail cannot be empty",
+                        textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18
+                          ),
+                        )
+                      )
+                    );
+                  }
+                  else if(passwordController.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Password is required",
                           textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18
-                            ),
-                          )
+                          style: TextStyle(
+                            fontSize: 18
+                          ),
                         )
-                      );
+                      )
+                    );
+                  }
+                  else{
+                    bool isCreated = await createUser();
+                    if(isCreated){
+                      if(context.mounted){
+                        context.replaceNamed(RouteConstants.loginUsername);
+                     }  
                     }
-                    else if(emailController.text.isEmpty){
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("E-mail cannot be empty",
-                          textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18
-                            ),
-                          )
-                        )
-                      );
-                    }
-                    else if(passwordController.text.isEmpty){
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Password is required",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18
-                            ),
-                          )
-                        )
-                      );
-                    }
-                    else{
-                      bool isCreated = await createUser();
-                      if(isCreated){
-                        if(context.mounted){
-                          context.replaceNamed(RouteConstants.loginUsername);
-                       }  
-                      }
-                    }
-                  }, 
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(Colors.black),
-                    elevation: WidgetStatePropertyAll(4)
-                  ),
-                  child: Text("Continue",
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.white
-                    ),
-                  )
-                ),
+                  }
+                }, 
+                child: Text("Continue",)
               ),
               const Lineorline(),
               const SigninGoogle(),
@@ -306,21 +216,20 @@ class _RegisterState extends State<Register> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Already have an account?",
-                    style: TextStyle(
-                      fontSize: 17
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      letterSpacing: -0.2
+                    )
                   ),
                   TextButton(
                     onPressed: (){
                       context.pushNamed(RouteConstants.loginUsername);
                     }, 
                     child: Text("Log in",
-                      style: TextStyle(
-                        color: Color.fromRGBO(102, 110, 169, 1),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Pallete.indigo700Color,
                         decoration: TextDecoration.underline,
-                        decorationColor: Color.fromRGBO(102, 110, 169, 1),
-                        fontSize: 17
-                      ),
+                        letterSpacing: -0.2
+                      )
                     )
                   )
                 ],
