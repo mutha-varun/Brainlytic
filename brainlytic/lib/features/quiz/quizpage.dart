@@ -1,4 +1,5 @@
 import 'package:brainlytic/core/router/route_constants.dart';
+import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -28,17 +29,17 @@ class _QuizpageState extends State<Quizpage> {
 
   Color getButtonColor(int index) {
     if (!_isAnswered) {
-      return Colors.black;
+      return Pallete.blackColor;
     }
     if(index == _answerIndex) {
-      return Colors.green;
+      return Pallete.correctAnsColor;
     }
 
     if(index == _selectedAnswer){
-      return  Colors.red;
+      return Pallete.wrongAnsColor;
     }
     
-    return Colors.black;
+    return Pallete.blackColor;
 
   }
 
@@ -64,20 +65,14 @@ class _QuizpageState extends State<Quizpage> {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              title: const Text("Quiz Completed",
+              title: Text("Quiz Completed",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green
-                ),
+                style: Theme.of(context).textTheme.headlineMedium
               ),
               content: Text("Your score is $_score out of $_totalQuestions",
                 softWrap: true,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 23,
-                ),
+                style: Theme.of(context).textTheme.titleSmall
               ),
               actions: [
                 TextButton(
@@ -85,11 +80,10 @@ class _QuizpageState extends State<Quizpage> {
                     Navigator.of(context).pop();
                     context.goNamed(RouteConstants.home); // Go back to the home screen
                   },
-                  child: const Text("OK",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
+                  child: Text("OK",
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Pallete.indigo700Color
+                    )
                   )
                 )
               ],
@@ -123,16 +117,10 @@ class _QuizpageState extends State<Quizpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
         title: Text("Question ${_currentQuestionIndex + 1}",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: Theme.of(context).textTheme.headlineMedium
         ),
-        backgroundColor: Colors.grey.shade800,
         centerTitle: true,
         toolbarHeight: 70,
       ),
@@ -169,10 +157,7 @@ class _QuizpageState extends State<Quizpage> {
                 child: Text(snapshot.data!.docs[_currentQuestionIndex].data()['question'],
                   textAlign: TextAlign.center,
                   softWrap: true,
-                  style: TextStyle(
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.headlineLarge,
                 ),
               ),
               Expanded(
@@ -183,11 +168,8 @@ class _QuizpageState extends State<Quizpage> {
                       margin: const EdgeInsets.only(top: 17, bottom: 17, left: 20, right: 20),
                       height: 85,
                       child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: getButtonColor(index),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(45),
-                          ),
+                        style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
+                          backgroundColor: WidgetStatePropertyAll(getButtonColor(index))
                         ),
                         onPressed: (){
                           _checkAnswer(index);
@@ -196,10 +178,7 @@ class _QuizpageState extends State<Quizpage> {
                           snapshot.data!.docs[_currentQuestionIndex].data()['options'][index],
                           softWrap: true,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.white,
-                          ),
+                          style: Theme.of(context).textTheme.headlineSmall
                         ),
                       ),
                     );
