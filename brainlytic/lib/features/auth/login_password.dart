@@ -1,4 +1,5 @@
 import 'package:brainlytic/core/router/route_constants.dart';
+import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/auth/widgets/lineorline.dart';
 import 'package:brainlytic/features/auth/signingithub.dart';
 import 'package:brainlytic/features/auth/signingoogle.dart';
@@ -24,13 +25,16 @@ class _LoginPasswordState extends State<LoginPassword> {
 
   bool showPasswordField = false;
   bool isVisible = false;
+  late final TextEditingController emailController;
   final passwordController = TextEditingController();
   final recoveryEmail = TextEditingController();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final _focusNode = FocusNode();
   
   @override
   void initState() {
     isVisible = true;
+    emailController = TextEditingController(text: email);
     super.initState();
   } 
 
@@ -55,45 +59,26 @@ class _LoginPasswordState extends State<LoginPassword> {
           )
         );
       }
-      
     }
   }
-
 
   Future<void> resetPasswordDialog() async{
     await showDialog<void>(context: context, 
       builder: (BuildContext context){
         return AlertDialog(
-          contentPadding: EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 0),
+          backgroundColor: Pallete.scaffoldColor,
+          contentPadding: const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 0),
           content: SizedBox(
+            width: 360,
             height: 140,
-            width: 270,
             child: Column(
               children: [
                 TextField(
                   decoration: InputDecoration(
-                    label: Text("Email",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.indigoAccent.shade400,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                      borderSide: BorderSide(
-                        width: 2,
-                        color: Colors.indigoAccent.shade400,
-                      )
-                    ),
-                    floatingLabelStyle: TextStyle(
-                      fontSize: 19,
-                      color: Colors.indigoAccent.shade400
-                    ),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    label: Text("Email",),
                   ),
                   autofocus: true, 
                   controller: recoveryEmail, 
-                  obscureText: false,
                 ),
                 SizedBox(height: 22,),
                 Row(
@@ -208,92 +193,53 @@ class _LoginPasswordState extends State<LoginPassword> {
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 27,),
+              const SizedBox(height: 25,),
               Text("Brainlytic",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.titleLarge
               ),
+              const SizedBox(height: 30,),
+              Text("Enter password",
+                style: Theme.of(context).textTheme.headlineLarge
+              ),
+              const SizedBox(height: 10,),
               Container(
-                margin: EdgeInsets.only(top: 27, bottom: 5),
-                padding: EdgeInsets.only(top: 7, bottom: 7),
-                child: Text("Enter your password",
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.w600
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(left: 16, top: 5, bottom: 16),
-                    width: 350,
-                    child: TextField(
-                      enabled: false,
-                      decoration: InputDecoration(
-                        label: Text(email, //change this to widget.emil
-                          style: TextStyle(
-                            fontSize: 19
-                          )
-                        ),
-                        labelStyle: TextStyle(
-                          fontSize: 19,
-                          color: Colors.grey.shade600
-                        ),
-                        floatingLabelStyle: TextStyle(
-                          fontSize: 19,
-                          color: Colors.indigoAccent.shade400
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey.shade400,
-                            style: BorderStyle.solid,
-                            width: 1.5
-                          ),
-                          borderRadius: BorderRadius.circular(50)
-                        ),
-                      ),
+                margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 16),
+                width: 360,
+                height: 60,
+                child: TextField(
+                  readOnly: true,
+                  focusNode: _focusNode,
+                  onTap: () => _focusNode.unfocus(),
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                    floatingLabelStyle: TextStyle(
+                      color: Pallete.enabledBorderColor
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 16),
-                    child: IconButton(
-                      onPressed: (){
-                        context.pushNamed(RouteConstants.loginUsername);
-                      }, 
+                    suffixIcon: IconButton(
+                      onPressed: ()=> context.replaceNamed(RouteConstants.loginUsername,
+                        queryParameters: {"text": email}
+                      ), 
                       icon: Icon(Icons.edit,
-                        size: 27,
+                        size: 25,
                       )
-                    ),
-                  )
-                ],
+                    )
+                  ),
+                  style: Theme.of(context).textTheme.bodyLarge
+                ),
               ),
               Container(
-                padding: EdgeInsets.only(left: 16,right: 16, top: 10, bottom: 10),
-                width: 400,
+                margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 10),
+                width: 360,
+                height: 60,
                 child: TextField(
                   controller: passwordController,
                   obscureText: isVisible,
                   autofocus: true,
                   decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        style: BorderStyle.solid
-                      ),
-                      borderRadius: BorderRadius.circular(50)
-                    ),
                     labelText: "Password",
-                    labelStyle: TextStyle(
-                      fontSize: 20
-                    ),
-                    floatingLabelStyle: TextStyle(
-                      fontSize: 19,
-                      color: Colors.indigoAccent.shade400
-                    ),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
                     suffixIcon: IconButton(
                       onPressed: (){
                         setState(() {
@@ -304,89 +250,66 @@ class _LoginPasswordState extends State<LoginPassword> {
                         size: 30,
                       )
                     ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide(
-                          color: Colors.indigoAccent.shade400,
-                          width: 1.5
-                      )
-                    ),
                   ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 )
               ),
               Container(
                 alignment: Alignment.centerRight,
-                margin: EdgeInsets.only(right: 12, bottom: 10),
+                margin: const EdgeInsets.only(right: 12, bottom: 6),
                 child: TextButton(
                   onPressed: () async{
                     await resetPasswordDialog();
                   }, 
                   child: Text("Forgot Password?",
-                    style: TextStyle(
-                      color: Colors.indigoAccent.shade700,
-                      fontSize: 17
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Pallete.indigo700Color
+                    )
                   )
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8, top:6),
-                child: SizedBox(
-                  width: 340,
-                  height: 60,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if(passwordController.text.isEmpty){
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Password is required",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 18
-                              ),
-                            )
-                          )
-                        );
-                      }
-                      else{
-                        await loginUser();
-                      }
-                      
-                    }, 
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(Colors.black),
-                    ),
-                    child: Text("Continue",
-                      style: TextStyle(
-                        fontSize: 21.3,
-                        color: Colors.white
-                      ),
-                    )
-                  ),
-                ),
+              ElevatedButton(
+                onPressed: () async {
+                  if(passwordController.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Password is required",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18
+                          ),
+                        )
+                      )
+                    );
+                  }
+                  else{
+                    await loginUser();
+                  }
+                }, 
+                child: Text("Continue")
               ),
-              Lineorline(),
-              SigninGoogle(),
-              SigninGitHub(),
+              const Lineorline(),
+              const SigninGoogle(),
+              const SigninGitHub(),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Don't have an account?",
-                    style: TextStyle(
-                      fontSize: 17
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      letterSpacing: -0.2
+                    )
                   ),
                   TextButton(
                     onPressed: (){
-                      context.pushNamed(RouteConstants.register);
+                      context.replaceNamed(RouteConstants.register);
                     }, 
                     child: Text("Sign up",
-                      style: TextStyle(
-                        color: Color.fromRGBO(102, 110, 169, 1),
-                        decoration: TextDecoration.underline,
-                        decorationColor: Color.fromRGBO(102, 110, 169, 1),
-                        fontSize: 17
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        letterSpacing: -0.2,
+                        color: Pallete.indigo700Color,
+                        decoration: TextDecoration.underline
+                      )
                     )
                   )
                 ],
