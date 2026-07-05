@@ -1,9 +1,9 @@
 import 'package:brainlytic/core/router/route_constants.dart';
-import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/auth/widgets/appname.dart';
 import 'package:brainlytic/features/auth/widgets/lineorline.dart';
 import 'package:brainlytic/features/auth/signingithub.dart';
 import 'package:brainlytic/features/auth/signingoogle.dart';
+import 'package:brainlytic/features/auth/widgets/questiontext.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -210,28 +210,11 @@ class _RegisterState extends State<Register> {
               const SizedBox(height: 20,),
               const SigninGitHub(),
               const SizedBox(height: 15,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Already have an account?",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      letterSpacing: -0.2
-                    )
-                  ),
-                  TextButton(
-                    onPressed: (){
-                      context.pushNamed(RouteConstants.loginUsername);
-                    }, 
-                    child: Text("Log in",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Pallete.indigo700Color,
-                        decoration: TextDecoration.underline,
-                        letterSpacing: -0.2
-                      )
-                    )
-                  )
-                ],
-              ) 
+              Questiontext(
+                text: "Already have an account?", 
+                buttonText: "Log in", 
+                onTap: ()=> context.pushNamed(RouteConstants.loginUsername)
+              )
             ],
           ),
         ),
