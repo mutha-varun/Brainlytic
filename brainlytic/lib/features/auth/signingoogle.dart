@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'package:brainlytic/features/home/homescreen.dart';
+import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_button/sign_button.dart';
 
@@ -77,30 +78,23 @@ class _SigninGoogleState extends State<SigninGoogle> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      height: 60,
-        child: SignInButton(
-          buttonType: ButtonType.google, 
-          onPressed: () async {
-          final user = await singinWithGoogle();
-          if(user != null){
-            if(user.additionalUserInfo?.isNewUser ?? false){
-              await createUserData(user);
-            }
-            if(context.mounted){
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => HomeScreen()
-                )
-              );
-            }
+    return ElevatedButton.icon(
+      onPressed: () async {
+        final user = await singinWithGoogle();
+        if(user != null){
+          if(user.additionalUserInfo?.isNewUser ?? false){
+            await createUserData(user);
           }
-          },
-          btnText: "Continue with Google",
-          width: MediaQuery.of(context).size.width,
-          buttonSize: ButtonSize.large,
-        ),
+          if(context.mounted){
+            context.goNamed(RouteConstants.home);
+          }
+        }
+      }, 
+      icon:Image.asset("assets/google.png",
+        width: 35,
+      ),
+      iconAlignment: IconAlignment.start,
+      label: const Text("Continue with Google")
     );
   }
 }

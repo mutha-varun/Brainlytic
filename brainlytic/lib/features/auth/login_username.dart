@@ -1,15 +1,28 @@
+import 'package:brainlytic/core/router/route_constants.dart';
+import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/auth/widgets/lineorline.dart';
-import 'package:brainlytic/features/auth/login_password.dart';
-import 'package:brainlytic/features/auth/register.dart';
 import 'package:brainlytic/features/auth/signingithub.dart';
 import 'package:brainlytic/features/auth/signingoogle.dart';
-
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 
-class LoginUsername extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  LoginUsername({super.key});
+class LoginUsername extends StatefulWidget {
+  final String? text;
+  const LoginUsername({this.text = "", super.key});
+
+  @override
+  State<LoginUsername> createState() => _LoginUsernameState();
+}
+
+class _LoginUsernameState extends State<LoginUsername> {
+  late final TextEditingController emailController;
+
+  @override
+  void initState() {
+    emailController = TextEditingController(text: widget.text);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,127 +31,76 @@ class LoginUsername extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         child: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 25,),
-              const Text("Brainlytic",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                )
+              Text("Brainlytic",
+                style: Theme.of(context).textTheme.titleLarge
               ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 25),
-                padding: EdgeInsets.symmetric(vertical: 3),
-                child: Text("Welcome Back!",
-                  style: TextStyle(
-                    fontSize: 45,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              const SizedBox(height: 30,),
+              Text("Welcome Back!",
+                style: Theme.of(context).textTheme.headlineLarge
               ),
+              const SizedBox(height: 10,),
               Container(
-                padding: EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 16),
-                width: 400,
+                margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 16),
+                width: 360,
+                height: 60,
                 child: TextField(
                   controller: emailController,
                   autofocus: true,
                   decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
-                        style: BorderStyle.solid,
-                        width: 1.5
-                      ),
-                      borderRadius: BorderRadius.circular(50)
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(
-                        color: Colors.indigoAccent.shade400,
-                        width: 1.5
-                      )
-                    ),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
                     labelText: "Email",
-                    labelStyle: TextStyle(
-                      fontSize: 20
-                    ),
-                    enabled: true,
                   ),
-                  style: TextStyle(
-                    fontSize: 19
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: SizedBox(
-                  width: 340,
-                  height: 60,
-                  child: ElevatedButton(
-                    onPressed: () async{
-                      if(emailController.text.isEmpty){
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("E-mail cannot be empty",
-                            textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 18
-                              ),
-                            )
-                          )
-                        );
-                      }
-                      else{
-                        Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context){
-                          return LoginPassword(
-                            email: emailController.text
-                          );
-                        }
-                      ));
-                      }
-                      
-                    }, 
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(Colors.black),
-                    ),
-                    child: Text("Continue",
-                      style: TextStyle(
-                        fontSize: 21.3,
-                        color: Colors.white
-                      ),
-                    )
-                  ),
-                ),
+              const SizedBox(height: 15,),
+              ElevatedButton(
+                onPressed: () async{
+                  if(emailController.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("E-mail cannot be empty",
+                        textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18
+                          ),
+                        )
+                      )
+                    );
+                  }
+                  else{
+                    context.pushNamed(RouteConstants.loginPassword);
+                  }
+                }, 
+                child: Text("Continue",)
               ),
               const Lineorline(),
+              const SizedBox(height: 20,),
               const SigninGoogle(),
+              const SizedBox(height: 20,),
               const SigninGitHub(),
+              const SizedBox(height: 15,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Don't have an account?",
-                    style: TextStyle(
-                      fontSize: 17
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      letterSpacing: -0.2
+                    )
                   ),
                   TextButton(
                     onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) {
-                          return Register();
-                        }
-                      ));
+                      context.replaceNamed(RouteConstants.register);
                     }, 
                     child: Text("Sign up",
-                      style: TextStyle(
-                        color: Color.fromRGBO(102, 110, 169, 1),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Pallete.indigo700Color,
                         decoration: TextDecoration.underline,
-                        decorationColor: Color.fromRGBO(102, 110, 169, 1),
-                        fontSize: 17
-                      ),
+                        letterSpacing: -0.2
+                      )
                     )
                   )
                 ],

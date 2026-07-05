@@ -1,8 +1,10 @@
-import 'package:brainlytic/features/onboarding/pages/onboarding.dart';
+import 'package:brainlytic/core/router/route_constants.dart';
+import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/home/quiz_topics_templates.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -48,53 +50,45 @@ class _HomeScreenState extends State<HomeScreen> {
               Icon(Icons.home,
                 size: 30,
               ),
-              Text("Hey! $name"),
+              Text("Hey! $name",
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
             ],
           ),
         ),
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.black,
         actions: [
           IconButton(
             padding: EdgeInsets.only(right: 20),
-            icon: const Icon(Icons.logout, color: Colors.black),
+            icon: const Icon(Icons.logout),
             onPressed: () {
               showDialog(context: context, builder: (context) {
                 return AlertDialog(
-                  title: const Text("Logout",
+                  title: Text("Logout",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge
                   ),
-                  content: const Text("Are you sure you want to logout?",
-                    style: TextStyle(fontSize: 18),
+                  content: Text("Are you sure you want to logout?",
+                    style: Theme.of(context).textTheme.bodyLarge
                   ),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text("No",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 20,
-                        ),
+                      child: Text("No",
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          color: Colors.blue
+                        )
                       ),
                     ),
                     TextButton(
                       onPressed: () {
                         FirebaseAuth.instance.signOut();
-                        Navigator.pushAndRemoveUntil(context,
-                          MaterialPageRoute(builder: (context) =>  Onboarding()),
-                          (Route<dynamic> route)=> false
-                        );
+                        context.goNamed(RouteConstants.onboarding);
                       },
-                      child: const Text("Logout",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 20,
-                        ),
+                      child:  Text("Logout",
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          color: Colors.red
+                        )
                       ),
                     ),
                   ],
@@ -119,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       alignment: Alignment.center,
                       child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                        valueColor: AlwaysStoppedAnimation<Color>(Pallete.blackColor),
                       ),
                     );
                   }

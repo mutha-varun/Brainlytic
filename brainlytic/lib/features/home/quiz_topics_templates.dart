@@ -1,8 +1,7 @@
-//import 'package:brainlytic/firebase_options.dart';
-import 'package:brainlytic/features/quiz/quizpage.dart';
+import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-//import "dart:io" show Platform;
 
 class QuizTopicsTemplates extends StatelessWidget {
   final Color color;
@@ -22,8 +21,6 @@ class QuizTopicsTemplates extends StatelessWidget {
     }
   );
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,16 +37,8 @@ class QuizTopicsTemplates extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-              color: color.withValues(alpha: 2),
-            ),
             child: Text(title,
-              style: const TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.black54,
-              ),
+              style: Theme.of(context).textTheme.titleLarge
             ),
           ),
           const SizedBox(height: 15),
@@ -61,11 +50,9 @@ class QuizTopicsTemplates extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text("$stars/$totalQuestions",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  letterSpacing: 1
+                )
               ),
             ],
           ),
@@ -80,34 +67,15 @@ class QuizTopicsTemplates extends StatelessWidget {
           ),
           const SizedBox(height: 35),
           Center(
-            child: TextButton(
-              style: ButtonStyle(
-                shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: const BorderSide(
-                    style: BorderStyle.solid,
-                    color: Colors.black,
-                    width: 2
-                  ),
-                )),
-                fixedSize: WidgetStatePropertyAll(const Size(200, 50)),
-                backgroundColor: WidgetStatePropertyAll(Colors.white),
-              ),
+            child: ElevatedButton(
               onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) {
-                    return Quizpage(
-                      qid: id,
-                    );
-                  },
-                ));
+                context.pushNamed(RouteConstants.quizPage,
+                  pathParameters: {
+                    'quizId': id.toString()
+                  }
+                );
               }, 
-              child: const Text("Start",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                ),
-              )
+              child: const Text("Start",)
             ),
           )
         ],
