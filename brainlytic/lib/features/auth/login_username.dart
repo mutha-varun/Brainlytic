@@ -1,6 +1,7 @@
 import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/auth/widgets/appname.dart';
+import 'package:brainlytic/features/auth/widgets/button.dart';
 import 'package:brainlytic/features/auth/widgets/lineorline.dart';
 import 'package:brainlytic/features/auth/signingithub.dart';
 import 'package:brainlytic/features/auth/signingoogle.dart';
@@ -50,8 +51,8 @@ class _LoginUsernameState extends State<LoginUsername> {
                 ),
               ),
               const SizedBox(height: 15,),
-              ElevatedButton(
-                onPressed: () async{
+              Button(
+                onTap: () async{
                   if(emailController.text.isEmpty){
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -67,8 +68,7 @@ class _LoginUsernameState extends State<LoginUsername> {
                   else{
                     context.pushNamed(RouteConstants.loginPassword);
                   }
-                }, 
-                child: Text("Continue",)
+                }
               ),
               const Lineorline(),
               const SizedBox(height: 20,),
