@@ -78,26 +78,23 @@ class _SigninGoogleState extends State<SigninGoogle> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      height: 60,
-        child: SignInButton(
-          buttonType: ButtonType.google, 
-          onPressed: () async {
-          final user = await singinWithGoogle();
-          if(user != null){
-            if(user.additionalUserInfo?.isNewUser ?? false){
-              await createUserData(user);
-            }
-            if(context.mounted){
-              context.goNamed(RouteConstants.home);
-            }
+    return ElevatedButton.icon(
+      onPressed: () async {
+        final user = await singinWithGoogle();
+        if(user != null){
+          if(user.additionalUserInfo?.isNewUser ?? false){
+            await createUserData(user);
           }
-          },
-          btnText: "Continue with Google",
-          width: MediaQuery.of(context).size.width,
-          buttonSize: ButtonSize.large,
-        ),
+          if(context.mounted){
+            context.goNamed(RouteConstants.home);
+          }
+        }
+      }, 
+      icon:Image.asset("assets/google.png",
+        width: 35,
+      ),
+      iconAlignment: IconAlignment.start,
+      label: const Text("Continue with Google")
     );
   }
 }
