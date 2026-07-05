@@ -3,8 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sign_button/constants.dart';
-import 'package:sign_button/create_button.dart';
 
 
 class SigninGitHub extends StatefulWidget {
@@ -60,13 +58,9 @@ class _SigninGitHubState extends State<SigninGitHub>{
   }
   @override
   Widget build(BuildContext context){
-    return Container(
-      margin: EdgeInsets.only(left: 20,right: 20, top:10,bottom: 10),
-      height: 60,
-      child: SignInButton(
-        buttonType: ButtonType.github,
-        onPressed: () async{
-          final user = await signinGitHub();
+    return ElevatedButton.icon(
+      onPressed: () async {
+        final user = await signinGitHub();
           if(user != null){
             if(user.additionalUserInfo?.isNewUser ?? false){
               await createUserData(user);
@@ -75,13 +69,13 @@ class _SigninGitHubState extends State<SigninGitHub>{
               context.goNamed(RouteConstants.home);
             }
           }
-        },
-        width: MediaQuery.of(context).size.width,
-        btnText: "Continue with GitHub",
-        buttonSize: ButtonSize.large,
-        btnColor: Color.fromRGBO(250, 250, 250, 1),
-        elevation: 3,
+      },
+      icon: Image.asset(
+        "assets/github.png",
+        width: 35,
       ),
+      iconAlignment: IconAlignment.start,
+      label: const Text("Continue with Github"),
     );
   }
 }
