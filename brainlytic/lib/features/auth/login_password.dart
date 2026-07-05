@@ -1,5 +1,6 @@
 import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/core/theme/pallete.dart';
+import 'package:brainlytic/features/auth/widgets/appname.dart';
 import 'package:brainlytic/features/auth/widgets/lineorline.dart';
 import 'package:brainlytic/features/auth/signingithub.dart';
 import 'package:brainlytic/features/auth/signingoogle.dart';
@@ -195,15 +196,7 @@ class _LoginPasswordState extends State<LoginPassword> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 25,),
-              Text("Brainlytic",
-                style: Theme.of(context).textTheme.titleLarge
-              ),
-              const SizedBox(height: 30,),
-              Text("Enter password",
-                style: Theme.of(context).textTheme.headlineLarge
-              ),
-              const SizedBox(height: 10,),
+              Appname(displayText: "Enter password"),
               Container(
                 margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 16),
                 width: 360,

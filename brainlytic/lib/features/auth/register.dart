@@ -1,5 +1,6 @@
 import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/core/theme/pallete.dart';
+import 'package:brainlytic/features/auth/widgets/appname.dart';
 import 'package:brainlytic/features/auth/widgets/lineorline.dart';
 import 'package:brainlytic/features/auth/signingithub.dart';
 import 'package:brainlytic/features/auth/signingoogle.dart';
@@ -106,14 +107,7 @@ class _RegisterState extends State<Register> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 25,),
-              Text("Brainlytic",
-                style: Theme.of(context).textTheme.titleLarge
-              ),
-              const SizedBox(height: 30,),
-              Text("Create an account",
-                style: Theme.of(context).textTheme.headlineLarge
-              ),
+              Appname(displayText: "Create an account"),
               const SizedBox(height: 10,),
               Container(
                 margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 10),
