@@ -6,6 +6,7 @@ import 'package:brainlytic/features/quiz/router/quiz_routes.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
+  
   initialLocation: RouteConstants.initialScreen,
   routes: [
     ...OnboardingRoutes.route,

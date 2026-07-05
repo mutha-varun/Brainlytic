@@ -1,9 +1,6 @@
 import 'package:brainlytic/core/router/app_router.dart';
 import 'package:brainlytic/core/theme/theme.dart';
-import 'package:brainlytic/features/onboarding/pages/initial_screen.dart';
-import 'package:brainlytic/features/onboarding/pages/onboarding.dart';
 import 'package:brainlytic/firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

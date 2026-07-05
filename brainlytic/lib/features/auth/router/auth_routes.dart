@@ -10,7 +10,10 @@ class AuthRoutes {
     GoRoute(
       name: RouteConstants.loginUsername,
       path: '/loginUsername',
-      builder: (context, state)=> LoginUsername()
+      builder: (context, state){ 
+        String? text = state.uri.queryParameters['text'];
+        return LoginUsername(text: text,);
+      }
     ),
     GoRoute(
       name: RouteConstants.loginPassword,
