@@ -289,9 +289,11 @@ class _LoginPasswordState extends State<LoginPassword> {
                 child: Text("Continue")
               ),
               const Lineorline(),
+              const SizedBox(height: 20,),
               const SigninGoogle(),
+              const SizedBox(height: 20,),
               const SigninGitHub(),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

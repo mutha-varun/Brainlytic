@@ -210,8 +210,11 @@ class _RegisterState extends State<Register> {
                 child: Text("Continue",)
               ),
               const Lineorline(),
+              const SizedBox(height: 20,),
               const SigninGoogle(),
+              const SizedBox(height: 20,),
               const SigninGitHub(),
+              const SizedBox(height: 15,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
