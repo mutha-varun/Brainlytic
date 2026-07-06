@@ -108,7 +108,6 @@ class _RegisterState extends State<Register> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Appname(displayText: "Create an account"),
-              const SizedBox(height: 10,),
               Container(
                 margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 10),
                 width: 360,
