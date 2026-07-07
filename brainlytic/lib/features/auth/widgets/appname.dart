@@ -5,7 +5,6 @@ class Appname extends StatelessWidget {
   final String displayText;
   const Appname({required this.displayText ,super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
