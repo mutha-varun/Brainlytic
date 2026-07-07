@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_button/sign_button.dart';
 
 class SigninGoogle extends StatefulWidget {
   const SigninGoogle({super.key});
@@ -79,6 +78,7 @@ class _SigninGoogleState extends State<SigninGoogle> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
+      style: Theme.of(context).elevatedButtonTheme.style,
       onPressed: () async {
         final user = await singinWithGoogle();
         if(user != null){
@@ -91,7 +91,7 @@ class _SigninGoogleState extends State<SigninGoogle> {
         }
       }, 
       icon:Image.asset("assets/google.png",
-        width: 35,
+        width: 30,
       ),
       iconAlignment: IconAlignment.start,
       label: const Text("Continue with Google")

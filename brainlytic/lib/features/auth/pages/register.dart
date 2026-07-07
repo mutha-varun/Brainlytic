@@ -1,9 +1,9 @@
 import 'package:brainlytic/core/router/route_constants.dart';
-import 'package:brainlytic/features/auth/widgets/appname.dart';
-import 'package:brainlytic/features/auth/widgets/lineorline.dart';
-import 'package:brainlytic/features/auth/signingithub.dart';
-import 'package:brainlytic/features/auth/signingoogle.dart';
-import 'package:brainlytic/features/auth/widgets/questiontext.dart';
+import 'package:brainlytic/features/auth/pages/widgets/appname.dart';
+import 'package:brainlytic/features/auth/pages/widgets/lineorline.dart';
+import 'package:brainlytic/features/auth/pages/widgets/signingithub.dart';
+import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
+import 'package:brainlytic/features/auth/pages/widgets/questiontext.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

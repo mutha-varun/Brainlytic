@@ -59,6 +59,7 @@ class _SigninGitHubState extends State<SigninGitHub>{
   @override
   Widget build(BuildContext context){
     return ElevatedButton.icon(
+      style: Theme.of(context).elevatedButtonTheme.style,
       onPressed: () async {
         final user = await signinGitHub();
           if(user != null){
@@ -72,7 +73,7 @@ class _SigninGitHubState extends State<SigninGitHub>{
       },
       icon: Image.asset(
         "assets/github.png",
-        width: 35,
+        width: 30,
       ),
       iconAlignment: IconAlignment.start,
       label: const Text("Continue with Github"),
