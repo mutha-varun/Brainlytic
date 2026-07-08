@@ -1,7 +1,7 @@
 import 'package:brainlytic/core/router/route_constants.dart';
-import 'package:brainlytic/features/auth/login_password.dart';
-import 'package:brainlytic/features/auth/login_username.dart';
-import 'package:brainlytic/features/auth/register.dart';
+import 'package:brainlytic/features/auth/pages/login_password.dart';
+import 'package:brainlytic/features/auth/pages/login_username.dart';
+import 'package:brainlytic/features/auth/pages/register.dart';
 import 'package:go_router/go_router.dart';
 
 class AuthRoutes {
