@@ -33,6 +33,7 @@ class _LoginPasswordState extends State<LoginPassword> {
   final recoveryEmail = TextEditingController();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final _focusNode = FocusNode();
+  final formKey = GlobalKey<FormState>();
   
   @override
   void initState() {
@@ -194,108 +195,111 @@ class _LoginPasswordState extends State<LoginPassword> {
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Appname(displayText: "Enter password"),
-              Container(
-                margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 16),
-                width: 360,
-                height: 60,
-                child: TextField(
-                  readOnly: true,
-                  focusNode: _focusNode,
-                  onTap: () => _focusNode.unfocus(),
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    floatingLabelStyle: TextStyle(
-                      color: Pallete.enabledBorderColor
-                    ),
-                    suffixIcon: IconButton(
-                      onPressed: ()=> context.replaceNamed(RouteConstants.loginUsername,
-                        queryParameters: {"text": email}
-                      ), 
-                      icon: Icon(Icons.edit,
-                        size: 25,
-                      )
-                    )
-                  ),
-                  style: Theme.of(context).textTheme.bodyLarge
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 10),
-                width: 360,
-                height: 60,
-                child: TextField(
-                  controller: passwordController,
-                  obscureText: isVisible,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    suffixIcon: IconButton(
-                      onPressed: (){
-                        setState(() {
-                          isVisible = !isVisible;
-                        });
-                      },
-                      icon: Icon(isVisible? Icons.visibility : Icons.visibility_off,
-                        size: 30,
-                      )
-                    ),
-                  ),
-                  style: Theme.of(context).textTheme.bodyLarge,
-                )
-              ),
-              Container(
-                alignment: Alignment.centerRight,
-                margin: const EdgeInsets.only(right: 12, bottom: 6),
-                child: TextButton(
-                  onPressed: () async{
-                    await resetPasswordDialog();
-                  }, 
-                  child: Text("Forgot Password?",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Pallete.indigo700Color
-                    )
-                  )
-                ),
-              ),
-              Button(
-                onTap: () async {
-                  if(passwordController.text.isEmpty){
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Password is required",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18
-                          ),
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Appname(displayText: "Enter password"),
+                Container(
+                  margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 16),
+                  width: 360,
+                  height: 60,
+                  child: TextField(
+                    readOnly: true,
+                    focusNode: _focusNode,
+                    onTap: () => _focusNode.unfocus(),
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      labelText: "Email",
+                      floatingLabelStyle: TextStyle(
+                        color: Pallete.enabledBorderColor
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed: ()=> context.replaceNamed(RouteConstants.loginUsername,
+                          queryParameters: {"text": email}
+                        ), 
+                        icon: const Icon(Icons.edit,
+                          size: 25,
                         )
                       )
-                    );
+                    ),
+                    style: Theme.of(context).textTheme.bodyLarge
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 10),
+                  width: 360,
+                  height: 60,
+                  child: TextField(
+                    controller: passwordController,
+                    obscureText: isVisible,
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      suffixIcon: IconButton(
+                        onPressed: (){
+                          setState(() {
+                            isVisible = !isVisible;
+                          });
+                        },
+                        icon: Icon(isVisible? Icons.visibility : Icons.visibility_off,
+                          size: 30,
+                        )
+                      ),
+                    ),
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  )
+                ),
+                Container(
+                  alignment: Alignment.centerRight,
+                  margin: const EdgeInsets.only(right: 12, bottom: 6),
+                  child: TextButton(
+                    onPressed: () async{
+                      await resetPasswordDialog();
+                    }, 
+                    child: Text("Forgot Password?",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Pallete.indigo700Color
+                      )
+                    )
+                  ),
+                ),
+                Button(
+                  onTap: () async {
+                    if(passwordController.text.isEmpty){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Password is required",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18
+                            ),
+                          )
+                        )
+                      );
+                    }
+                    else{
+                      await loginUser();
+                    }
                   }
-                  else{
-                    await loginUser();
+                ),
+                const Lineorline(),
+                const SizedBox(height: 20,),
+                const SigninGoogle(),
+                const SizedBox(height: 20,),
+                const SigninGitHub(),
+                const SizedBox(height: 15),
+                Questiontext(
+                  text: "Don't have an account?", 
+                  buttonText: "Sign up", 
+                  onTap: (){
+                    context.replaceNamed(RouteConstants.register);
                   }
-                }
-              ),
-              const Lineorline(),
-              const SizedBox(height: 20,),
-              const SigninGoogle(),
-              const SizedBox(height: 20,),
-              const SigninGitHub(),
-              const SizedBox(height: 15),
-              Questiontext(
-                text: "Don't have an account?", 
-                buttonText: "Sign up", 
-                onTap:  (){
-                  context.replaceNamed(RouteConstants.register);
-                }
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
