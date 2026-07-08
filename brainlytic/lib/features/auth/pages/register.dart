@@ -1,5 +1,7 @@
 import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/features/auth/pages/widgets/appname.dart';
+import 'package:brainlytic/features/auth/pages/widgets/button.dart';
+import 'package:brainlytic/features/auth/pages/widgets/customtextfield.dart';
 import 'package:brainlytic/features/auth/pages/widgets/lineorline.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingithub.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
@@ -107,29 +109,14 @@ class _RegisterState extends State<Register> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Appname(displayText: "Create an account"),
-              Container(
-                margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 10),
-                width: 360,
-                height: 60,
-                child: TextField(
-                  autofocus: true,
-                  controller: nameController,
-                  decoration: InputDecoration(
-                    label: Text("Name"),
-                  ),
-                ),
+              const Appname(displayText: "Create an account"),
+              Customtextfield(
+                controller: nameController, 
+                text: "Name"
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 16,right: 16, top: 10, bottom: 10),
-                width: 360,
-                height: 60,
-                child: TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    label: Text("Email"),
-                  ),
-                ),
+              Customtextfield(
+                controller: emailController, 
+                text: "Email"
               ),
               Container(
                 margin: const EdgeInsets.only(left: 16,right: 16, top: 10, bottom: 16),
@@ -154,8 +141,8 @@ class _RegisterState extends State<Register> {
                 ),
               ),
               const SizedBox(height: 15,),
-              ElevatedButton(
-                onPressed: ()async{
+              Button(
+                onTap: ()async{
                   if(nameController.text.isEmpty){
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -201,7 +188,6 @@ class _RegisterState extends State<Register> {
                     }
                   }
                 }, 
-                child: Text("Continue",)
               ),
               const Lineorline(),
               const SizedBox(height: 20,),
