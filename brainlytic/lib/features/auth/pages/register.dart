@@ -105,102 +105,105 @@ class _RegisterState extends State<Register> {
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Appname(displayText: "Create an account"),
-              Customtextfield(
-                controller: nameController, 
-                text: "Name"
-              ),
-              Customtextfield(
-                controller: emailController, 
-                text: "Email"
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 16,right: 16, top: 10, bottom: 16),
-                width: 360,
-                height: 60,
-                child: TextField(
-                  obscureText: isVisible,
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                    label: Text("Password"),
-                    suffixIcon: IconButton(
-                      onPressed: (){
-                        setState(() {
-                          isVisible = !isVisible;
-                        });
-                      },
-                      icon: Icon(isVisible? Icons.visibility : Icons.visibility_off,
-                        size: 30,
-                      )
+          child: Form(
+            key: formkey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Appname(displayText: "Create an account"),
+                Customtextfield(
+                  controller: nameController, 
+                  text: "Name"
+                ),
+                Customtextfield(
+                  controller: emailController, 
+                  text: "Email"
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 16,right: 16, top: 10, bottom: 16),
+                  width: 360,
+                  height: 60,
+                  child: TextField(
+                    obscureText: isVisible,
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                      label: Text("Password"),
+                      suffixIcon: IconButton(
+                        onPressed: (){
+                          setState(() {
+                            isVisible = !isVisible;
+                          });
+                        },
+                        icon: Icon(isVisible? Icons.visibility : Icons.visibility_off,
+                          size: 30,
+                        )
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 15,),
-              Button(
-                onTap: ()async{
-                  if(nameController.text.isEmpty){
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Name cannot be empty",
-                        textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18
-                          ),
-                        )
-                      )
-                    );
-                  }
-                  else if(emailController.text.isEmpty){
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("E-mail cannot be empty",
-                        textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18
-                          ),
-                        )
-                      )
-                    );
-                  }
-                  else if(passwordController.text.isEmpty){
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Password is required",
+                const SizedBox(height: 15,),
+                Button(
+                  onTap: ()async{
+                    if(nameController.text.isEmpty){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Name cannot be empty",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18
-                          ),
+                            style: TextStyle(
+                              fontSize: 18
+                            ),
+                          )
                         )
-                      )
-                    );
-                  }
-                  else{
-                    bool isCreated = await createUser();
-                    if(isCreated){
-                      if(context.mounted){
-                        context.replaceNamed(RouteConstants.loginUsername);
-                     }  
+                      );
                     }
-                  }
-                }, 
-              ),
-              const Lineorline(),
-              const SizedBox(height: 20,),
-              const SigninGoogle(),
-              const SizedBox(height: 20,),
-              const SigninGitHub(),
-              const SizedBox(height: 15,),
-              Questiontext(
-                text: "Already have an account?", 
-                buttonText: "Log in", 
-                onTap: ()=> context.pushNamed(RouteConstants.loginUsername)
-              )
-            ],
+                    else if(emailController.text.isEmpty){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("E-mail cannot be empty",
+                          textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18
+                            ),
+                          )
+                        )
+                      );
+                    }
+                    else if(passwordController.text.isEmpty){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Password is required",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18
+                            ),
+                          )
+                        )
+                      );
+                    }
+                    else{
+                      bool isCreated = await createUser();
+                      if(isCreated){
+                        if(context.mounted){
+                          context.replaceNamed(RouteConstants.loginUsername);
+                       }  
+                      }
+                    }
+                  }, 
+                ),
+                const Lineorline(),
+                const SizedBox(height: 20,),
+                const SigninGoogle(),
+                const SizedBox(height: 20,),
+                const SigninGitHub(),
+                const SizedBox(height: 15,),
+                Questiontext(
+                  text: "Already have an account?", 
+                  buttonText: "Log in", 
+                  onTap: ()=> context.pushNamed(RouteConstants.loginUsername)
+                )
+              ],
+            ),
           ),
         ),
       ),
