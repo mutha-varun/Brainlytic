@@ -201,7 +201,7 @@ class _LoginPasswordState extends State<LoginPassword> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Appname(displayText: "Enter password"),
+                const Appname(displayText: "Enter password"),
                 Container(
                   margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 16),
                   width: 360,
