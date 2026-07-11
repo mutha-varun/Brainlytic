@@ -6,7 +6,7 @@ class Lineorline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 450,
+      width: 380,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -18,8 +18,8 @@ class Lineorline extends StatelessWidget {
               ), 
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 20),
+          Container(
+            margin: EdgeInsets.only(top: 20),
             child: Text("or",
               style: TextStyle(
                 fontSize: 18
