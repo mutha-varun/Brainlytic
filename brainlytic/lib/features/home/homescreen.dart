@@ -1,5 +1,6 @@
 import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/core/theme/pallete.dart';
+import 'package:brainlytic/features/common/widgets/circularindicator.dart';
 import 'package:brainlytic/features/home/quiz_topics_templates.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -108,13 +109,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 stream: FirebaseFirestore.instance.collection('quizzes').snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Container(
-                      margin: const EdgeInsets.all(20),
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      alignment: Alignment.center,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Pallete.blackColor),
-                      ),
+                    // return Container(
+                    //   margin: const EdgeInsets.all(20),
+                    //   padding: const EdgeInsets.symmetric(horizontal: 30),
+                    //   alignment: Alignment.center,
+                    //   // child: CircularProgressIndicator(
+                    //   //   valueColor: AlwaysStoppedAnimation<Color>(Pallete.blackColor),
+                    //   // ),
+                    //   ch
+                    // );
+                    return Center(
+                      child: const Circularindicator(),
                     );
                   }
                   return Expanded(
