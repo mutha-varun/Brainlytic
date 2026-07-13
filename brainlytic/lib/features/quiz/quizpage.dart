@@ -1,5 +1,6 @@
 import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/core/theme/pallete.dart';
+import 'package:brainlytic/features/common/widgets/circularindicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -132,9 +133,7 @@ class _QuizpageState extends State<Quizpage> {
             return Container(
               margin: const EdgeInsets.all(20),
               alignment: Alignment.center,
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-              ),
+              child: Circularindicator()
             );
           }
 
