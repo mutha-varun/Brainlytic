@@ -24,8 +24,9 @@ class QuizTopicsTemplates extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 285,
-      padding: const EdgeInsets.all(16),
+      width: 300,
+      height: 260,
+      padding: const EdgeInsets.only(left:16, right: 16, top: 16, bottom: 10),
       margin: const EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
