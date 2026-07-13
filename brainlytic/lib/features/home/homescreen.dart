@@ -1,5 +1,4 @@
 import 'package:brainlytic/core/router/route_constants.dart';
-import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/common/widgets/circularindicator.dart';
 import 'package:brainlytic/features/home/quiz_topics_templates.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -38,6 +37,41 @@ class _HomeScreenState extends State<HomeScreen> {
       return Color(int.parse(hex, radix: 16) + 0xFF000000);
   }
 
+  void signOut(){
+    showDialog(context: context, builder: (context) {
+      return AlertDialog(
+        title: Text("Logout",
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleLarge
+        ),
+        content: Text("Are you sure you want to logout?",
+          style: Theme.of(context).textTheme.bodyLarge
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("No",
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: Colors.blue
+              )
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              context.goNamed(RouteConstants.onboarding);
+            },
+            child:  Text("Logout",
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: Colors.red
+              )
+            ),
+          ),
+        ],
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     
@@ -62,40 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             padding: EdgeInsets.only(right: 20),
             icon: const Icon(Icons.logout),
-            onPressed: () {
-              showDialog(context: context, builder: (context) {
-                return AlertDialog(
-                  title: Text("Logout",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleLarge
-                  ),
-                  content: Text("Are you sure you want to logout?",
-                    style: Theme.of(context).textTheme.bodyLarge
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text("No",
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          color: Colors.blue
-                        )
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                        context.goNamed(RouteConstants.onboarding);
-                      },
-                      child:  Text("Logout",
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          color: Colors.red
-                        )
-                      ),
-                    ),
-                  ],
-                );
-              });
-            },
+            onPressed: () => signOut(),
           ),
         ],
       ),
@@ -109,15 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 stream: FirebaseFirestore.instance.collection('quizzes').snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    // return Container(
-                    //   margin: const EdgeInsets.all(20),
-                    //   padding: const EdgeInsets.symmetric(horizontal: 30),
-                    //   alignment: Alignment.center,
-                    //   // child: CircularProgressIndicator(
-                    //   //   valueColor: AlwaysStoppedAnimation<Color>(Pallete.blackColor),
-                    //   // ),
-                    //   ch
-                    // );
                     return Center(
                       child: const Circularindicator(),
                     );
