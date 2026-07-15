@@ -8,12 +8,10 @@ class RegisterUsecase {
   const RegisterUsecase(this._authRepository);
 
   Future<Either<AppFailure,User>> call({
-      required String name,
-      required String email,
-      required String password
-    })async{
-
+    required String name,
+    required String email,
+    required String password
+  })async{
     return _authRepository.register(name: name, email: email, password:password);
-  
   }
 }
