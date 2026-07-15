@@ -20,6 +20,12 @@ class Customtextfield extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         autofocus: autofocus,
+        validator: (value) {
+          if(value!.isEmpty){
+            return "$text cannot be empty";
+          }
+          return null;
+        },
         decoration: InputDecoration(
           labelText: text,
         ),

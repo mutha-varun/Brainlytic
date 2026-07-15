@@ -1,13 +1,16 @@
 import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/core/theme/pallete.dart';
+import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
 import 'package:brainlytic/features/auth/pages/widgets/appname.dart';
 import 'package:brainlytic/features/auth/pages/widgets/button.dart';
+import 'package:brainlytic/features/auth/pages/widgets/forgotpassword.dart';
 import 'package:brainlytic/features/auth/pages/widgets/lineorline.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingithub.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
 import 'package:brainlytic/features/auth/pages/widgets/questiontext.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPassword extends StatefulWidget {
@@ -22,7 +25,6 @@ class LoginPassword extends StatefulWidget {
 }
 
 class _LoginPasswordState extends State<LoginPassword> {
-
   //temporary varible for email
   var email = "muthavarun@gmail.com";
 
@@ -34,160 +36,156 @@ class _LoginPasswordState extends State<LoginPassword> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final _focusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
-  
+
   @override
   void initState() {
     isVisible = true;
     emailController = TextEditingController(text: email);
     super.initState();
-  } 
+  }
 
   Future<void> loginUser() async {
-    try{
-      final userCredential =  await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, //change this to widegt.email 
-        password: passwordController.text.trim()
+    try {
+      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, //change this to widegt.email
+        password: passwordController.text.trim(),
       );
-      if(mounted) {
+      if (mounted) {
         context.goNamed(RouteConstants.home);
       }
     } on FirebaseAuthException catch (e) {
-      if(mounted){
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message!,
+          SnackBar(
+            content: Text(
+              e.message!,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18
-              ),
-            )
-          )
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
         );
       }
     }
   }
 
-  Future<void> resetPasswordDialog() async{
-    await showDialog<void>(context: context, 
-      builder: (BuildContext context){
+  Future<void> resetPasswordDialog() async {
+    await showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Pallete.scaffoldColor,
-          contentPadding: const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 0),
+          contentPadding: const EdgeInsets.only(
+            top: 30,
+            left: 20,
+            right: 20,
+            bottom: 0,
+          ),
           content: SizedBox(
             width: 360,
             height: 140,
             child: Column(
               children: [
                 TextField(
-                  decoration: InputDecoration(
-                    label: Text("Email",),
-                  ),
-                  autofocus: true, 
-                  controller: recoveryEmail, 
+                  decoration: InputDecoration(label: Text("Email")),
+                  autofocus: true,
+                  controller: recoveryEmail,
                 ),
-                SizedBox(height: 22,),
+                SizedBox(height: 22),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: (){
-                        if(recoveryEmail.text.isEmpty)
-                        {
+                      onPressed: () {
+                        if (recoveryEmail.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text("Email is required",
+                              content: Text(
+                                "Email is required",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 18
-                                ),
-                              )
-                            )
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
                           );
-                        }
-                        else{
+                        } else {
                           Navigator.of(context).pop();
                           resetPassword();
                         }
-                      }, 
-                      child: Text("Send",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.blue
-                        ),
-                      )
+                      },
+                      child: Text(
+                        "Send",
+                        style: TextStyle(fontSize: 18, color: Colors.blue),
+                      ),
                     ),
                     TextButton(
-                      onPressed: (){
+                      onPressed: () {
                         recoveryEmail.clear();
                         Navigator.of(context).pop();
-                      }, 
-                      child: Text("Close",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.red
-                        ),
-                      )
-                    )
+                      },
+                      child: Text(
+                        "Close",
+                        style: TextStyle(fontSize: 18, color: Colors.red),
+                      ),
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),
         );
-      }
+      },
     );
   }
 
-  Future<void> resetPassword() async{
-    try{ 
-      await _firebaseAuth.sendPasswordResetEmail(email: recoveryEmail.text.trim());
-      if(mounted){
+  Future<void> resetPassword() async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(
+        email: recoveryEmail.text.trim(),
+      );
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Mail sent",
+          SnackBar(
+            content: Text(
+              "Mail sent",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18
-              )
-            )
-          )
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
         );
       }
-    } on FirebaseAuthException catch(e){
-
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message!,
+          SnackBar(
+            content: Text(
+              e.message!,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18
-              ),
-            )
-          )
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
         );
-      } 
-      else if (e.code == 'invalid-email' && mounted) {
+      } else if (e.code == 'invalid-email' && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message!,
+          SnackBar(
+            content: Text(
+              e.message!,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18
-              ),
-            )
-          )
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
         );
       }
       recoveryEmail.clear();
       throw Exception(e.message);
-    }catch(e){
-      if(mounted){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString()))
-        );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     }
 
     recoveryEmail.clear();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -195,111 +193,141 @@ class _LoginPasswordState extends State<LoginPassword> {
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: SafeArea(
-          child: Form(
-            key: formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Appname(displayText: "Enter password"),
-                Container(
-                  margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 16),
-                  width: 360,
-                  height: 60,
-                  child: TextField(
-                    readOnly: true,
-                    focusNode: _focusNode,
-                    onTap: () => _focusNode.unfocus(),
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      labelText: "Email",
-                      floatingLabelStyle: TextStyle(
-                        color: Pallete.enabledBorderColor
+          child: BlocConsumer<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if(state is AuthFailure){
+                //add snackbar
+              }
+              if(state is AuthSuccess){
+                context.goNamed(RouteConstants.home);
+              }
+            },
+            builder: (context, state) {
+              if(state is AuthLoading){
+                // Add circular indicator
+              }
+              return Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Appname(displayText: "Enter password"),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        top: 15,
+                        bottom: 16,
                       ),
-                      suffixIcon: IconButton(
-                        onPressed: ()=> context.replaceNamed(RouteConstants.loginUsername,
-                          queryParameters: {"text": email}
-                        ), 
-                        icon: const Icon(Icons.edit,
-                          size: 25,
-                        )
-                      )
-                    ),
-                    style: Theme.of(context).textTheme.bodyLarge
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 10),
-                  width: 360,
-                  height: 60,
-                  child: TextField(
-                    controller: passwordController,
-                    obscureText: isVisible,
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      labelText: "Password",
-                      suffixIcon: IconButton(
-                        onPressed: (){
-                          setState(() {
-                            isVisible = !isVisible;
-                          });
-                        },
-                        icon: Icon(isVisible? Icons.visibility : Icons.visibility_off,
-                          size: 30,
-                        )
-                      ),
-                    ),
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  )
-                ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  margin: const EdgeInsets.only(right: 12, bottom: 6),
-                  child: TextButton(
-                    onPressed: () async{
-                      await resetPasswordDialog();
-                    }, 
-                    child: Text("Forgot Password?",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Pallete.indigo700Color
-                      )
-                    )
-                  ),
-                ),
-                Button(
-                  onTap: () async {
-                    if(passwordController.text.isEmpty){
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Password is required",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18
+                      width: 360,
+                      height: 60,
+                      child: TextFormField(
+                        readOnly: true,
+                        focusNode: _focusNode,
+                        onTap: () => _focusNode.unfocus(),
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          labelText: "Email",
+                          floatingLabelStyle: TextStyle(
+                            color: Pallete.enabledBorderColor,
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () => context.replaceNamed(
+                              RouteConstants.loginUsername,
+                              queryParameters: {"text": email},
                             ),
-                          )
-                        )
-                      );
-                    }
-                    else{
-                      await loginUser();
-                    }
-                  }
+                            icon: const Icon(Icons.edit, size: 25),
+                          ),
+                        ),
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        top: 15,
+                        bottom: 10,
+                      ),
+                      width: 360,
+                      height: 60,
+                      child: TextFormField(
+                        controller: passwordController,
+                        obscureText: isVisible,
+                        autofocus: true,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Password cannot be empty";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Password",
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isVisible = !isVisible;
+                              });
+                            },
+                            icon: Icon(
+                              isVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                    ForgotPassword(
+                      onTap: () async => await resetPasswordDialog(),
+                    ),
+                    Button(
+                      onTap: () async {
+                        // if(passwordController.text.isEmpty){
+                        //   ScaffoldMessenger.of(context).showSnackBar(
+                        //     const SnackBar(
+                        //       content: Text("Password is required",
+                        //         textAlign: TextAlign.center,
+                        //         style: TextStyle(
+                        //           fontSize: 18
+                        //         ),
+                        //       )
+                        //     )
+                        //   );
+                        // }
+                        // else{
+                        //   await loginUser();
+                        // }
+                        if (formKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(
+                            LoginEvent(
+                              email: email,
+                              password: passwordController.text.trim(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                    const Lineorline(),
+                    const SizedBox(height: 20),
+                    const SigninGoogle(),
+                    const SizedBox(height: 20),
+                    const SigninGitHub(),
+                    const SizedBox(height: 15),
+                    Questiontext(
+                      text: "Don't have an account?",
+                      buttonText: "Sign up",
+                      onTap: () {
+                        context.replaceNamed(RouteConstants.register);
+                      },
+                    ),
+                  ],
                 ),
-                const Lineorline(),
-                const SizedBox(height: 20,),
-                const SigninGoogle(),
-                const SizedBox(height: 20,),
-                const SigninGitHub(),
-                const SizedBox(height: 15),
-                Questiontext(
-                  text: "Don't have an account?", 
-                  buttonText: "Sign up", 
-                  onTap: (){
-                    context.replaceNamed(RouteConstants.register);
-                  }
-                )
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),
