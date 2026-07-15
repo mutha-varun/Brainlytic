@@ -2,6 +2,7 @@ import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/auth/pages/widgets/appname.dart';
 import 'package:brainlytic/features/auth/pages/widgets/button.dart';
+import 'package:brainlytic/features/auth/pages/widgets/forgotpassword.dart';
 import 'package:brainlytic/features/auth/pages/widgets/lineorline.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingithub.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
@@ -252,19 +253,8 @@ class _LoginPasswordState extends State<LoginPassword> {
                     style: Theme.of(context).textTheme.bodyLarge,
                   )
                 ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  margin: const EdgeInsets.only(right: 12, bottom: 6),
-                  child: TextButton(
-                    onPressed: () async{
-                      await resetPasswordDialog();
-                    }, 
-                    child: Text("Forgot Password?",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Pallete.indigo700Color
-                      )
-                    )
-                  ),
+                ForgotPassword(
+                  onTap: () async => await resetPasswordDialog()
                 ),
                 Button(
                   onTap: () async {
