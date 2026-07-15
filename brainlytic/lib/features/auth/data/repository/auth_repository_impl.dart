@@ -22,11 +22,17 @@ class AuthRepositoryImpl implements AuthRepository{
   }
 
   @override
-  Future<UserModel> login(String email, String password) async{
-    final cred = await _authDatasources.loginWithEmailPassword(email: email, password: password);
+  Future<Either<AppFailure, UserModel>> login({
+    required String email, 
+    required String password
+  }) async{
+    try{
+      final user = await _authDatasources.loginWithEmailPassword(email: email, password: password);
 
-    return UserModel(id: cred.user!.uid, email: cred.user!.email!,name: cred.user!.displayName!);
-    
+      return Right(user);
+    }catch(e){
+      throw Left(AppFailure(e.toString()));
+    }
   }
 
   @override

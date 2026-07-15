@@ -5,7 +5,10 @@ import 'package:brainlytic/features/auth/data/model/user_model.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract class AuthRepository {
-  Future<UserModel> login(String email, String password);
+  Future<Either<AppFailure, User>> login({
+    required String email, 
+    required String password
+  });
 
   Future<Either<AppFailure, User>> register({
       required String name, 
