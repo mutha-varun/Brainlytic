@@ -124,9 +124,15 @@ class _RegisterState extends State<Register> {
                   margin: const EdgeInsets.only(left: 16,right: 16, top: 10, bottom: 16),
                   width: 360,
                   height: 60,
-                  child: TextField(
+                      child: TextFormField(
                     obscureText: isVisible,
                     controller: passwordController,
+                        validator: (value) {
+                          if(value!.isEmpty){
+                            return "Password cannot be empty";
+                          }
+                          return null;
+                        },
                     decoration: InputDecoration(
                       label: Text("Password"),
                       suffixIcon: IconButton(
