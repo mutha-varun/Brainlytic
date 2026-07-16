@@ -5,12 +5,15 @@ import 'package:brainlytic/features/auth/pages/widgets/appname.dart';
 import 'package:brainlytic/features/auth/pages/widgets/button.dart';
 import 'package:brainlytic/features/auth/pages/widgets/forgotpassword.dart';
 import 'package:brainlytic/features/auth/pages/widgets/lineorline.dart';
+import 'package:brainlytic/features/auth/pages/widgets/passwordtextfield.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingithub.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
 import 'package:brainlytic/features/auth/pages/widgets/questiontext.dart';
+import 'package:brainlytic/features/auth/provider/isobscured.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPassword extends StatefulWidget {
@@ -26,8 +29,6 @@ class LoginPassword extends StatefulWidget {
 
 class _LoginPasswordState extends State<LoginPassword> {
 
-  bool showPasswordField = false;
-  bool isObscured = false;
   late final TextEditingController emailController;
   final passwordController = TextEditingController();
   final recoveryEmail = TextEditingController();
@@ -37,7 +38,6 @@ class _LoginPasswordState extends State<LoginPassword> {
 
   @override
   void initState() {
-    isObscured = true;
     emailController = TextEditingController(text: widget.email);
     super.initState();
   }
@@ -243,41 +243,54 @@ class _LoginPasswordState extends State<LoginPassword> {
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        left: 16,
-                        right: 16,
-                        top: 15,
-                      ),
-                      width: 360,
-                      child: TextFormField(
-                        controller: passwordController,
-                        obscureText: isObscured,
-                        autofocus: true,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Password cannot be empty";
+                    // Container(
+                    //   margin: const EdgeInsets.only(
+                    //     left: 16,
+                    //     right: 16,
+                    //     top: 15,
+                    //   ),
+                    //   width: 360,
+                    //   child: TextFormField(
+                    //     controller: passwordController,
+                    //     obscureText: isObscured,
+                    //     autofocus: true,
+                    //     validator: (value) {
+                    //       if (value!.isEmpty) {
+                    //         return "Password cannot be empty";
+                    //       }
+                    //       return null;
+                    //     },
+                    //     decoration: InputDecoration(
+                    //       labelText: "Password",
+                    //       suffixIcon: IconButton(
+                    //         onPressed: () {
+                    //           setState(() {
+                    //             isObscured = !isObscured;
+                    //           });
+                    //         },
+                    //         icon: Icon(
+                    //           isObscured
+                    //               ? Icons.visibility
+                    //               : Icons.visibility_off,
+                    //           size: 30,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     style: Theme.of(context).textTheme.bodyLarge,
+                    //   ),
+                    // ),
+                    Consumer(
+                      builder: (context, ref, child){
+                        bool isObscured = ref.watch(isObscuredProvider);
+                        return Passwordtextfield(
+                          controller: passwordController, 
+                          isObscured: isObscured,
+                          autoFocus: true,
+                          onTap: (){
+                            ref.read(isObscuredProvider.notifier).state = !isObscured;
                           }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          labelText: "Password",
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isObscured = !isObscured;
-                              });
-                            },
-                            icon: Icon(
-                              isObscured
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
+                        );
+                      },
                     ),
                     ForgotPassword(
                       onTap: () async => await resetPasswordDialog(),
@@ -319,6 +332,8 @@ class _LoginPasswordState extends State<LoginPassword> {
                       text: "Don't have an account?",
                       buttonText: "Sign up",
                       onTap: () {
+                        final container = ProviderScope.containerOf(context);
+                        container.read(isObscuredProvider.notifier).state = true;
                         context.replaceNamed(RouteConstants.register);
                       },
                     ),

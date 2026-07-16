@@ -43,6 +43,7 @@ class _LoginUsernameState extends State<LoginUsername> {
                 Appname(displayText: "Welcome Back!"),
                 Customtextfield(
                   controller: emailController,
+                  autofocus: true,
                   text: "Email",
                 ),
                 const SizedBox(height: 15,),

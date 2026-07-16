@@ -4,13 +4,16 @@ import 'package:brainlytic/features/auth/pages/widgets/appname.dart';
 import 'package:brainlytic/features/auth/pages/widgets/button.dart';
 import 'package:brainlytic/features/auth/pages/widgets/customtextfield.dart';
 import 'package:brainlytic/features/auth/pages/widgets/lineorline.dart';
+import 'package:brainlytic/features/auth/pages/widgets/passwordtextfield.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingithub.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
 import 'package:brainlytic/features/auth/pages/widgets/questiontext.dart';
+import 'package:brainlytic/features/auth/provider/isobscured.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class Register extends StatefulWidget {
@@ -22,7 +25,6 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
 
-  bool isObscured = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
@@ -30,7 +32,6 @@ class _RegisterState extends State<Register> {
 
   @override
   void initState() {
-    isObscured = true;
     super.initState();
   }
 
@@ -127,38 +128,51 @@ class _RegisterState extends State<Register> {
                     const Appname(displayText: "Create an account"),
                     Customtextfield(
                       controller: nameController, 
-                      text: "Name"
+                      text: "Name",
+                      autofocus: true,
                     ),
                     Customtextfield(
                       controller: emailController, 
                       text: "Email"
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 16,right: 16, top: 15,),
-                      width: 360,
-                      child: TextFormField(
-                        obscureText: isObscured,
-                        controller: passwordController,
-                        validator: (value) {
-                          if(value!.isEmpty){
-                            return "Password cannot be empty";
+                    // Container(
+                    //   margin: const EdgeInsets.only(left: 16,right: 16, top: 15,),
+                    //   width: 360,
+                    //   child: TextFormField(
+                    //     obscureText: isObscured,
+                    //     controller: passwordController,
+                    //     validator: (value) {
+                    //       if(value!.isEmpty){
+                    //         return "Password cannot be empty";
+                    //       }
+                    //       return null;
+                    //     },
+                    //     decoration: InputDecoration(
+                    //       label: Text("Password"),
+                    //       suffixIcon: IconButton(
+                    //         onPressed: (){
+                    //           setState(() {
+                    //             isObscured = !isObscured;
+                    //           });
+                    //         },
+                    //         icon: Icon(isObscured? Icons.visibility : Icons.visibility_off,
+                    //           size: 30,
+                    //         )
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    Consumer(
+                      builder: (context, ref, child){
+                        bool isObscured = ref.watch(isObscuredProvider);
+                        return Passwordtextfield(
+                          controller: passwordController, 
+                          isObscured: isObscured,
+                          onTap: (){
+                            ref.read(isObscuredProvider.notifier).state = !isObscured;
                           }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          label: Text("Password"),
-                          suffixIcon: IconButton(
-                            onPressed: (){
-                              setState(() {
-                                isObscured = !isObscured;
-                              });
-                            },
-                            icon: Icon(isObscured? Icons.visibility : Icons.visibility_off,
-                              size: 30,
-                            )
-                          ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 25,),
                     Button(
@@ -223,7 +237,11 @@ class _RegisterState extends State<Register> {
                     Questiontext(
                       text: "Already have an account?",
                       buttonText: "Log in",
-                      onTap: ()=> context.pushNamed(RouteConstants.loginUsername)
+                      onTap: (){
+                        final container = ProviderScope.containerOf(context);
+                        container.read(isObscuredProvider.notifier).state = true;
+                        context.pushNamed(RouteConstants.loginUsername);
+                      }
                     )
                   ],
                 ),
