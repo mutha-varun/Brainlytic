@@ -10,6 +10,5 @@ class Pallete {
   static Color transparentColor = Colors.transparent;
   static Color indigo700Color =Colors.indigoAccent.shade700;
   static Color correctAnsColor = Colors.green;
-  static Color wrongAnsColor = Colors.red;
-
+  static Color redColor = Colors.red;
 }
