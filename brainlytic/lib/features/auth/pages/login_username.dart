@@ -11,8 +11,8 @@ import 'package:go_router/go_router.dart';
 
 
 class LoginUsername extends StatefulWidget {
-  final String? text;
-  const LoginUsername({this.text = "", super.key});
+  final String? email;
+  const LoginUsername({this.email = "", super.key});
 
   @override
   State<LoginUsername> createState() => _LoginUsernameState();
@@ -24,7 +24,7 @@ class _LoginUsernameState extends State<LoginUsername> {
 
   @override
   void initState() {
-    emailController = TextEditingController(text: widget.text);
+    emailController = TextEditingController(text: widget.email);
     super.initState();
   }
 
@@ -64,7 +64,12 @@ class _LoginUsernameState extends State<LoginUsername> {
                     //   context.pushNamed(RouteConstants.loginPassword);
                     // }
                     if(formKey.currentState!.validate()){
-                      context.pushNamed(RouteConstants.loginPassword);
+                      context.pushNamed(
+                        RouteConstants.loginPassword,
+                        queryParameters: {
+                          "email": emailController.text.trim()
+                        }
+                      );
                     }
                   }
                 ),

@@ -14,10 +14,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPassword extends StatefulWidget {
-  //final String email;
+  final String email;
   const LoginPassword({
     super.key,
-    //required this.email
+    required this.email
   });
 
   @override
@@ -25,8 +25,6 @@ class LoginPassword extends StatefulWidget {
 }
 
 class _LoginPasswordState extends State<LoginPassword> {
-  //temporary varible for email
-  var email = "muthavarun@gmail.com";
 
   bool showPasswordField = false;
   bool isObscured = false;
@@ -40,14 +38,14 @@ class _LoginPasswordState extends State<LoginPassword> {
   @override
   void initState() {
     isObscured = true;
-    emailController = TextEditingController(text: email);
+    emailController = TextEditingController(text: widget.email);
     super.initState();
   }
 
   Future<void> loginUser() async {
     try {
       final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, //change this to widegt.email
+        email: widget.email, //change this to widegt.email
         password: passwordController.text.trim(),
       );
       if (mounted) {
@@ -232,10 +230,13 @@ class _LoginPasswordState extends State<LoginPassword> {
                             color: Pallete.enabledBorderColor,
                           ),
                           suffixIcon: IconButton(
-                            onPressed: () => context.replaceNamed(
-                              RouteConstants.loginUsername,
-                              queryParameters: {"text": email},
-                            ),
+                            onPressed: () { 
+                              context.pop();
+                              context.replaceNamed(
+                                RouteConstants.loginUsername,
+                                queryParameters: {"email": widget.email},
+                              );
+                            },
                             icon: const Icon(Icons.edit, size: 25),
                           ),
                         ),
@@ -301,7 +302,7 @@ class _LoginPasswordState extends State<LoginPassword> {
                         if (formKey.currentState!.validate()) {
                           context.read<AuthBloc>().add(
                             LoginEvent(
-                              email: email,
+                              email: widget.email,
                               password: passwordController.text.trim(),
                             ),
                           );
