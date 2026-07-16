@@ -14,9 +14,8 @@ class Customtextfield extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 16,right: 16, top: 15, bottom: 16),
+      margin: const EdgeInsets.only(left: 16,right: 16, top: 10, bottom: 10),
       width: 360,
-      height: 60,
       child: TextFormField(
         controller: controller,
         autofocus: autofocus,

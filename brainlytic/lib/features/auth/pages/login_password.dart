@@ -218,10 +218,9 @@ class _LoginPasswordState extends State<LoginPassword> {
                         left: 16,
                         right: 16,
                         top: 15,
-                        bottom: 16,
+                        bottom: 10
                       ),
                       width: 360,
-                      height: 60,
                       child: TextFormField(
                         readOnly: true,
                         focusNode: _focusNode,
@@ -248,10 +247,8 @@ class _LoginPasswordState extends State<LoginPassword> {
                         left: 16,
                         right: 16,
                         top: 15,
-                        bottom: 10,
                       ),
                       width: 360,
-                      height: 60,
                       child: TextFormField(
                         controller: passwordController,
                         obscureText: isObscured,

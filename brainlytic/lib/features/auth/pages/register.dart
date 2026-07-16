@@ -134,9 +134,8 @@ class _RegisterState extends State<Register> {
                       text: "Email"
                     ),
                     Container(
-                      margin: const EdgeInsets.only(left: 16,right: 16, top: 10, bottom: 16),
+                      margin: const EdgeInsets.only(left: 16,right: 16, top: 15,),
                       width: 360,
-                      height: 60,
                       child: TextFormField(
                         obscureText: isObscured,
                         controller: passwordController,
@@ -161,7 +160,7 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 15,),
+                    const SizedBox(height: 25,),
                     Button(
                       onTap: () async {
                         // if (nameController.text.isEmpty) {
