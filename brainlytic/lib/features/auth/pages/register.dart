@@ -22,7 +22,7 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
 
-  bool isVisible = false;
+  bool isObscured = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
@@ -30,7 +30,7 @@ class _RegisterState extends State<Register> {
 
   @override
   void initState() {
-    isVisible = true;
+    isObscured = true;
     super.initState();
   }
 
@@ -138,7 +138,7 @@ class _RegisterState extends State<Register> {
                       width: 360,
                       height: 60,
                       child: TextFormField(
-                        obscureText: isVisible,
+                        obscureText: isObscured,
                         controller: passwordController,
                         validator: (value) {
                           if(value!.isEmpty){
@@ -151,10 +151,10 @@ class _RegisterState extends State<Register> {
                           suffixIcon: IconButton(
                             onPressed: (){
                               setState(() {
-                                isVisible = !isVisible;
+                                isObscured = !isObscured;
                               });
                             },
-                            icon: Icon(isVisible? Icons.visibility : Icons.visibility_off,
+                            icon: Icon(isObscured? Icons.visibility : Icons.visibility_off,
                               size: 30,
                             )
                           ),

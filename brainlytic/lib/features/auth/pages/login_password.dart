@@ -29,7 +29,7 @@ class _LoginPasswordState extends State<LoginPassword> {
   var email = "muthavarun@gmail.com";
 
   bool showPasswordField = false;
-  bool isVisible = false;
+  bool isObscured = false;
   late final TextEditingController emailController;
   final passwordController = TextEditingController();
   final recoveryEmail = TextEditingController();
@@ -39,7 +39,7 @@ class _LoginPasswordState extends State<LoginPassword> {
 
   @override
   void initState() {
-    isVisible = true;
+    isObscured = true;
     emailController = TextEditingController(text: email);
     super.initState();
   }
@@ -254,7 +254,7 @@ class _LoginPasswordState extends State<LoginPassword> {
                       height: 60,
                       child: TextFormField(
                         controller: passwordController,
-                        obscureText: isVisible,
+                        obscureText: isObscured,
                         autofocus: true,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -267,11 +267,11 @@ class _LoginPasswordState extends State<LoginPassword> {
                           suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
-                                isVisible = !isVisible;
+                                isObscured = !isObscured;
                               });
                             },
                             icon: Icon(
-                              isVisible
+                              isObscured
                                   ? Icons.visibility
                                   : Icons.visibility_off,
                               size: 30,
