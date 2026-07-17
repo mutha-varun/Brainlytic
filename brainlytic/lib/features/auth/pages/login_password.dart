@@ -10,6 +10,7 @@ import 'package:brainlytic/features/auth/pages/widgets/signingithub.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
 import 'package:brainlytic/features/auth/pages/widgets/questiontext.dart';
 import 'package:brainlytic/features/auth/provider/isobscured.dart';
+import 'package:brainlytic/features/common/widgets/circularindicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -201,9 +202,9 @@ class _LoginPasswordState extends State<LoginPassword> {
               }
             },
             builder: (context, state) {
-              if(state is AuthLoading){
-                // Add circular indicator
-              }
+              // if(state is AuthLoading){
+              //   // Add circular indicator
+              // }
               return Form(
                 key: formKey,
                 child: Column(
@@ -295,6 +296,9 @@ class _LoginPasswordState extends State<LoginPassword> {
                     ForgotPassword(
                       onTap: () async => await resetPasswordDialog(),
                     ),
+                    state is AuthLoading?
+                    const Circularindicator()
+                    :
                     Button(
                       onTap: () async {
                         // if(passwordController.text.isEmpty){

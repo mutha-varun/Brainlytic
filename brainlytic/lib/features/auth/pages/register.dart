@@ -9,6 +9,7 @@ import 'package:brainlytic/features/auth/pages/widgets/signingithub.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
 import 'package:brainlytic/features/auth/pages/widgets/questiontext.dart';
 import 'package:brainlytic/features/auth/provider/isobscured.dart';
+import 'package:brainlytic/features/common/widgets/circularindicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -116,9 +117,6 @@ class _RegisterState extends State<Register> {
               }
             },
             builder: (context, state) {
-              if(state is AuthLoading){
-               //Later add circular indicator widget after merging 
-              }
               return Form(
                 key: formkey,
                 child: Column(
@@ -175,6 +173,9 @@ class _RegisterState extends State<Register> {
                       },
                     ),
                     const SizedBox(height: 25,),
+                    state is AuthLoading?
+                    const Circularindicator()
+                    :
                     Button(
                       onTap: () async {
                         // if (nameController.text.isEmpty) {
