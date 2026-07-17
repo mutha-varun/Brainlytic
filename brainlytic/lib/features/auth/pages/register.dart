@@ -241,7 +241,7 @@ class _RegisterState extends State<Register> {
                       onTap: (){
                         final container = ProviderScope.containerOf(context);
                         container.read(isObscuredProvider.notifier).state = true;
-                        context.pushNamed(RouteConstants.loginUsername);
+                        context.replaceNamed(RouteConstants.loginUsername);
                       }
                     )
                   ],

@@ -338,6 +338,7 @@ class _LoginPasswordState extends State<LoginPassword> {
                       onTap: () {
                         final container = ProviderScope.containerOf(context);
                         container.read(isObscuredProvider.notifier).state = true;
+                        context.pop();
                         context.replaceNamed(RouteConstants.register);
                       },
                     ),
