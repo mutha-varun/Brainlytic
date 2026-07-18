@@ -1,3 +1,4 @@
+import 'package:brainlytic/core/common/utils/utils.dart';
 import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
@@ -46,7 +47,7 @@ class _LoginPasswordState extends State<LoginPassword> {
   Future<void> loginUser() async {
     try {
       final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
-        email: widget.email, //change this to widegt.email
+        email: widget.email,
         password: passwordController.text.trim(),
       );
       if (mounted) {
@@ -195,16 +196,13 @@ class _LoginPasswordState extends State<LoginPassword> {
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
               if(state is AuthFailure){
-                //add snackbar
+                showSnackBar(context, state.message);
               }
               if(state is AuthSuccess){
                 context.goNamed(RouteConstants.home);
               }
             },
             builder: (context, state) {
-              // if(state is AuthLoading){
-              //   // Add circular indicator
-              // }
               return Form(
                 key: formKey,
                 child: Column(
