@@ -22,6 +22,12 @@ class AppTheme{
       floatingLabelBehavior: FloatingLabelBehavior.auto,
       enabledBorder: _border(Pallete.enabledBorderColor),
       focusedBorder: _border(Pallete.focusedBorderColor),
+      errorBorder: _border(Pallete.redColor),
+      focusedErrorBorder: _border(Pallete.redColor),
+      errorStyle: TextStyle(
+        fontSize: 13,
+        color: Pallete.redColor
+      ),
       labelStyle: TextStyle(
         fontSize: 19,
         color: Pallete.enabledBorderColor

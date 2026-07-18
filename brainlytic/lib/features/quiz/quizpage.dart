@@ -37,7 +37,7 @@ class _QuizpageState extends State<Quizpage> {
     }
 
     if(index == _selectedAnswer){
-      return Pallete.wrongAnsColor;
+      return Pallete.redColor;
     }
     
     return Pallete.blackColor;

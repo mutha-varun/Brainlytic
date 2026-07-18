@@ -11,14 +11,17 @@ class AuthRoutes {
       name: RouteConstants.loginUsername,
       path: '/loginUsername',
       builder: (context, state){ 
-        String? text = state.uri.queryParameters['text'];
-        return LoginUsername(text: text,);
+        String? email = state.uri.queryParameters['text'];
+        return LoginUsername(email: email,);
       }
     ),
     GoRoute(
       name: RouteConstants.loginPassword,
       path: '/loginPassword',
-      builder: (context, state)=> LoginPassword()
+      builder: (context, state){ 
+        String email = state.uri.queryParameters['email']!;
+        return LoginPassword(email: email);
+      }
     ),
     GoRoute(
       name: RouteConstants.register,

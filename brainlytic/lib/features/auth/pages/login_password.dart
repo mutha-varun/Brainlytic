@@ -1,3 +1,4 @@
+//import 'package:brainlytic/core/common/utils/utils.dart';
 import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
@@ -5,19 +6,23 @@ import 'package:brainlytic/features/auth/pages/widgets/appname.dart';
 import 'package:brainlytic/features/auth/pages/widgets/button.dart';
 import 'package:brainlytic/features/auth/pages/widgets/forgotpassword.dart';
 import 'package:brainlytic/features/auth/pages/widgets/lineorline.dart';
+import 'package:brainlytic/features/auth/pages/widgets/passwordtextfield.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingithub.dart';
 import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
 import 'package:brainlytic/features/auth/pages/widgets/questiontext.dart';
+import 'package:brainlytic/features/auth/provider/isobscured.dart';
+import 'package:brainlytic/features/common/widgets/circularindicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPassword extends StatefulWidget {
-  //final String email;
+  final String email;
   const LoginPassword({
     super.key,
-    //required this.email
+    required this.email
   });
 
   @override
@@ -25,11 +30,7 @@ class LoginPassword extends StatefulWidget {
 }
 
 class _LoginPasswordState extends State<LoginPassword> {
-  //temporary varible for email
-  var email = "muthavarun@gmail.com";
 
-  bool showPasswordField = false;
-  bool isVisible = false;
   late final TextEditingController emailController;
   final passwordController = TextEditingController();
   final recoveryEmail = TextEditingController();
@@ -39,15 +40,14 @@ class _LoginPasswordState extends State<LoginPassword> {
 
   @override
   void initState() {
-    isVisible = true;
-    emailController = TextEditingController(text: email);
+    emailController = TextEditingController(text: widget.email);
     super.initState();
   }
 
   Future<void> loginUser() async {
     try {
       final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, //change this to widegt.email
+        email: widget.email,
         password: passwordController.text.trim(),
       );
       if (mounted) {
@@ -196,16 +196,13 @@ class _LoginPasswordState extends State<LoginPassword> {
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
               if(state is AuthFailure){
-                //add snackbar
+                //showSnackBar(context, state.message);
               }
               if(state is AuthSuccess){
                 context.goNamed(RouteConstants.home);
               }
             },
             builder: (context, state) {
-              if(state is AuthLoading){
-                // Add circular indicator
-              }
               return Form(
                 key: formKey,
                 child: Column(
@@ -218,10 +215,9 @@ class _LoginPasswordState extends State<LoginPassword> {
                         left: 16,
                         right: 16,
                         top: 15,
-                        bottom: 16,
+                        bottom: 10
                       ),
                       width: 360,
-                      height: 60,
                       child: TextFormField(
                         readOnly: true,
                         focusNode: _focusNode,
@@ -233,57 +229,76 @@ class _LoginPasswordState extends State<LoginPassword> {
                             color: Pallete.enabledBorderColor,
                           ),
                           suffixIcon: IconButton(
-                            onPressed: () => context.replaceNamed(
-                              RouteConstants.loginUsername,
-                              queryParameters: {"text": email},
-                            ),
+                            onPressed: () { 
+                              context.pop();
+                              context.replaceNamed(
+                                RouteConstants.loginUsername,
+                                queryParameters: {"email": widget.email},
+                              );
+                              final container = ProviderScope.containerOf(context);
+                              container.read(isObscuredProvider.notifier).state = true;
+                            },
                             icon: const Icon(Icons.edit, size: 25),
                           ),
                         ),
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        left: 16,
-                        right: 16,
-                        top: 15,
-                        bottom: 10,
-                      ),
-                      width: 360,
-                      height: 60,
-                      child: TextFormField(
-                        controller: passwordController,
-                        obscureText: isVisible,
-                        autofocus: true,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Password cannot be empty";
+                    // Container(
+                    //   margin: const EdgeInsets.only(
+                    //     left: 16,
+                    //     right: 16,
+                    //     top: 15,
+                    //   ),
+                    //   width: 360,
+                    //   child: TextFormField(
+                    //     controller: passwordController,
+                    //     obscureText: isObscured,
+                    //     autofocus: true,
+                    //     validator: (value) {
+                    //       if (value!.isEmpty) {
+                    //         return "Password cannot be empty";
+                    //       }
+                    //       return null;
+                    //     },
+                    //     decoration: InputDecoration(
+                    //       labelText: "Password",
+                    //       suffixIcon: IconButton(
+                    //         onPressed: () {
+                    //           setState(() {
+                    //             isObscured = !isObscured;
+                    //           });
+                    //         },
+                    //         icon: Icon(
+                    //           isObscured
+                    //               ? Icons.visibility
+                    //               : Icons.visibility_off,
+                    //           size: 30,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     style: Theme.of(context).textTheme.bodyLarge,
+                    //   ),
+                    // ),
+                    Consumer(
+                      builder: (context, ref, child){
+                        bool isObscured = ref.watch(isObscuredProvider);
+                        return Passwordtextfield(
+                          controller: passwordController, 
+                          isObscured: isObscured,
+                          autoFocus: true,
+                          onTap: (){
+                            ref.read(isObscuredProvider.notifier).state = !isObscured;
                           }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          labelText: "Password",
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isVisible = !isVisible;
-                              });
-                            },
-                            icon: Icon(
-                              isVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
+                        );
+                      },
                     ),
                     ForgotPassword(
                       onTap: () async => await resetPasswordDialog(),
                     ),
+                    state is AuthLoading?
+                    const Circularindicator()
+                    :
                     Button(
                       onTap: () async {
                         // if(passwordController.text.isEmpty){
@@ -304,7 +319,7 @@ class _LoginPasswordState extends State<LoginPassword> {
                         if (formKey.currentState!.validate()) {
                           context.read<AuthBloc>().add(
                             LoginEvent(
-                              email: email,
+                              email: widget.email,
                               password: passwordController.text.trim(),
                             ),
                           );
@@ -321,6 +336,9 @@ class _LoginPasswordState extends State<LoginPassword> {
                       text: "Don't have an account?",
                       buttonText: "Sign up",
                       onTap: () {
+                        final container = ProviderScope.containerOf(context);
+                        container.read(isObscuredProvider.notifier).state = true;
+                        context.pop();
                         context.replaceNamed(RouteConstants.register);
                       },
                     ),
