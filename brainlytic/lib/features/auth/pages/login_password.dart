@@ -1,4 +1,4 @@
-import 'package:brainlytic/core/common/utils/utils.dart';
+//import 'package:brainlytic/core/common/utils/utils.dart';
 import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
@@ -196,7 +196,7 @@ class _LoginPasswordState extends State<LoginPassword> {
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
               if(state is AuthFailure){
-                showSnackBar(context, state.message);
+                //showSnackBar(context, state.message);
               }
               if(state is AuthSuccess){
                 context.goNamed(RouteConstants.home);
@@ -235,6 +235,8 @@ class _LoginPasswordState extends State<LoginPassword> {
                                 RouteConstants.loginUsername,
                                 queryParameters: {"email": widget.email},
                               );
+                              final container = ProviderScope.containerOf(context);
+                              container.read(isObscuredProvider.notifier).state = true;
                             },
                             icon: const Icon(Icons.edit, size: 25),
                           ),
