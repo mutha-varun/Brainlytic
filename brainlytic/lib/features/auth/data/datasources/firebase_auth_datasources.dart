@@ -27,7 +27,6 @@ class FirebaseAuthDatasources {
     }catch(e){
       throw Serverexception(e.toString());
     }
-    
   }
   
   Future<UserModel> loginWithEmailPassword({
@@ -41,7 +40,7 @@ class FirebaseAuthDatasources {
       );
 
       if(cred.user == null){
-        throw Serverexception("User not found");
+        throw const Serverexception("User not found");
       }
 
       var map = {
