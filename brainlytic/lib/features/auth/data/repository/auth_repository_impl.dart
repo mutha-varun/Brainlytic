@@ -1,7 +1,9 @@
 import 'package:brainlytic/core/errors/appfailure.dart';
+import 'package:brainlytic/core/errors/serverexception.dart';
 import 'package:brainlytic/features/auth/data/datasources/firebase_auth_datasources.dart';
 import 'package:brainlytic/features/auth/data/model/user_model.dart';
 import 'package:brainlytic/features/auth/domain/repository/auth_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
 
 class AuthRepositoryImpl implements AuthRepository{
@@ -30,8 +32,11 @@ class AuthRepositoryImpl implements AuthRepository{
       final user = await _authDatasources.loginWithEmailPassword(email: email, password: password);
 
       return Right(user);
-    }catch(e){
-      throw Left(AppFailure(e.toString()));
+    }on Serverexception catch(e){
+      return Left(AppFailure(e.message));
+    }
+    on FirebaseAuthException catch(e){
+      return Left(AppFailure(e.message!));
     }
   }
 
@@ -45,8 +50,11 @@ class AuthRepositoryImpl implements AuthRepository{
       final user = await _authDatasources.registerWithEmailPassword(name: name,email: email, password: password);
 
       return Right(user);
-    } catch(e){
-      return Left(AppFailure(e.toString()));
+    }on Serverexception catch(e){
+      return Left(AppFailure(e.message));
+    }
+    on FirebaseAuthException catch(e){
+      return Left(AppFailure(e.message!));
     }
   }
 
