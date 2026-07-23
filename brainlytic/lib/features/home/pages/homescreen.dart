@@ -1,6 +1,6 @@
 import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/features/common/widgets/circularindicator.dart';
-import 'package:brainlytic/features/home/quiz_topics_templates.dart';
+import 'package:brainlytic/features/home/pages/widgets/quiz_topics_templates.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
