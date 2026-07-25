@@ -11,4 +11,5 @@ class Pallete {
   static Color indigo700Color =Colors.indigoAccent.shade700;
   static Color correctAnsColor = Colors.green;
   static Color redColor = Colors.red;
+  static Color snackBarColor = Color.fromRGBO(90, 90, 90, 1);
 }

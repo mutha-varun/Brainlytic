@@ -1,4 +1,5 @@
 import 'package:brainlytic/core/router/route_constants.dart';
+import 'package:brainlytic/core/utility/utils.dart';
 import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
 import 'package:brainlytic/features/auth/pages/widgets/appname.dart';
 import 'package:brainlytic/features/auth/pages/widgets/button.dart';
@@ -110,7 +111,7 @@ class _RegisterState extends State<Register> {
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
               if(state is AuthFailure){
-                return ;
+                return showSnackBar(context, state.message);
               }
               if(state is AuthSuccess){
                 context.replaceNamed(RouteConstants.loginUsername);
