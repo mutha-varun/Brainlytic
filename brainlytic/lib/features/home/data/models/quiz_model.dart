@@ -1,15 +1,12 @@
+import 'package:brainlytic/core/entities/quiz.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class QuizModel{
-  final String color;
-  final String title;
-  final int id;
-  final int totalQuestions;
+class QuizModel extends Quiz{
   const QuizModel({
-    required this.color, 
-    required this.title, 
-    required this.id, 
-    required this.totalQuestions,
+    required super.color, 
+    required super.title, 
+    required super.id, 
+    required super.totalQuestions,
   });
 
   factory QuizModel.fromDoc(QueryDocumentSnapshot<Map<String, dynamic>> doc){
