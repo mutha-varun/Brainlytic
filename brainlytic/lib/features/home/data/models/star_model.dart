@@ -1,11 +1,11 @@
-import 'package:brainlytic/core/entities/star.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class StarModel extends Star{
-  
+class StarModel {
+  final int quizId;
+  final int star;
   StarModel({
-    required super.quizId,
-    required super.star
+    required this.quizId,
+    required this.star
   });
 
   factory StarModel.fromDoc(QueryDocumentSnapshot<Map<String, dynamic>> doc){
