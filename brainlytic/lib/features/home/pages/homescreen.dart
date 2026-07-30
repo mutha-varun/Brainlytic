@@ -1,6 +1,6 @@
+import 'package:brainlytic/core/entities/quiz.dart';
 import 'package:brainlytic/core/router/app_router.dart';
 import 'package:brainlytic/features/common/widgets/circularindicator.dart';
-import 'package:brainlytic/features/home/data/models/quiz_model.dart';
 import 'package:brainlytic/features/home/pages/bloc/home_bloc.dart';
 import 'package:brainlytic/features/home/pages/widgets/quiz_topics_templates.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -185,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware{
           }
 
           else if(state is HomeDataFetchSuccess){
-            final List<QuizModel> quizzes = state.quizzes;
+            final List<Quiz> quizzes = state.quizzes;
             final  stars = state.stars;
 
             return ListView.builder(

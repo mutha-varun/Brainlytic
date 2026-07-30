@@ -6,7 +6,7 @@ sealed class HomeState {}
 final class HomeLoading extends HomeState{}
 
 final class HomeDataFetchSuccess extends HomeState{
-  final List<QuizModel> quizzes;
+  final List<Quiz> quizzes;
   final Map<String, int> stars;
   HomeDataFetchSuccess(this.quizzes, this.stars);
 }

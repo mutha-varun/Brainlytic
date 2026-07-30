@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:brainlytic/features/home/data/models/quiz_model.dart';
+import 'package:brainlytic/core/entities/quiz.dart';
 import 'package:brainlytic/features/home/domain/usecase/quizdata_usecase.dart';
 import 'package:brainlytic/features/home/domain/usecase/star_usecase.dart';
 import 'package:meta/meta.dart';
