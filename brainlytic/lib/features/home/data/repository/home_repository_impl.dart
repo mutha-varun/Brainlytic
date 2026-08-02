@@ -10,14 +10,14 @@ class HomeRepositoryImpl implements HomeRepository{
   HomeRepositoryImpl(this._firestoreDatasource);
   
   @override
-  Future<List<QuizModel>> getQuizData({required String userId}) async{
+  Future<List<QuizModel>> getQuizData() async{
     final data = await _firestoreDatasource.getQuizData();
     return data.docs.map(QuizModel.fromDoc).toList();
   }
   
   @override
-  Future<Map<String, int>> getUserStars({required String userId}) async{
-    final data = await _firestoreDatasource.getUserStars(userId: userId);
+  Future<Map<String, int>> getUserStars() async{
+    final data = await _firestoreDatasource.getUserStars();
     return {
       for(final entry in data) 'quiz${entry.quizId}': entry.star,
     };

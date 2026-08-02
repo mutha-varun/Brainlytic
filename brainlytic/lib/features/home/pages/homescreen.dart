@@ -21,8 +21,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with RouteAware{
 
-  late final String userId;
-
 //   final userId = FirebaseAuth.instance.currentUser!.uid;
 //   final name = FirebaseAuth.instance.currentUser!.displayName;
 
@@ -88,8 +86,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware{
   @override
   void initState() {
     super.initState();
-    userId = FirebaseAuth.instance.currentUser!.uid;
-    context.read<HomeBloc>().add(HomeDataFetch(userId));
+    context.read<HomeBloc>().add(HomeDataFetch());
   }
 
   @override
@@ -100,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware{
 
   @override
   void didPopNext() {
-    context.read<HomeBloc>().add(StarRefreshed(userId));
+    context.read<HomeBloc>().add(StarRefreshed());
     super.didPopNext();
   }
 
@@ -202,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware{
               }
             );
           }
-          return Circularindicator();
+          return Center(child: Circularindicator());
         }, 
       )
     );

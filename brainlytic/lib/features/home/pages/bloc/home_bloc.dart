@@ -24,8 +24,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     
     on<HomeDataFetch>((event, emit) async {
       try{
-        final res = await _quizdataUsecase(userId: event.userId);
-        final stars = await _starUsecase(userId: event.userId);
+        final res = await _quizdataUsecase();
+        final stars = await _starUsecase();
 
         emit(HomeDataFetchSuccess(res, stars));
       }catch(e){
@@ -40,7 +40,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return;
       }
       try{
-        final stars = await _starUsecase(userId: event.userId);
+        final stars = await _starUsecase();
         emit(HomeDataFetchSuccess(current.quizzes, stars));
       }catch(e){
         emit(HomeError(e.toString()));

@@ -4,9 +4,7 @@ class StarUsecase {
   final HomeRepository _homeRepository;
   StarUsecase(this._homeRepository);
 
-  Future<Map<String, int>> call({
-    required String userId
-  }){
-    return _homeRepository.getUserStars(userId: userId);
+  Future<Map<String, int>> call() {
+    return _homeRepository.getUserStars();
   }
 }
