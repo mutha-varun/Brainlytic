@@ -7,11 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String? userId;
-
   const HomeScreen({
     super.key,
-    this.userId,
   });
 
   @override
