@@ -32,10 +32,4 @@ class FirestoreDatasource {
       throw Serverexception(e.toString());
     } 
   }
-
-  Future<void> updateQuizStar({
-    required int quizId
-  }) async{
-
-  }
 }
