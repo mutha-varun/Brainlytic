@@ -18,3 +18,7 @@ final class AuthFailure extends AuthState {
   AuthFailure(this.message);
 }
 
+final class AuthUnauthenticated extends AuthState{
+  
+}
+
