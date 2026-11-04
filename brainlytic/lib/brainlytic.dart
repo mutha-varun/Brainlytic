@@ -4,6 +4,7 @@ import 'package:brainlytic/features/auth/data/datasources/firebase_auth_datasour
 import 'package:brainlytic/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:brainlytic/features/auth/domain/usecases/login_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/register_usecase.dart';
+import 'package:brainlytic/features/auth/domain/usecases/signout_usecase.dart';
 import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
 import 'package:brainlytic/features/home/data/datasource/firestore_datasource.dart';
 import 'package:brainlytic/features/home/data/repository/home_repository_impl.dart';
@@ -18,19 +19,20 @@ class Brainlytic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authDatasources = FirebaseAuthDatasources();
+    final authRepository = AuthRepositoryImpl(authDatasources);
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(
           create: (_)=>AuthBloc(
             registerUsecase: RegisterUsecase(
-              AuthRepositoryImpl(
-                FirebaseAuthDatasources()
-              )
+              authRepository
             ),
             loginUsecase: LoginUsecase(
-              AuthRepositoryImpl(
-                FirebaseAuthDatasources()
-              )
+              authRepository
+            ),
+            signoutUsecase: SignoutUsecase(
+              authRepository
             )
           )
         ),

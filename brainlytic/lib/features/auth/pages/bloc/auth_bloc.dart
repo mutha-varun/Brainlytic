@@ -1,6 +1,7 @@
 import 'package:brainlytic/core/entities/user.dart';
 import 'package:brainlytic/features/auth/domain/usecases/login_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/register_usecase.dart';
+import 'package:brainlytic/features/auth/domain/usecases/signout_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -11,13 +12,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   final RegisterUsecase _registerUsecase;
   final LoginUsecase _loginUsecase;
+  final SignoutUsecase _signoutUsecase;
 
   AuthBloc({
     required RegisterUsecase registerUsecase,
-    required LoginUsecase loginUsecase
+    required LoginUsecase loginUsecase,
+    required SignoutUsecase signoutUsecase
   }) : 
   _registerUsecase = registerUsecase,
   _loginUsecase = loginUsecase,
+  _signoutUsecase = signoutUsecase,
   super(AuthInitial()) {
     on<AuthEvent>((_, emit) =>emit(AuthLoading()));
 
@@ -45,5 +49,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         (user)=>emit(AuthSuccess(user))
       );
     });
+
+    on<SignoutEvent>((event, emit) async{
+      await _signoutUsecase();
+      emit(AuthUnauthenticated());
+    },);
   }
 }
