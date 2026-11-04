@@ -1,4 +1,3 @@
-import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/common/widgets/circularindicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -79,7 +78,7 @@ class _QuizpageState extends State<Quizpage> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    context.goNamed(RouteConstants.home); // Go back to the home screen
+                    context.pop(); // Go back to the home screen
                   },
                   child: Text("OK",
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
