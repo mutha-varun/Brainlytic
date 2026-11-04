@@ -1,5 +1,8 @@
 import 'package:brainlytic/core/entities/quiz.dart';
 import 'package:brainlytic/core/router/app_router.dart';
+import 'package:brainlytic/core/theme/pallete.dart';
+import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
+import 'package:brainlytic/features/common/methods/fromhex.dart';
 import 'package:brainlytic/features/common/widgets/circularindicator.dart';
 import 'package:brainlytic/features/home/pages/bloc/home_bloc.dart';
 import 'package:brainlytic/features/home/pages/widgets/quiz_topics_templates.dart';
@@ -16,26 +19,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with RouteAware{
-
-//   final userId = FirebaseAuth.instance.currentUser!.uid;
-//   final name = FirebaseAuth.instance.currentUser!.displayName;
-
-//   Stream<Map<String, int>> getUserStars(){
-//     return FirebaseFirestore.instance.collection('userData').
-//     doc(userId).collection('quizData').snapshots().
-//     map((snapshot) {
-//       final starsMap = <String, int>{};
-//       for (var doc in snapshot.docs) {
-//         final quizNumber = doc.id.replaceAll('quiz', '');
-//         starsMap['quiz$quizNumber'] = doc['stars'] as int;
-//       }
-//       return starsMap;
-//     });
-//   }
-
-  Color hextoColor(String hex) {
-      return Color(int.parse(hex, radix: 16) + 0xFF000000);
-  }
 
 //   void signOut(){
 //     showDialog(context: context, builder: (context) {
@@ -102,16 +85,17 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 45,
         title: Padding(
           padding: const EdgeInsets.only(left: 5),
           child: Row(
-            spacing: 5,
+            spacing: 10,
             children: [
               Icon(Icons.home,
-                size: 30,
+                size: 26,
               ),
               Text("Hey!",
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
@@ -119,11 +103,18 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware{
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            padding: EdgeInsets.only(right: 20),
+            style: IconButton.styleFrom(
+              shape: const CircleBorder(), 
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            splashRadius: 6,
+            
             icon: const Icon(Icons.logout),
-            onPressed: () {},
+            onPressed: () {
+            },
           ),
         ],
+        backgroundColor: Pallete.focusedBorderColor,
       ),
       // body: Column(
       //   mainAxisAlignment: MainAxisAlignment.center,
@@ -170,7 +161,6 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware{
           }
         },
         builder: (context, state){
-
           if(state is HomeLoading){
             return Center(
               child: Circularindicator()
