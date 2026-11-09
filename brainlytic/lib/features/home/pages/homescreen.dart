@@ -6,6 +6,7 @@ import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
 import 'package:brainlytic/features/common/methods/fromhex.dart';
 import 'package:brainlytic/features/common/widgets/circularindicator.dart';
 import 'package:brainlytic/features/home/pages/bloc/home_bloc.dart';
+import 'package:brainlytic/features/home/pages/widgets/confirmation.dart';
 import 'package:brainlytic/features/home/pages/widgets/quiz_topics_templates.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -120,8 +121,12 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware{
               
               icon: const Icon(Icons.logout),
               onPressed: () {
-                context.read<AuthBloc>().add(SignoutEvent());
-                
+                showDialog(
+                  context: context, 
+                  builder: (context){
+                    return Confirmation();
+                  }
+                );
               },
             ),
           ],
