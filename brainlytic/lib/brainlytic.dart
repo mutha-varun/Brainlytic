@@ -11,6 +11,11 @@ import 'package:brainlytic/features/home/data/repository/home_repository_impl.da
 import 'package:brainlytic/features/home/domain/usecase/quizdata_usecase.dart';
 import 'package:brainlytic/features/home/domain/usecase/star_usecase.dart';
 import 'package:brainlytic/features/home/pages/bloc/home_bloc.dart';
+import 'package:brainlytic/features/quiz/data/datasource/firestore_quiz_datasource.dart';
+import 'package:brainlytic/features/quiz/data/repository/quiz_repository_impl.dart';
+import 'package:brainlytic/features/quiz/domain/usecase/first_question_usecase.dart';
+import 'package:brainlytic/features/quiz/domain/usecase/update_usecase.dart';
+import 'package:brainlytic/features/quiz/pages/bloc/quiz_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,7 +44,6 @@ class Brainlytic extends StatelessWidget {
         BlocProvider<HomeBloc>(
           create: (_){
             final datasource = FirestoreDatasource();
-
             final repository = HomeRepositoryImpl(datasource);
             return HomeBloc(
             quizdataUsecase: QuizdataUsecase(
@@ -48,6 +52,16 @@ class Brainlytic extends StatelessWidget {
               starUsecase: StarUsecase(
                 repository
               )
+            );
+          }
+        ),
+        BlocProvider<QuizBloc>(
+          create: (_){
+            final quizDatasource = FirestoreQuizDatasource();
+            final quizRepository = QuizRepositoryImpl(quizDatasource);
+            return QuizBloc(
+              firstQuestionUsecase: FirstQuestionUsecase(quizRepository),
+              updateUsecase: UpdateUsecase(quizRepository)
             );
           }
         )
