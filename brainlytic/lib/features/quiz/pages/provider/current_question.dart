@@ -2,7 +2,8 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final currentQuestionProvider = NotifierProvider(()=>CurrentQuestion());
+final currentQuestionProvider =
+    NotifierProvider.autoDispose<CurrentQuestion, int>(CurrentQuestion.new);
 
 class CurrentQuestion extends Notifier<int>{
   @override
@@ -10,5 +11,9 @@ class CurrentQuestion extends Notifier<int>{
 
   void increment(){
     state++;
+  }
+
+  void reset(){
+    state = 1;
   }
 }
