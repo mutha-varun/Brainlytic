@@ -7,13 +7,13 @@ final currentQuestionProvider =
 
 class CurrentQuestion extends Notifier<int>{
   @override
-  int build() => 1;
+  int build() => 0;
 
   void increment(){
     state++;
   }
 
   void reset(){
-    state = 1;
+    state = 0;
   }
 }
