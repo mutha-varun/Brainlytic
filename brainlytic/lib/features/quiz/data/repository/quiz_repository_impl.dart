@@ -13,5 +13,9 @@ class QuizRepositoryImpl extends QuizRepository{
     return _datasource.fetch(quizId: quizId);
   }
   
+  @override
+  Future<void> update({required String quizId, required int score}){
+    return _datasource.update(quizId: quizId, score: score);
+  }
 }
 
