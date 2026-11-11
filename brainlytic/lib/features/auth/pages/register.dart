@@ -11,8 +11,6 @@ import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
 import 'package:brainlytic/features/auth/pages/widgets/questiontext.dart';
 import 'package:brainlytic/features/auth/provider/isobscured.dart';
 import 'package:brainlytic/features/common/widgets/circularindicator.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,62 +43,64 @@ class _RegisterState extends State<Register> {
     super.dispose();
   }
 
-  Future<void> createUserData() async{
-    try{
-      final user = FirebaseAuth.instance.currentUser;
+  // Make this in datasource
 
-      if(user!=null){
-        await FirebaseFirestore.instance.collection('userData').doc(user.uid).set({"uid": user.uid});
+  // Future<void> createUserData() async{
+  //   try{
+  //     final user = FirebaseAuth.instance.currentUser;
 
-        for(int i=1; i<=8; i++){
-          await FirebaseFirestore.instance.collection("userData").doc(user.uid).
-          collection('quizData').doc("quiz$i").set({
-            "stars": 0,
-            "id": i
-          });
-        }
-      }
+  //     if(user!=null){
+  //       await FirebaseFirestore.instance.collection('userData').doc(user.uid).set({"uid": user.uid});
+
+  //       for(int i=1; i<=8; i++){
+  //         await FirebaseFirestore.instance.collection("userData").doc(user.uid).
+  //         collection('quizData').doc("quiz$i").set({
+  //           "stars": 0,
+  //           "id": i
+  //         });
+  //       }
+  //     }
       
-    }catch(e){
-      if(mounted){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.toString(),
-              textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18
-            ),
-          )
-        )
-        );
-      }
-    }
-  }
+  //   }catch(e){
+  //     if(mounted){
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text(e.toString(),
+  //             textAlign: TextAlign.center,
+  //           style: TextStyle(
+  //             fontSize: 18
+  //           ),
+  //         )
+  //       )
+  //       );
+  //     }
+  //   }
+  // }
 
-  Future<bool> createUser() async{
-    try{
-      final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim()
-      );
-      await userCredential.user!.updateDisplayName(nameController.text.trim());
-      await createUserData();
+  // Future<bool> createUser() async{
+  //   try{
+  //     final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //       email: emailController.text.trim(),
+  //       password: passwordController.text.trim()
+  //     );
+  //     await userCredential.user!.updateDisplayName(nameController.text.trim());
+  //     await createUserData();
 
-      return true;
-    }on FirebaseAuthException catch(e){
-      if(mounted){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.message!,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        );
-      }
-      return false;
-    }
-  }
+  //     return true;
+  //   }on FirebaseAuthException catch(e){
+  //     if(mounted){
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text(e.message!,
+  //             textAlign: TextAlign.center,
+  //             style: TextStyle(fontSize: 18),
+  //           ),
+  //         ),
+  //       );
+  //     }
+  //     return false;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -134,33 +134,6 @@ class _RegisterState extends State<Register> {
                       controller: emailController, 
                       text: "Email"
                     ),
-                    // Container(
-                    //   margin: const EdgeInsets.only(left: 16,right: 16, top: 15,),
-                    //   width: 360,
-                    //   child: TextFormField(
-                    //     obscureText: isObscured,
-                    //     controller: passwordController,
-                    //     validator: (value) {
-                    //       if(value!.isEmpty){
-                    //         return "Password cannot be empty";
-                    //       }
-                    //       return null;
-                    //     },
-                    //     decoration: InputDecoration(
-                    //       label: Text("Password"),
-                    //       suffixIcon: IconButton(
-                    //         onPressed: (){
-                    //           setState(() {
-                    //             isObscured = !isObscured;
-                    //           });
-                    //         },
-                    //         icon: Icon(isObscured? Icons.visibility : Icons.visibility_off,
-                    //           size: 30,
-                    //         )
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     Consumer(
                       builder: (context, ref, child){
                         bool isObscured = ref.watch(isObscuredProvider);
@@ -179,46 +152,6 @@ class _RegisterState extends State<Register> {
                     :
                     Button(
                       onTap: () async {
-                        // if (nameController.text.isEmpty) {
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //     SnackBar(
-                        //       content: Text(
-                        //         "Name cannot be empty",
-                        //         textAlign: TextAlign.center,
-                        //         style: TextStyle(fontSize: 18),
-                        //       ),
-                        //     ),
-                        //   );
-                        // } else if (emailController.text.isEmpty) {
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //     SnackBar(
-                        //       content: Text(
-                        //         "E-mail cannot be empty",
-                        //         textAlign: TextAlign.center,
-                        //         style: TextStyle(fontSize: 18),
-                        //       ),
-                        //     ), 
-                        //   );
-                        // } else if (passwordController.text.isEmpty) {
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //     SnackBar(
-                        //       content: Text(
-                        //         "Password is required",
-                        //         textAlign: TextAlign.center,
-                        //         style: TextStyle(fontSize: 18),
-                        //       ),
-                        //     ),
-                        //   );
-                        // } else {
-                        //   bool isCreated = await createUser();
-                        //   if (isCreated) {
-                        //     if (context.mounted) {
-                        //       context.replaceNamed(
-                        //         RouteConstants.loginUsername,
-                        //       );
-                        //     }
-                        //   }
-                        // }
                         if(formkey.currentState!.validate()){
                           context.read<AuthBloc>().add(
                             RegisterEvent(

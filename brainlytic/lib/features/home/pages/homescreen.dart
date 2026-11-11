@@ -23,42 +23,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with RouteAware{
 
-//   void signOut(){
-//     showDialog(context: context, builder: (context) {
-//       return AlertDialog(
-//         title: Text("Logout",
-//           textAlign: TextAlign.center,
-//           style: Theme.of(context).textTheme.titleLarge
-//         ),
-//         content: Text("Are you sure you want to logout?",
-//           style: Theme.of(context).textTheme.bodyLarge
-//         ),
-//         actions: [
-//           TextButton(
-//             onPressed: () => Navigator.pop(context),
-//             child: Text("No",
-//               style: Theme.of(context).textTheme.titleSmall!.copyWith(
-//                 color: Colors.blue
-//               )
-//             ),
-//           ),
-//           TextButton(
-//             onPressed: () {
-//               FirebaseAuth.instance.signOut();
-//               context.goNamed(RouteConstants.onboarding);
-//             },
-//             child:  Text("Logout",
-//               style: Theme.of(context).textTheme.titleSmall!.copyWith(
-//                 color: Colors.red
-//               )
-//             ),
-//           ),
-//         ],
-//       );
-//     });
-//   }
-
-
   @override
   void didChangeDependencies() {
     routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
@@ -132,44 +96,6 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware{
           ],
           backgroundColor: Pallete.focusedBorderColor,
         ),
-        // body: Column(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: [
-          //   StreamBuilder<Map<String, int>>(
-          //     stream: getUserStars(),
-          //     builder: (context, asyncSnapshot) {
-          //       return StreamBuilder(
-          //         stream: FirebaseFirestore.instance.collection('quizzes').snapshots(),
-          //         builder: (context, snapshot) {
-          //           if (snapshot.connectionState == ConnectionState.waiting) {
-          //             return Center(
-          //               child: const Circularindicator(),
-          //             );
-          //           }
-          //           return Expanded(
-          //             child: ListView.builder(
-          //               itemCount: 7,
-          //               itemBuilder: (context, index){
-          //                 final quizData = snapshot.data!.docs[index].data();
-          //                 final quizId = 'quiz${quizData['id']}';
-          //                 final userStars  = asyncSnapshot.data?[quizId] ?? 0;
-
-          //                 return QuizTopicsTemplates(
-          //                   color: hextoColor(quizData['color']),
-          //                   title: quizData['title'],
-          //                   id: quizData['id'],
-          //                   stars: userStars,
-          //                   totalQuestions: quizData['Questions'],
-          //                 );
-          //               },
-          //             ),
-          //           );
-          //         }
-          //       );
-          //     }
-          //   ),
-          // ],
-        //),
         body: BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state){
             if(state is HomeError){

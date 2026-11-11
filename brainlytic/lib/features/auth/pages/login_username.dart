@@ -49,21 +49,6 @@ class _LoginUsernameState extends State<LoginUsername> {
                 const SizedBox(height: 15,),
                 Button(
                   onTap: () async{
-                    // if(emailController.text.isEmpty){
-                    //   ScaffoldMessenger.of(context).showSnackBar(
-                    //     const SnackBar(
-                    //       content: Text("E-mail cannot be empty",
-                    //       textAlign: TextAlign.center,
-                    //         style: TextStyle(
-                    //           fontSize: 18
-                    //         ),
-                    //       )
-                    //     )
-                    //   );
-                    // }
-                    // else{
-                    //   context.pushNamed(RouteConstants.loginPassword);
-                    // }
                     if(formKey.currentState!.validate()){
                       context.pushNamed(
                         RouteConstants.loginPassword,

@@ -44,31 +44,8 @@ class _LoginPasswordState extends State<LoginPassword> {
     emailController = TextEditingController(text: widget.email);
     super.initState();
   }
-
-  Future<void> loginUser() async {
-    try {
-      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
-        email: widget.email,
-        password: passwordController.text.trim(),
-      );
-      if (mounted) {
-        context.goNamed(RouteConstants.home);
-      }
-    } on FirebaseAuthException catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              e.message!,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        );
-      }
-    }
-  }
-
+  
+  //remove the implementation of reset password
   Future<void> resetPasswordDialog() async {
     await showDialog<void>(
       context: context,
@@ -245,42 +222,6 @@ class _LoginPasswordState extends State<LoginPassword> {
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
-                    // Container(
-                    //   margin: const EdgeInsets.only(
-                    //     left: 16,
-                    //     right: 16,
-                    //     top: 15,
-                    //   ),
-                    //   width: 360,
-                    //   child: TextFormField(
-                    //     controller: passwordController,
-                    //     obscureText: isObscured,
-                    //     autofocus: true,
-                    //     validator: (value) {
-                    //       if (value!.isEmpty) {
-                    //         return "Password cannot be empty";
-                    //       }
-                    //       return null;
-                    //     },
-                    //     decoration: InputDecoration(
-                    //       labelText: "Password",
-                    //       suffixIcon: IconButton(
-                    //         onPressed: () {
-                    //           setState(() {
-                    //             isObscured = !isObscured;
-                    //           });
-                    //         },
-                    //         icon: Icon(
-                    //           isObscured
-                    //               ? Icons.visibility
-                    //               : Icons.visibility_off,
-                    //           size: 30,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     style: Theme.of(context).textTheme.bodyLarge,
-                    //   ),
-                    // ),
                     Consumer(
                       builder: (context, ref, child){
                         bool isObscured = ref.watch(isObscuredProvider);
@@ -302,21 +243,6 @@ class _LoginPasswordState extends State<LoginPassword> {
                     :
                     Button(
                       onTap: () async {
-                        // if(passwordController.text.isEmpty){
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //     const SnackBar(
-                        //       content: Text("Password is required",
-                        //         textAlign: TextAlign.center,
-                        //         style: TextStyle(
-                        //           fontSize: 18
-                        //         ),
-                        //       )
-                        //     )
-                        //   );
-                        // }
-                        // else{
-                        //   await loginUser();
-                        // }
                         if (formKey.currentState!.validate()) {
                           context.read<AuthBloc>().add(
                             LoginEvent(

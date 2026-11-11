@@ -26,6 +26,10 @@ class Brainlytic extends StatelessWidget {
   Widget build(BuildContext context) {
     final authDatasources = FirebaseAuthDatasources();
     final authRepository = AuthRepositoryImpl(authDatasources);
+    final homeDatasource = FirestoreDatasource();
+    final homeRepository = HomeRepositoryImpl(homeDatasource);
+    final quizDatasource = FirestoreQuizDatasource();
+    final quizRepository = QuizRepositoryImpl(quizDatasource);
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(
@@ -43,22 +47,18 @@ class Brainlytic extends StatelessWidget {
         ),
         BlocProvider<HomeBloc>(
           create: (_){
-            final datasource = FirestoreDatasource();
-            final repository = HomeRepositoryImpl(datasource);
             return HomeBloc(
-            quizdataUsecase: QuizdataUsecase(
-              repository
-            ), 
+              quizdataUsecase: QuizdataUsecase(
+                homeRepository
+              ), 
               starUsecase: StarUsecase(
-                repository
+                homeRepository
               )
             );
           }
         ),
         BlocProvider<QuizBloc>(
           create: (_){
-            final quizDatasource = FirestoreQuizDatasource();
-            final quizRepository = QuizRepositoryImpl(quizDatasource);
             return QuizBloc(
               firstQuestionUsecase: FirstQuestionUsecase(quizRepository),
               updateUsecase: UpdateUsecase(quizRepository)
@@ -70,17 +70,6 @@ class Brainlytic extends StatelessWidget {
         title: "Brainlytic",
         debugShowCheckedModeBanner: false,
         theme: AppTheme.darkTheme,
-        // home: StreamBuilder(
-        //   stream: FirebaseAuth.instance.authStateChanges(),
-        //   builder: (context, snapshot) {
-            
-        //     if(snapshot.data != null){
-        //       return HomeScreen();
-        //     }
-        //     return Onboarding();
-        //   },
-        // )
-      
         routerConfig: appRouter,
       ),
     );
