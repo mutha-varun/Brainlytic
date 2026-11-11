@@ -1,6 +1,5 @@
 import 'package:brainlytic/core/entities/user.dart';
 import 'package:brainlytic/core/errors/appfailure.dart';
-import 'package:brainlytic/features/auth/data/model/user_model.dart';
 
 import 'package:fpdart/fpdart.dart';
 
@@ -17,5 +16,5 @@ abstract class AuthRepository {
   });
   
   Future<void> signOut();
-  Stream<UserModel?> get authStateChanges;
+  Stream<User?> get authStateChanges;
 }
