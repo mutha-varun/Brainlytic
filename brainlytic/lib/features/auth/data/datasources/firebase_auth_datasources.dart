@@ -1,9 +1,38 @@
 import 'package:brainlytic/core/errors/serverexception.dart';
 import 'package:brainlytic/features/auth/data/model/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fba;
 
 class FirebaseAuthDatasources {
   final fba.FirebaseAuth _auth = fba.FirebaseAuth.instance;
+
+
+  Future<bool> createUserData({required String uid}) async{
+    try{
+      final user = _auth.currentUser;
+      final FirebaseFirestore fireStore = FirebaseFirestore.instance;
+
+      
+      await fireStore.collection("userData").doc(uid).set({"uid": uid});
+      final length = await fireStore.collection("quizzes").count().get();
+      if(length.count is int){
+        for(int i=1; i<=(length.count ?? 8); i++){
+          await fireStore.collection("userData").doc(uid).
+          collection('quizData').doc("quiz$i").set({
+            "stars": 0,
+            "id": i
+          });
+        }
+
+        return true;
+      }
+      
+      return false;
+      
+    }catch(e){
+      return false;
+    }
+  }
 
   Future<UserModel> registerWithEmailPassword({
     required String name,
@@ -15,6 +44,12 @@ class FirebaseAuthDatasources {
       cred.user!.updateDisplayName(name);
       if(cred.user == null){
         throw Serverexception("User not created");
+      }
+
+      final res = await createUserData(uid: cred.user!.uid);
+
+      if(!res){
+        throw Serverexception("User data cannot be created");
       }
 
       var map = {
