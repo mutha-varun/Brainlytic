@@ -14,6 +14,8 @@ abstract class AuthRepository {
       required String email, 
       required String password
   });
+
+  Future<Either<AppFailure, User>> googleSignin();
   
   Future<void> signOut();
   Stream<User?> get authStateChanges;

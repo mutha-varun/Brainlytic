@@ -59,6 +59,20 @@ class AuthRepositoryImpl implements AuthRepository{
   }
 
   @override
+  Future<Either<AppFailure, UserModel>> googleSignin() async{
+    try{
+      final user = await _authDatasources.singinWithGoogle();
+
+      return Right(user);
+    }on Serverexception catch(e){
+      return Left(AppFailure(e.message));
+    }
+    on FirebaseAuthException catch(e){
+      return Left(AppFailure(e.message!));
+    }
+  }
+
+  @override
   Future<void> signOut() => _authDatasources.signOut();
 
 }
