@@ -2,6 +2,7 @@ import 'package:brainlytic/core/errors/serverexception.dart';
 import 'package:brainlytic/features/auth/data/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fba;
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthDatasources {
@@ -108,6 +109,42 @@ class FirebaseAuthDatasources {
       return UserModel.fromMap(map);
 
     } catch(e){
+      throw Serverexception(e.toString());
+    }
+  }
+
+  Future<UserModel> signinWithGithub()async{
+    try{
+
+      fba.GithubAuthProvider githubAuthProvider = fba.GithubAuthProvider();
+      late final fba.UserCredential cred;
+      if(kIsWeb){
+        cred = await fba.FirebaseAuth.instance.signInWithPopup(githubAuthProvider);
+      }
+      else{
+        cred = await fba.FirebaseAuth.instance.signInWithProvider(githubAuthProvider);
+      }
+
+      if(cred.user == null){
+        throw const Serverexception("User not found");
+      }
+
+      if(cred.additionalUserInfo?.isNewUser ?? false){
+        final res = await createUserData(uid: cred.user!.uid);
+
+        if(!res){
+          throw const Serverexception("User data cannot be created");
+        }
+      }
+
+      var map = {
+       "id": cred.user!.uid,
+        "email": cred.user!.email,
+        "name": cred.user!.displayName,
+      };
+
+      return UserModel.fromMap(map);
+    }catch(e){
       throw Serverexception(e.toString());
     }
   }
