@@ -165,9 +165,9 @@ class _RegisterState extends State<Register> {
                     ),
                     const Lineorline(),
                     const SizedBox(height: 20,),
-                    const SigninGoogle(),
+                    SigninGoogle(state: state,),
                     const SizedBox(height: 20,),
-                    const SigninGitHub(),
+                    SigninGitHub(state: state,),
                     const SizedBox(height: 15,),
                     Questiontext(
                       text: "Already have an account?",

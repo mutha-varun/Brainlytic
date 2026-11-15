@@ -255,9 +255,9 @@ class _LoginPasswordState extends State<LoginPassword> {
                     ),
                     const Lineorline(),
                     const SizedBox(height: 20),
-                    const SigninGoogle(),
+                    SigninGoogle(state: state,),
                     const SizedBox(height: 20),
-                    const SigninGitHub(),
+                    SigninGitHub(state: state,),
                     const SizedBox(height: 15),
                     Questiontext(
                       text: "Don't have an account?",
