@@ -16,6 +16,7 @@ abstract class AuthRepository {
   });
 
   Future<Either<AppFailure, User>> googleSignin();
+  Future<Either<AppFailure, User>> githubSignin();
   
   Future<void> signOut();
   Stream<User?> get authStateChanges;
