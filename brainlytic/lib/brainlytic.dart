@@ -2,6 +2,7 @@ import 'package:brainlytic/core/router/app_router.dart';
 import 'package:brainlytic/core/theme/theme.dart';
 import 'package:brainlytic/features/auth/data/datasources/firebase_auth_datasources.dart';
 import 'package:brainlytic/features/auth/data/repository/auth_repository_impl.dart';
+import 'package:brainlytic/features/auth/domain/usecases/github_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/google_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/login_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/register_usecase.dart';
@@ -45,6 +46,9 @@ class Brainlytic extends StatelessWidget {
               authRepository
             ),
             googleUsecase: GoogleUsecase(
+              authRepository
+            ),
+            githubUsecase: GithubUsecase(
               authRepository
             )
           )
