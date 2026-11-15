@@ -28,6 +28,8 @@ final class RegisterEvent extends AuthEvent{
 
 final class GoogleSigninEvent extends AuthEvent{}
 
+final class GithubSigninEvent extends AuthEvent{}
+
 final class SignoutEvent extends AuthEvent{}
 
 

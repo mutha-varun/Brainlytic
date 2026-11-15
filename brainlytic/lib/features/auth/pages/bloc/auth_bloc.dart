@@ -1,4 +1,5 @@
 import 'package:brainlytic/core/entities/user.dart';
+import 'package:brainlytic/features/auth/domain/usecases/github_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/google_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/login_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/register_usecase.dart';
@@ -15,17 +16,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUsecase _loginUsecase;
   final SignoutUsecase _signoutUsecase;
   final GoogleUsecase _googleUsecase;
+  final GithubUsecase _githubUsecase;
 
   AuthBloc({
     required RegisterUsecase registerUsecase,
     required LoginUsecase loginUsecase,
     required SignoutUsecase signoutUsecase,
-    required GoogleUsecase googleUsecase
+    required GoogleUsecase googleUsecase,
+    required GithubUsecase githubUsecase
   }) : 
   _registerUsecase = registerUsecase,
   _loginUsecase = loginUsecase,
   _signoutUsecase = signoutUsecase,
   _googleUsecase = googleUsecase,
+  _githubUsecase = githubUsecase,
   super(AuthInitial()) {
     on<AuthEvent>((_, emit) =>emit(AuthLoading()));
 
@@ -62,6 +66,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         (user)=>emit(AuthSuccess(user))
       );
     });
+
+    on<GithubSigninEvent>((event, emit) async{
+        final res = await _githubUsecase();
+
+        res.fold(
+          (l)=>emit(AuthFailure(l.message)), 
+          (user)=>emit(AuthSuccess(user))
+        );
+    },);
 
     on<SignoutEvent>((event, emit) async{
       await _signoutUsecase();
