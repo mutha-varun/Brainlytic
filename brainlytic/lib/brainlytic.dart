@@ -18,7 +18,7 @@ import 'package:brainlytic/features/quiz/data/repository/quiz_repository_impl.da
 import 'package:brainlytic/features/quiz/domain/usecase/first_question_usecase.dart';
 import 'package:brainlytic/features/quiz/domain/usecase/update_usecase.dart';
 import 'package:brainlytic/features/quiz/pages/bloc/quiz_bloc.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Brainlytic extends StatelessWidget {

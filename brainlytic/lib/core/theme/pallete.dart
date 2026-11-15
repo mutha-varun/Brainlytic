@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class Pallete {
   static Color scaffoldColor = Color.fromRGBO(18, 18, 18, 1);

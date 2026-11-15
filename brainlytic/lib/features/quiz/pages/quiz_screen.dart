@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:brainlytic/core/theme/pallete.dart';
 import 'package:brainlytic/features/quiz/pages/widgets/answer_tile.dart';
 import 'package:brainlytic/features/quiz/pages/widgets/question_tile.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class QuizScreen extends ConsumerStatefulWidget {
   final String qid;

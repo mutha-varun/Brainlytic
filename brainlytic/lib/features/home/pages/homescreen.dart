@@ -8,7 +8,7 @@ import 'package:brainlytic/features/common/widgets/circularindicator.dart';
 import 'package:brainlytic/features/home/pages/bloc/home_bloc.dart';
 import 'package:brainlytic/features/home/pages/widgets/confirmation.dart';
 import 'package:brainlytic/features/home/pages/widgets/quiz_topics_templates.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 

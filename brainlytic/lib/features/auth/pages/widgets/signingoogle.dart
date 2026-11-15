@@ -2,7 +2,7 @@ import 'package:brainlytic/core/router/route_constants.dart';
 import 'package:brainlytic/core/utility/utils.dart';
 import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
 import 'package:brainlytic/features/common/widgets/circularindicator.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
