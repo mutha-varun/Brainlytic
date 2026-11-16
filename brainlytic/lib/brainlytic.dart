@@ -6,6 +6,7 @@ import 'package:brainlytic/features/auth/domain/usecases/github_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/google_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/login_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/register_usecase.dart';
+import 'package:brainlytic/features/auth/domain/usecases/resetpassword_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/signout_usecase.dart';
 import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
 import 'package:brainlytic/features/home/data/datasource/firestore_datasource.dart';
@@ -49,6 +50,9 @@ class Brainlytic extends StatelessWidget {
               authRepository
             ),
             githubUsecase: GithubUsecase(
+              authRepository
+            ),
+            resetpasswordUsecase: ResetpasswordUsecase(
               authRepository
             )
           )
