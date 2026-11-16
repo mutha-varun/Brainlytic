@@ -88,6 +88,21 @@ class AuthRepositoryImpl implements AuthRepository{
   }
 
   @override
+  Future<Either<AppFailure, String>> resetPassword({
+    required String email
+  }) async {
+    try{
+      final res = await _authDatasources.resetPassword(email: email);
+
+      return Right(res);
+    } on Serverexception catch(e){
+      return Left(AppFailure(e.message));
+    }
+    on FirebaseAuthException catch (e){
+      return Left(AppFailure(e.toString()));
+    }
+  }
+  @override
   Future<void> signOut() => _authDatasources.signOut();
 
 }

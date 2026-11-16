@@ -176,6 +176,19 @@ class FirebaseAuthDatasources {
     }
   }
 
+  Future<String> resetPassword({
+    required String email
+  })async{
+    try {
+      await _auth.sendPasswordResetEmail(
+        email: email
+      );
+      return "Email sent successfully";
+    } catch(e){
+      throw Serverexception(e.toString());
+    }
+  }
+
   Future<void> signOut() => _auth.signOut();
 
   Stream<fba.User?> get authStateChanges => _auth.authStateChanges();
