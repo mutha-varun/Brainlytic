@@ -14,11 +14,13 @@ final class AuthSuccess extends AuthState {
 
 final class AuthFailure extends AuthState {
   final String message;
-
   AuthFailure(this.message);
 }
 
-final class AuthUnauthenticated extends AuthState{
-  
+final class AuthUnauthenticated extends AuthState{}
+
+final class ResetPasswordSent extends AuthState{
+  final String m;
+  ResetPasswordSent(this.m);
 }
 

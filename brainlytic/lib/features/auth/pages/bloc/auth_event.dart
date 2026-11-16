@@ -30,6 +30,13 @@ final class GoogleSigninEvent extends AuthEvent{}
 
 final class GithubSigninEvent extends AuthEvent{}
 
+final class ResetPasswordEvent extends AuthEvent{
+  final String email;
+  ResetPasswordEvent({
+    required this.email
+  });
+}
+
 final class SignoutEvent extends AuthEvent{}
 
 

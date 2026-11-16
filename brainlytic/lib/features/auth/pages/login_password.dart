@@ -85,8 +85,11 @@ class _LoginPasswordState extends State<LoginPassword> {
                             ),
                           );
                         } else {
+                          recoveryEmail.clear();
                           Navigator.of(context).pop();
-                          resetPassword();
+                          context.read<AuthBloc>().add(ResetPasswordEvent(
+                            email: recoveryEmail.text.trim()
+                          ));
                         }
                       },
                       child: Text(
@@ -114,57 +117,6 @@ class _LoginPasswordState extends State<LoginPassword> {
     );
   }
 
-  Future<void> resetPassword() async {
-    try {
-      await _firebaseAuth.sendPasswordResetEmail(
-        email: recoveryEmail.text.trim(),
-      );
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Mail sent",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        );
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found' && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              e.message!,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        );
-      } else if (e.code == 'invalid-email' && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              e.message!,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        );
-      }
-      recoveryEmail.clear();
-      throw Exception(e.message);
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(e.toString())));
-      }
-    }
-
-    recoveryEmail.clear();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,6 +130,9 @@ class _LoginPasswordState extends State<LoginPassword> {
               }
               if(state is AuthSuccess){
                 context.goNamed(RouteConstants.home);
+              }
+              if(state is ResetPasswordSent){
+                showSnackBar(context, state.m);
               }
             },
             builder: (context, state) {
