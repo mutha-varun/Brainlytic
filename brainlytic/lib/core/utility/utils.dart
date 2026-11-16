@@ -24,7 +24,7 @@ void showSnackBar(BuildContext context, String text){
   ..show(
     context: context,
     title: Text(text,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: Theme.of(context).textTheme.bodySmall,
     ),
     style: ToastificationStyle.simple,
     borderSide: BorderSide.none,
