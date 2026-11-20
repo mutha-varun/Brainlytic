@@ -6,4 +6,5 @@ class RouteConstants {
   static String register = "register";
   static String home = "home";
   static String quizPage = "quizPage";
+  static String splash = "splash";
 }
