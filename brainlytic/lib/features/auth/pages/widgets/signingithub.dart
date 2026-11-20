@@ -21,7 +21,7 @@ class _SigninGitHubState extends State<SigninGitHub> {
           : () => context.read<AuthBloc>().add(GithubSigninEvent()),
       icon: Image.asset("assets/github.png", width: 30),
       iconAlignment: IconAlignment.start,
-      label: widget.state is AuthLoading
+      label: widget.state is GithubSigninLoading
           ? const Circularindicator()
           : const Text("Continue with Github"),
     );

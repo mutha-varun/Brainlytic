@@ -17,13 +17,13 @@ class _SigninGoogleState extends State<SigninGoogle> {
   Widget build(BuildContext context) {
         return ElevatedButton.icon(
           style: Theme.of(context).elevatedButtonTheme.style,
-          onPressed: widget.state is AuthLoading? null : 
+          onPressed: widget.state is GoogleSignInLoading? null : 
             (){
               context.read<AuthBloc>().add(GoogleSigninEvent());
             },
           icon: Image.asset("assets/google.png", width: 30),
           iconAlignment: IconAlignment.start,
-          label: widget.state is AuthLoading? 
+          label: widget.state is GoogleSignInLoading? 
             const Circularindicator() : const Text("Continue with Google"),
         );
   }

@@ -35,9 +35,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _githubUsecase = githubUsecase,
   _resetpasswordUsecase = resetpasswordUsecase,
   super(AuthInitial()) {
-    on<AuthEvent>((_, emit) =>emit(AuthLoading()));
+    //on<AuthEvent>((_, emit) =>emit(AuthLoading()));
 
     on<RegisterEvent>((event, emit) async {
+      emit(AuthLoading());
       final res = await _registerUsecase(
         name: event.name,
         email: event.email,
@@ -51,6 +52,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<LoginEvent>((event, emit) async{
+      emit(AuthLoading());
       final res = await _loginUsecase(
         email: event.email,
         password: event.password
@@ -63,6 +65,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<GoogleSigninEvent>((event, emit)async {
+      emit(GoogleSignInLoading());
       final res = await _googleUsecase();
 
       res.fold(
@@ -72,6 +75,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<GithubSigninEvent>((event, emit) async{
+        emit(GithubSigninLoading());
         final res = await _githubUsecase();
 
         res.fold(
