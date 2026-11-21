@@ -191,5 +191,7 @@ class FirebaseAuthDatasources {
 
   Future<void> signOut() => _auth.signOut();
 
+  fba.User? get currentUser => _auth.currentUser;
+
   Stream<fba.User?> get authStateChanges => _auth.authStateChanges();
 }

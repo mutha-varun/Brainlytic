@@ -14,7 +14,7 @@ class OnboardingRoutes {
     ),
     GoRoute(
       name: RouteConstants.initialScreen,
-      path: '/initialScreen',
+      path: RouteConstants.initialScreenPath,
       builder: (context, state) => const InitialScreen(),
     ),
     GoRoute(
