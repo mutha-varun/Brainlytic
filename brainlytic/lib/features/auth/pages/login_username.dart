@@ -1,0 +1,97 @@
+import 'package:brainlytic/core/router/route_constants.dart';
+import 'package:brainlytic/core/utility/utils.dart';
+import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
+import 'package:brainlytic/features/auth/pages/widgets/appname.dart';
+import 'package:brainlytic/features/auth/pages/widgets/button.dart';
+import 'package:brainlytic/features/auth/pages/widgets/customtextfield.dart';
+import 'package:brainlytic/features/auth/pages/widgets/lineorline.dart';
+import 'package:brainlytic/features/auth/pages/widgets/signingithub.dart';
+import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
+import 'package:brainlytic/features/auth/pages/widgets/questiontext.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+class LoginUsername extends StatefulWidget {
+  final String? email;
+  const LoginUsername({this.email = "", super.key});
+
+  @override
+  State<LoginUsername> createState() => _LoginUsernameState();
+}
+
+class _LoginUsernameState extends State<LoginUsername> {
+  late final TextEditingController emailController;
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    emailController = TextEditingController(text: widget.email);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: SafeArea(
+          child: BlocConsumer<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (ModalRoute.of(context)?.isCurrent != true) return;
+
+              if (state is AuthFailure) {
+                showSnackBar(context, state.message);
+              } else if (state is AuthSuccess) {
+                context.goNamed(RouteConstants.home);
+              }
+            },
+            builder: (context, state) {
+              return Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Appname(displayText: "Welcome Back!"),
+                    Customtextfield(
+                      controller: emailController,
+                      autofocus: true,
+                      text: "Email",
+                    ),
+                    const SizedBox(height: 15),
+                    Button(
+                      onTap: () async {
+                        if (formKey.currentState!.validate()) {
+                          context.pushNamed(
+                            RouteConstants.loginPassword,
+                            queryParameters: {
+                              "email": emailController.text.trim(),
+                            },
+                          );
+                        }
+                      },
+                    ),
+                    const Lineorline(),
+                    const SizedBox(height: 20),
+                    SigninGoogle(state: state),
+                    const SizedBox(height: 20),
+                    SigninGitHub(state: state),
+                    const SizedBox(height: 15),
+                    Questiontext(
+                      text: "Don't have an account?",
+                      buttonText: "Sign up",
+                      onTap: () {
+                        context.replaceNamed(RouteConstants.register);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}

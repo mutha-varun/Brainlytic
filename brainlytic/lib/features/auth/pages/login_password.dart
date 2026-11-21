@@ -1,0 +1,236 @@
+//import 'package:brainlytic/core/common/utils/utils.dart';
+import 'package:brainlytic/core/router/route_constants.dart';
+import 'package:brainlytic/core/theme/pallete.dart';
+import 'package:brainlytic/core/utility/utils.dart';
+import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
+import 'package:brainlytic/features/auth/pages/widgets/appname.dart';
+import 'package:brainlytic/features/auth/pages/widgets/button.dart';
+import 'package:brainlytic/features/auth/pages/widgets/forgotpassword.dart';
+import 'package:brainlytic/features/auth/pages/widgets/lineorline.dart';
+import 'package:brainlytic/features/auth/pages/widgets/passwordtextfield.dart';
+import 'package:brainlytic/features/auth/pages/widgets/signingithub.dart';
+import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
+import 'package:brainlytic/features/auth/pages/widgets/questiontext.dart';
+import 'package:brainlytic/features/auth/provider/isobscured.dart';
+import 'package:brainlytic/features/common/widgets/circularindicator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+class LoginPassword extends StatefulWidget {
+  final String email;
+  const LoginPassword({
+    super.key,
+    required this.email
+  });
+
+  @override
+  State<LoginPassword> createState() => _LoginPasswordState();
+}
+
+class _LoginPasswordState extends State<LoginPassword> {
+
+  late final TextEditingController emailController;
+  final passwordController = TextEditingController();
+  final recoveryEmail = TextEditingController();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final _focusNode = FocusNode();
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    emailController = TextEditingController(text: widget.email);
+    super.initState();
+  }
+  
+  //remove the implementation of reset password
+  Future<void> resetPasswordDialog() async {
+    await showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Pallete.scaffoldColor,
+          contentPadding: const EdgeInsets.only(
+            top: 30,
+            left: 20,
+            right: 20,
+            bottom: 0,
+          ),
+          content: SizedBox(
+            width: 360,
+            height: 140,
+            child: Column(
+              children: [
+                TextField(
+                  decoration: InputDecoration(label: Text("Email")),
+                  autofocus: true,
+                  controller: recoveryEmail,
+                ),
+                SizedBox(height: 22),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        if (recoveryEmail.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "Email is required",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          );
+                        } else {
+                          recoveryEmail.clear();
+                          Navigator.of(context).pop();
+                          context.read<AuthBloc>().add(ResetPasswordEvent(
+                            email: recoveryEmail.text.trim()
+                          ));
+                        }
+                      },
+                      child: Text(
+                        "Send",
+                        style: TextStyle(fontSize: 18, color: Colors.blue),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        recoveryEmail.clear();
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        "Close",
+                        style: TextStyle(fontSize: 18, color: Colors.red),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: SafeArea(
+          child: BlocConsumer<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if(state is AuthFailure){
+                showSnackBar(context, state.message);
+              }
+              if(state is AuthSuccess){
+                context.goNamed(RouteConstants.home);
+              }
+              if(state is ResetPasswordSent){
+                showSnackBar(context, state.m);
+              }
+            },
+            builder: (context, state) {
+              return Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Appname(displayText: "Enter password"),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        top: 15,
+                        bottom: 10
+                      ),
+                      width: 360,
+                      child: TextFormField(
+                        readOnly: true,
+                        focusNode: _focusNode,
+                        onTap: () => _focusNode.unfocus(),
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          labelText: "Email",
+                          floatingLabelStyle: TextStyle(
+                            color: Pallete.enabledBorderColor,
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () { 
+                              context.pop();
+                              context.replaceNamed(
+                                RouteConstants.loginUsername,
+                                queryParameters: {"email": widget.email},
+                              );
+                              final container = ProviderScope.containerOf(context);
+                              container.read(isObscuredProvider.notifier).state = true;
+                            },
+                            icon: const Icon(Icons.edit, size: 25),
+                          ),
+                        ),
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                    Consumer(
+                      builder: (context, ref, child){
+                        bool isObscured = ref.watch(isObscuredProvider);
+                        return Passwordtextfield(
+                          controller: passwordController, 
+                          isObscured: isObscured,
+                          autoFocus: true,
+                          onTap: (){
+                            ref.read(isObscuredProvider.notifier).state = !isObscured;
+                          }
+                        );
+                      },
+                    ),
+                    ForgotPassword(
+                      onTap: () async => await resetPasswordDialog(),
+                    ),
+                    state is AuthLoading?
+                    const Circularindicator()
+                    :
+                    Button(
+                      onTap: () async {
+                        if (formKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(
+                            LoginEvent(
+                              email: widget.email,
+                              password: passwordController.text.trim(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                    const Lineorline(),
+                    const SizedBox(height: 20),
+                    SigninGoogle(state: state,),
+                    const SizedBox(height: 20),
+                    SigninGitHub(state: state,),
+                    const SizedBox(height: 15),
+                    Questiontext(
+                      text: "Don't have an account?",
+                      buttonText: "Sign up",
+                      onTap: () {
+                        final container = ProviderScope.containerOf(context);
+                        container.read(isObscuredProvider.notifier).state = true;
+                        context.pop();
+                        context.replaceNamed(RouteConstants.register);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
