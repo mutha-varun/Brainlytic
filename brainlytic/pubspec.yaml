@@ -48,10 +48,8 @@ dependencies:
   toastification: ^3.2.0
   material_ui: ^1.11.0
 
-  
-
 dev_dependencies:
-  flutter_native_splash: ^2.4.7
+  flutter_native_splash: ^2.4.8
   flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
@@ -65,25 +63,16 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-# flutter_native_splash:
-#   web: false
-
-#   color: "#42a5f5"
-#   #color_dark: ""
-#   fullscreen: true
     
 # The following section is specific to Flutter packages.
 
 flutter_native_splash:
   web: false
-  image: assets/Logo.png
   color: "#000000"
   color_dark: "#000000"
   ios: true
   android: true
-  macos: true
   fullscreen: true
-  branding_bottom_padding_ios: assets/branding.png
 
 flutter_launcher_icons:
   android: true
