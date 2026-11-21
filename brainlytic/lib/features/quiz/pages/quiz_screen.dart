@@ -61,7 +61,8 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       if (!mounted) return;
       ref.read(isAnswered.notifier).reset();
 
-      if(ref.read(currentQuestionProvider) == _length){
+      print(_length);
+      if(ref.read(currentQuestionProvider) == _length-1){
         context.read<QuizBloc>().add(QuizEnd(quizId: widget.qid, score: _score));
         showDialog(
           context: context, 
