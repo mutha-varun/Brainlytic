@@ -1,4 +1,5 @@
 class RouteConstants {
+  static String initialScreenPath = "/initialScreen";
   static String initialScreen = "initialScreen";
   static String onboarding = "onboarding";
   static String loginUsername = "loginUsername";
@@ -6,4 +7,5 @@ class RouteConstants {
   static String register = "register";
   static String home = "home";
   static String quizPage = "quizPage";
+  static String splash = "splash";
 }

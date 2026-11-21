@@ -11,7 +11,7 @@ import 'package:brainlytic/features/auth/pages/widgets/signingoogle.dart';
 import 'package:brainlytic/features/auth/pages/widgets/questiontext.dart';
 import 'package:brainlytic/features/auth/provider/isobscured.dart';
 import 'package:brainlytic/features/common/widgets/circularindicator.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -42,65 +42,6 @@ class _RegisterState extends State<Register> {
     nameController.dispose();
     super.dispose();
   }
-
-  // Make this in datasource
-
-  // Future<void> createUserData() async{
-  //   try{
-  //     final user = FirebaseAuth.instance.currentUser;
-
-  //     if(user!=null){
-  //       await FirebaseFirestore.instance.collection('userData').doc(user.uid).set({"uid": user.uid});
-
-  //       for(int i=1; i<=8; i++){
-  //         await FirebaseFirestore.instance.collection("userData").doc(user.uid).
-  //         collection('quizData').doc("quiz$i").set({
-  //           "stars": 0,
-  //           "id": i
-  //         });
-  //       }
-  //     }
-      
-  //   }catch(e){
-  //     if(mounted){
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text(e.toString(),
-  //             textAlign: TextAlign.center,
-  //           style: TextStyle(
-  //             fontSize: 18
-  //           ),
-  //         )
-  //       )
-  //       );
-  //     }
-  //   }
-  // }
-
-  // Future<bool> createUser() async{
-  //   try{
-  //     final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-  //       email: emailController.text.trim(),
-  //       password: passwordController.text.trim()
-  //     );
-  //     await userCredential.user!.updateDisplayName(nameController.text.trim());
-  //     await createUserData();
-
-  //     return true;
-  //   }on FirebaseAuthException catch(e){
-  //     if(mounted){
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text(e.message!,
-  //             textAlign: TextAlign.center,
-  //             style: TextStyle(fontSize: 18),
-  //           ),
-  //         ),
-  //       );
-  //     }
-  //     return false;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -165,9 +106,9 @@ class _RegisterState extends State<Register> {
                     ),
                     const Lineorline(),
                     const SizedBox(height: 20,),
-                    const SigninGoogle(),
+                    SigninGoogle(state: state,),
                     const SizedBox(height: 20,),
-                    const SigninGitHub(),
+                    SigninGitHub(state: state,),
                     const SizedBox(height: 15,),
                     Questiontext(
                       text: "Already have an account?",

@@ -2,8 +2,11 @@ import 'package:brainlytic/core/router/app_router.dart';
 import 'package:brainlytic/core/theme/theme.dart';
 import 'package:brainlytic/features/auth/data/datasources/firebase_auth_datasources.dart';
 import 'package:brainlytic/features/auth/data/repository/auth_repository_impl.dart';
+import 'package:brainlytic/features/auth/domain/usecases/github_usecase.dart';
+import 'package:brainlytic/features/auth/domain/usecases/google_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/login_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/register_usecase.dart';
+import 'package:brainlytic/features/auth/domain/usecases/resetpassword_usecase.dart';
 import 'package:brainlytic/features/auth/domain/usecases/signout_usecase.dart';
 import 'package:brainlytic/features/auth/pages/bloc/auth_bloc.dart';
 import 'package:brainlytic/features/home/data/datasource/firestore_datasource.dart';
@@ -16,7 +19,7 @@ import 'package:brainlytic/features/quiz/data/repository/quiz_repository_impl.da
 import 'package:brainlytic/features/quiz/domain/usecase/first_question_usecase.dart';
 import 'package:brainlytic/features/quiz/domain/usecase/update_usecase.dart';
 import 'package:brainlytic/features/quiz/pages/bloc/quiz_bloc.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Brainlytic extends StatelessWidget {
@@ -41,6 +44,15 @@ class Brainlytic extends StatelessWidget {
               authRepository
             ),
             signoutUsecase: SignoutUsecase(
+              authRepository
+            ),
+            googleUsecase: GoogleUsecase(
+              authRepository
+            ),
+            githubUsecase: GithubUsecase(
+              authRepository
+            ),
+            resetpasswordUsecase: ResetpasswordUsecase(
               authRepository
             )
           )

@@ -7,7 +7,7 @@ class UserModel extends User{
     required super.name
   });
   
-  factory UserModel.fromJson(Map<String, dynamic> map){
+  factory UserModel.fromMap(Map<String, dynamic> map){
     return UserModel(
       id: map['id'] ?? '', 
       email: map['email'] ?? '', 

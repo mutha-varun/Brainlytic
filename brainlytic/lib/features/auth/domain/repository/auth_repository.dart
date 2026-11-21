@@ -1,6 +1,5 @@
 import 'package:brainlytic/core/entities/user.dart';
 import 'package:brainlytic/core/errors/appfailure.dart';
-import 'package:brainlytic/features/auth/data/model/user_model.dart';
 
 import 'package:fpdart/fpdart.dart';
 
@@ -15,7 +14,13 @@ abstract class AuthRepository {
       required String email, 
       required String password
   });
+
+  Future<Either<AppFailure, User>> googleSignin();
+  Future<Either<AppFailure, User>> githubSignin();
+  Future<Either<AppFailure, String>> resetPassword({
+    required String email
+  });
   
   Future<void> signOut();
-  Stream<UserModel?> get authStateChanges;
+  Stream<User?> get authStateChanges;
 }

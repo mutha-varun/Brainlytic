@@ -1,5 +1,5 @@
 import 'package:brainlytic/core/theme/pallete.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:toastification/toastification.dart';
 
 void showSnackBar(BuildContext context, String text){
@@ -24,7 +24,7 @@ void showSnackBar(BuildContext context, String text){
   ..show(
     context: context,
     title: Text(text,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: Theme.of(context).textTheme.bodySmall,
     ),
     style: ToastificationStyle.simple,
     borderSide: BorderSide.none,

@@ -14,7 +14,7 @@ import 'package:brainlytic/features/auth/pages/widgets/questiontext.dart';
 import 'package:brainlytic/features/auth/provider/isobscured.dart';
 import 'package:brainlytic/features/common/widgets/circularindicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -85,8 +85,11 @@ class _LoginPasswordState extends State<LoginPassword> {
                             ),
                           );
                         } else {
+                          recoveryEmail.clear();
                           Navigator.of(context).pop();
-                          resetPassword();
+                          context.read<AuthBloc>().add(ResetPasswordEvent(
+                            email: recoveryEmail.text.trim()
+                          ));
                         }
                       },
                       child: Text(
@@ -114,57 +117,6 @@ class _LoginPasswordState extends State<LoginPassword> {
     );
   }
 
-  Future<void> resetPassword() async {
-    try {
-      await _firebaseAuth.sendPasswordResetEmail(
-        email: recoveryEmail.text.trim(),
-      );
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Mail sent",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        );
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found' && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              e.message!,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        );
-      } else if (e.code == 'invalid-email' && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              e.message!,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        );
-      }
-      recoveryEmail.clear();
-      throw Exception(e.message);
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(e.toString())));
-      }
-    }
-
-    recoveryEmail.clear();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,6 +130,9 @@ class _LoginPasswordState extends State<LoginPassword> {
               }
               if(state is AuthSuccess){
                 context.goNamed(RouteConstants.home);
+              }
+              if(state is ResetPasswordSent){
+                showSnackBar(context, state.m);
               }
             },
             builder: (context, state) {
@@ -255,9 +210,9 @@ class _LoginPasswordState extends State<LoginPassword> {
                     ),
                     const Lineorline(),
                     const SizedBox(height: 20),
-                    const SigninGoogle(),
+                    SigninGoogle(state: state,),
                     const SizedBox(height: 20),
-                    const SigninGitHub(),
+                    SigninGitHub(state: state,),
                     const SizedBox(height: 15),
                     Questiontext(
                       text: "Don't have an account?",
