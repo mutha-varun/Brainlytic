@@ -37,17 +37,17 @@ Brainlytic is a cross-platform mobile quiz application that lets users test thei
 
 <div align="center">
 
-| Onboarding | Register | Sign In |
+| Initial Screen| Onboarding | Register |
 |:---:|:---:|:---:|
-| <img src="https://github.com/user-attachments/assets/c4d652dc-d878-43bc-ab79-863a63d5f751" height="300"/> | <img src="https://github.com/user-attachments/assets/d92d813c-d0c8-476e-a1d3-b35e319ee2e7" height="300"/> | <img src="https://github.com/user-attachments/assets/5d276fa7-739e-4223-bc91-c883d668a510" height="300"/> |
+| <img src= "https://github.com/user-attachments/assets/ca40b0ba-1d6d-40c1-ac45-6aea76c5ebe2" height="300"/> | <img src="https://github.com/user-attachments/assets/7fc80c8a-e29c-43fd-8896-472d007694ae" height="300"/> | <img src="https://github.com/user-attachments/assets/80c7cdf3-1f8a-4449-8903-cfb40139e0d8" height="300"/> |
 
-| Password | Quiz Topics | Question Screen |
+| Sign in| Password | Quiz Topics |
 |:---:|:---:|:---:|
-| <img src="https://github.com/user-attachments/assets/710ae866-6ac9-4164-8804-456adcce29db" height="300"/> | <img src="https://github.com/user-attachments/assets/bad56253-8e5d-4a77-8ee8-6a30f2624203" height="300"/> | <img src="https://github.com/user-attachments/assets/eb34bb48-cbe5-402f-894c-11e7640554f8" height="300"/> |
+| <img src="https://github.com/user-attachments/assets/0a754696-07aa-483c-a1b0-192433669fad" height="300"/> | <img src="https://github.com/user-attachments/assets/d13c4626-44f7-421d-9f61-948f463b9a02" height="300"/> | <img src="https://github.com/user-attachments/assets/33c3302b-d9db-44a8-9c94-ba1f59b96870" height="300"/> |
 
-| Results | Score Summary | Updated |
+| Question Screen | Results | Score Summary |
 |:---:|:---:|:---:|
-| <img src="https://github.com/user-attachments/assets/91e46dbf-71de-4ba9-8390-ca1c99f50301" height="300"/> | <img src="https://github.com/user-attachments/assets/1af76ac7-fbf4-4c84-b20f-f71cbc9fe175" height="300"/> | <img src="https://github.com/user-attachments/assets/f76878ab-ff7c-47c6-adb9-a993eab0379f" height="300"/> |
+| <img src="https://github.com/user-attachments/assets/7647f937-e312-4304-9388-10e5d6727cdc" height="300"/> | <img src="https://github.com/user-attachments/assets/b9721596-f71d-4c0b-954b-a2fedebdde92" height="300"/> | <img src="https://github.com/user-attachments/assets/a74e3b53-28f2-495b-8148-51f4d1a0f14e" height="300"/> |
 
 </div>
 
@@ -144,17 +144,5 @@ usersData/                           ← collection
         stars: 8
         id: {Id}
 ```
-
----
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome!
-
-1. Fork the repository
-2. Create a new branch: `git checkout -b feature/your-feature`
-3. Commit your changes: `git commit -m 'Add your feature'`
-4. Push to the branch: `git push origin feature/your-feature`
-5. Open a Pull Request
 
 ---
